@@ -8,8 +8,40 @@
 import SwiftUI
 
 struct FeedView: View {
+    
+    @State private var showNewTweetView = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        ZStack(alignment: .bottomTrailing) {
+            ScrollView {
+                LazyVStack {
+                    ForEach(0...20, id: \.self) { _ in
+                        TweetRowView()
+                    }
+                }
+            }
+            
+            Button {
+                showNewTweetView.toggle()
+            } label: {
+                Image(systemName: "square.and.pencil")
+                    .font(.title2)
+                    .foregroundColor(.white)
+            }
+            .background(
+                Circle()
+                    .fill(Color(.systemBlue))
+                    .frame(width: 54, height: 54)
+            )
+            .padding(.trailing, 32)
+            .padding(.vertical, 32)
+        }
+        // FullScreen ModalView
+        .fullScreenCover(isPresented: $showNewTweetView, content: {
+            // 新しいTweet投稿画面をmodalで表示
+            NewTweetView()
+        })
     }
 }
 
