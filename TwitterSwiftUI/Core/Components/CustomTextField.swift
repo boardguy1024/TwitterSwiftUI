@@ -11,6 +11,7 @@ struct CustomTextField: View {
     
     let imageName: String
     let placeholdeer: String
+    var isSecureField: Bool = false
     @Binding var text: String
     
     var body: some View {
@@ -22,7 +23,11 @@ struct CustomTextField: View {
                     .frame(width: 20, height: 20)
                     .foregroundColor(Color(.darkGray))
                 
-                TextField(placeholdeer, text: $text)
+                if isSecureField {
+                    SecureField(placeholdeer, text: $text)
+                } else {
+                    TextField(placeholdeer, text: $text)
+                }
             }
             
             Divider()

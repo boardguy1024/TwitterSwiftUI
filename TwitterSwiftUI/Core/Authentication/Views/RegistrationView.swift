@@ -17,43 +17,54 @@ struct RegistrationView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack {
-            AuthHeaderView(title1: "Get Started.", title2: "Create your account.")
+        // 画面を遷移させるため使用
+        NavigationStack {
 
-            VStack(spacing: 40) {
-                CustomTextField(imageName: "envelope", placeholdeer: "Email", text: $email)
-                CustomTextField(imageName: "person", placeholdeer: "User name", text: $username)
-                CustomTextField(imageName: "person", placeholdeer: "Full name", text: $fullname)
-                CustomTextField(imageName: "lock", placeholdeer: "Password", text: $password)
-            }
-            .padding(32)
- 
-            AuthSubmitButton(title: "Sign Up", width: 340) {
-                viewModel.register(withEmail: email,
-                                   password: password,
-                                   fullname: fullname,
-                                   username: username)
-            }
-            
-            Spacer()
-            
-            NavigationLink {
-                RegistrationView()
-                    .navigationBarHidden(true)
-            } label: {
-                HStack {
-                    Text("Already have an account?")
-                        .font(.footnote)
-                    
-                    Text("Sign In")
-                        .font(.footnote)
-                        .fontWeight(.semibold)
+            VStack {
+                AuthHeaderView(title1: "Get Started.", title2: "Create your account.")
+                
+                VStack(spacing: 40) {
+                    CustomTextField(imageName: "envelope", placeholdeer: "Email", text: $email)
+                    CustomTextField(imageName: "person", placeholdeer: "User name", text: $username)
+                    CustomTextField(imageName: "person", placeholdeer: "Full name", text: $fullname)
+                    CustomTextField(imageName: "lock",
+                                    placeholdeer: "Password",
+                                    isSecureField: true,
+                                    text: $password)
                 }
+                .padding(32)
+                
+                AuthSubmitButton(title: "Sign Up", width: 340) {
+                    viewModel.register(withEmail: email,
+                                       password: password,
+                                       fullname: fullname,
+                                       username: username)
+                }
+                
+                Spacer()
+                
+                NavigationLink {
+                    RegistrationView()
+                        .navigationBarHidden(true)
+                } label: {
+                    HStack {
+                        Text("Already have an account?")
+                            .font(.footnote)
+                        
+                        Text("Sign In")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                    }
+                }
+                .foregroundColor(Color(.systemBlue))
+                .padding(.bottom, 32)
             }
-            .foregroundColor(Color(.systemBlue))
-            .padding(.bottom, 32)
+            .ignoresSafeArea()
+            .navigationDestination(isPresented: $viewModel.didAuthenticateUser) {
+                // ユーザー登録が完了したらプロフィール画像選択画面へ遷移
+                ProfilePhotoSelectView()
+            }
         }
-        .ignoresSafeArea()
     }
 }
 

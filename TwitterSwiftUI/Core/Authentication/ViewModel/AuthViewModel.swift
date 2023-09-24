@@ -11,13 +11,23 @@ import Firebase
 class AuthViewModel: ObservableObject {
     
     @Published var userSession: FirebaseAuth.User?
-     
+    @Published var didAuthenticateUser: Bool = false
+    
+    // createUser -> uploadedProfileImage -> updateUserWithProfileImageUrlまではこちらを使い、
+    // このプロセスが完了したら、↑ userSessionにvalueをセットしてMainTabViewを表示するようにする
+    private var tempUserSession: FirebaseAuth.User?
+    
+    // User
+    @Published var currentUser: User?
+    private let userService = UserService()
+    
     init() {
         self.userSession = Auth.auth().currentUser
+        print("DEBUG: User Session is: \(String(describing: self.userSession))")
         
-        print("DEBUG: User Session is: \(self.userSession)")
+        self.fetchUser()
     }
-    
+     
     func login(withEmail email: String, password: String) {
         print("DEBUG: login with Email: \(email)")
 
@@ -45,13 +55,10 @@ class AuthViewModel: ObservableObject {
             }
             
             guard let user = result?.user else { return }
-            self.userSession = user
-            
-            print("DEBUG: Registered user successfully")
-            print("DEBUG: User is \(self.userSession)")
+            self.tempUserSession = user
+            //self.userSession = user
             
             //ユーザー登録が成功した場合、紐づくデータをDataBaseにPost
-            
             let userDataDic = ["email": email,
                                "username": username,
                                "fullname": fullname,
@@ -59,8 +66,11 @@ class AuthViewModel: ObservableObject {
             
             Firestore.firestore().collection("users")
                 .document(user.uid)
-                .setData(userDataDic) { _ in
+                .setData(userDataDic) { [weak self] _ in
                     print("DEBUG: Did upload user data")
+                    
+                    //FireStoreにUser情報をセットできたらProfilePhotoViewに遷移させる
+                    self?.didAuthenticateUser = true
                 }
         }
     }
@@ -68,6 +78,29 @@ class AuthViewModel: ObservableObject {
     func signOut() {
         userSession = nil
         try? Auth.auth().signOut()
-     }
+    }
+    
+    func uploadProfileImage(_ image: UIImage) {
+        guard let uid = tempUserSession?.uid else { return }
+        
+        ImageUploader.uploadImage(image: image) { profileImageUrl in
+            
+            Firestore.firestore().collection("users")
+                .document(uid)
+                .updateData(["profileImageUrl": profileImageUrl]) { _ in
+                    // 選択したプロフィール画像が正常にStorageにアップデートし、そのdownloadUrlを取得したら
+                    // userのnodeに「profileImageUrl」fieldを追加してアップデートを行う
+                    // 全てが完了したら、userSessionに値をセットし、Home画面が表示されるようにする
+                    self.userSession = self.tempUserSession
+                }
+        }
+    }
+    
+    private func fetchUser() {
+        guard let uid = userSession?.uid else { return }
+        userService.fetchProfile(withUid: uid) { [weak self] user in
+            self?.currentUser = user
+        }
+    }
 }
 

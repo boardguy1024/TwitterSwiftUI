@@ -18,7 +18,7 @@ struct AuthSubmitButton: View {
         Button {
             buttonAction()
         } label: {
-            Text("Sign Up")
+            Text(title)
                 .font(.headline)
                 .foregroundStyle(.white)
                 .frame(width: width, height: 50)
