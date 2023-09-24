@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SideMenuView: View {
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 20) {
@@ -38,7 +41,7 @@ struct SideMenuView: View {
                 case .bookmarks: SideMenuOptionRowView(viewModel: item)
                 case .logout:
                     Button {
-                        print("Logout tapped")
+                        authViewModel.signOut()
                     } label: {
                         SideMenuOptionRowView(viewModel: item)
                     }
