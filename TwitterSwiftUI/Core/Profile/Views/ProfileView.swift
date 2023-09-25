@@ -11,17 +11,15 @@ import Kingfisher
 struct ProfileView: View {
     
     @State private var selectedFilter: TweetFilterViewModel = .tweets
-    
+    @ObservedObject var viewModel: ProfileViewModel
     // プロパティラッパー@Environmentを使用して、環境変数にアクセス
     // 環境変数は、ビュー階層全体で利用できる共有の値や設定を提供
     // presentationModeは環境変数の1つで、現在のViewの表示状態に関する情報を持っている
     @Environment(\.presentationMode) var mode
     @Namespace var animation
-
-    private let user: User
     
     init(user: User) {
-        self.user = user
+        self.viewModel = ProfileViewModel(user: user)
     }
     
     var body: some View {
@@ -67,7 +65,7 @@ extension ProfileView {
                         .foregroundColor(.white)
                 }
                 
-                KFImage(URL(string: user.profileImageUrl))
+                KFImage(URL(string: viewModel.user.profileImageUrl))
                     .resizable()
                     .scaledToFill()
                     .frame(width: 72, height: 72)
@@ -108,14 +106,14 @@ extension ProfileView {
     var userInfoDetails: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text(user.fullname)
+                Text(viewModel.user.fullname)
                     .font(.title2).bold()
                 
                 Image(systemName: "checkmark.seal.fill")
                     .foregroundColor(Color(.systemBlue))
             }
             
-            Text("@\(user.username)")
+            Text("@\(viewModel.user.username)")
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
@@ -180,8 +178,8 @@ extension ProfileView {
     var tweetsview: some View {
         ScrollView {
             LazyVStack {
-                ForEach(0...9, id: \.self) { index in
-                    TweetRowView()
+                ForEach(viewModel.tweets) { tweet in
+                    TweetRowView(tweet: tweet)
                 }
             }
         }
