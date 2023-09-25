@@ -25,23 +25,23 @@ class AuthViewModel: ObservableObject {
         self.userSession = Auth.auth().currentUser
         print("DEBUG: User Session is: \(String(describing: self.userSession))")
         
-        self.fetchUser()
+        self.fetchUserProfile()
     }
      
     func login(withEmail email: String, password: String) {
         print("DEBUG: login with Email: \(email)")
 
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
                 print("DEBUG: Failed to login with error: \(error.localizedDescription)")
                 // TODO: 必要によってエラーを表示する
             }
             
             guard let user = result?.user else { return }
-            self.userSession = user
-            
+            self?.userSession = user
             print("DEBUG: Logged in user successfully")
-
+            
+            self?.fetchUserProfile()
         }
     }
     
@@ -77,6 +77,7 @@ class AuthViewModel: ObservableObject {
     
     func signOut() {
         userSession = nil
+        currentUser = nil
         try? Auth.auth().signOut()
     }
     
@@ -96,7 +97,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    private func fetchUser() {
+    private func fetchUserProfile() {
         guard let uid = userSession?.uid else { return }
         userService.fetchProfile(withUid: uid) { [weak self] user in
             self?.currentUser = user

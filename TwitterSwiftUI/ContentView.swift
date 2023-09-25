@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ContentView: View {
 
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     @State private var showMenu = false
 
@@ -18,15 +19,12 @@ struct ContentView: View {
         Group {
             
             // no user logged in
-            if viewModel.userSession == nil {
+            if authViewModel.userSession == nil {
                 LoginView()
             } else {
                 mainTabView
             }
         }
-        
-        
-        
     }
 }
 
@@ -66,8 +64,16 @@ extension ContentView {
                         showMenu.toggle()
                     }
                 } label: {
-                    Circle()
-                        .frame(width: 32, height: 32)
+                    if let user = authViewModel.currentUser {
+                        KFImage(URL(string: user.profileImageUrl))
+                            .resizable()
+                            .placeholder({ _ in
+                                Circle() // TODO: Default画像にすべき
+                            })
+                            .scaledToFill()
+                            .frame(width: 32, height: 32)
+                            .clipShape(Circle())
+                    }
                 }
             }
         }

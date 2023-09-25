@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainTabView: View {
-    
     @State private var selectedIndex: Int = 0
     var body: some View {
         
@@ -22,6 +21,7 @@ struct MainTabView: View {
                      Image(systemName: "house")
                 }
                 .tag(0)
+                .navigationTitle("Home")
             
             ExploreView()
                 .onTapGesture {

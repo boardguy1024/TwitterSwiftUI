@@ -6,7 +6,7 @@
 //
 
 import FirebaseStorage
-import UIKit
+import SwiftUI
 
 struct ImageUploader {
     

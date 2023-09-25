@@ -14,10 +14,10 @@ struct SideMenuView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 20) {
-            VStack(alignment: .leading) {
-                
-                if let user = authViewModel.currentUser {
+        if let user = authViewModel.currentUser {
+            VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading) {
+                    
                     KFImage(URL(string: user.profileImageUrl))
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -30,36 +30,36 @@ struct SideMenuView: View {
                     Text("@\(user.username)")
                         .font(.caption)
                         .foregroundStyle(.gray)
+                    
+                    UserStatsView()
+                        .padding(.vertical)
                 }
                 
-                UserStatsView()
-                    .padding(.vertical)
-            }
-            
-            ForEach(SideMenuViewModel.allCases, id:\.rawValue) { item in
-                switch item {
-                case .profile:
-                    NavigationLink {
-                        ProfileView()
-                    } label: {
-                        SideMenuOptionRowView(viewModel: item)
-                    }
-                case .lists: SideMenuOptionRowView(viewModel: item)
-                case .bookmarks: SideMenuOptionRowView(viewModel: item)
-                case .logout:
-                    Button {
-                        authViewModel.signOut()
-                    } label: {
-                        SideMenuOptionRowView(viewModel: item)
+                ForEach(SideMenuViewModel.allCases, id:\.rawValue) { item in
+                    switch item {
+                    case .profile:
+                        NavigationLink {
+                            ProfileView(user: user)
+                        } label: {
+                            SideMenuOptionRowView(viewModel: item)
+                        }
+                    case .lists: SideMenuOptionRowView(viewModel: item)
+                    case .bookmarks: SideMenuOptionRowView(viewModel: item)
+                    case .logout:
+                        Button {
+                            authViewModel.signOut()
+                        } label: {
+                            SideMenuOptionRowView(viewModel: item)
+                        }
                     }
                 }
+                
+                Spacer()
+                
             }
-            
-            Spacer()
-
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
     }
 }
 

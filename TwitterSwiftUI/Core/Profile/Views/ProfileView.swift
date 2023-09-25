@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProfileView: View {
     
@@ -16,6 +17,12 @@ struct ProfileView: View {
     // presentationModeは環境変数の1つで、現在のViewの表示状態に関する情報を持っている
     @Environment(\.presentationMode) var mode
     @Namespace var animation
+
+    private let user: User
+    
+    init(user: User) {
+        self.user = user
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -31,15 +38,14 @@ struct ProfileView: View {
             tweetsview
             
             Spacer()
-            
-           
         }
+        .navigationBarHidden(true)
     }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(user: .init(username: "", fullname: "", profileImageUrl: "", email: ""))
     }
 }
 
@@ -47,11 +53,10 @@ extension ProfileView {
     
     var headerView: some View {
         ZStack(alignment: .bottomLeading) {
-            Color(.systemBlue)
+            Color(.systemCyan)
                 .ignoresSafeArea()
-            
-            VStack {
-                
+
+            VStack(spacing: 0) {
                 Button {
                     // PresentationModeへアクセスしてdismiss
                     mode.wrappedValue.dismiss()
@@ -60,13 +65,16 @@ extension ProfileView {
                         .resizable()
                         .frame(width: 20, height: 16)
                         .foregroundColor(.white)
-                        .offset(x: 16, y: 12)
                 }
                 
-                Circle()
+                KFImage(URL(string: user.profileImageUrl))
+                    .resizable()
+                    .scaledToFill()
                     .frame(width: 72, height: 72)
-                .offset(x: 16, y: 24)
+                    .clipShape(Circle())
+                    .offset(x: 16, y: 24)
             }
+
         }
         .frame(height: 96)
     }
@@ -100,14 +108,14 @@ extension ProfileView {
     var userInfoDetails: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("Heath Ledger")
+                Text(user.fullname)
                     .font(.title2).bold()
                 
                 Image(systemName: "checkmark.seal.fill")
                     .foregroundColor(Color(.systemBlue))
             }
             
-            Text("@joker")
+            Text("@\(user.username)")
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
