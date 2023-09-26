@@ -17,6 +17,10 @@ class ProfileViewModel: ObservableObject {
     
     let user: User
     
+    var actionButtonTitle: String {
+        user.isCurrentUser ? "Edit Profile" : "Follow"
+    }
+    
     init(user: User) {
         self.user = user
         
