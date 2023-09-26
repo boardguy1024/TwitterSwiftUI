@@ -54,6 +54,12 @@ struct TweetService {
     }
     
     
+   
+}
+
+// MARK: - Likes
+
+extension TweetService {
     // 他のユーザーのTweetの「♡」をタップ
     func likeTweet(_ tweet: Tweet, completion: @escaping () -> Void) {
         
@@ -102,6 +108,27 @@ struct TweetService {
             .document(tweetId).getDocument { snapshot, _ in
                 guard let snapshot = snapshot else { return }
                 completion(snapshot.exists) // snapshotがあれば didLike=true
+            }
+    }
+    
+    func fetchLikedTweets(forUid uid: String, completion: @escaping ([Tweet]) -> Void) {
+        var tweets = [Tweet]()
+        
+        Firestore.firestore().collection("users").document(uid).collection("user-likes")
+            .getDocuments { snapshot, _ in
+                guard let docs = snapshot?.documents else { return }
+                
+                docs.forEach { snapshot in
+                    let tweetId = snapshot.documentID
+                    
+                    Firestore.firestore().collection("tweets").document(tweetId).getDocument { snapshot, _ in
+                        guard let tweet = try? snapshot?.data(as: Tweet.self) else { return }
+                        tweets.append(tweet)
+                        
+                        // 取得ごとにcompletionで画面を表示（すべてのtweetsを取得した後に completionを実行しなくても良い）
+                        completion(tweets)
+                    }
+                }
             }
     }
 }
