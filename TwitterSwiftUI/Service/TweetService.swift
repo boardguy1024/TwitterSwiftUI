@@ -8,7 +8,7 @@
 import Firebase
 
 struct TweetService {
-    
+        
     func uploadTweet(caption: String, completion: @escaping (Bool) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -52,9 +52,6 @@ struct TweetService {
                 completion(tweets.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue()}))
             }
     }
-    
-    
-   
 }
 
 // MARK: - Likes

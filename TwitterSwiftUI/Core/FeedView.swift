@@ -22,6 +22,9 @@ struct FeedView: View {
                     }
                 }
             }
+            .refreshable {
+                viewModel.fetchTweets()
+            }
             
             Button {
                 showNewTweetView.toggle()
@@ -41,7 +44,10 @@ struct FeedView: View {
         // FullScreen ModalView
         .fullScreenCover(isPresented: $showNewTweetView, content: {
             // 新しいTweet投稿画面をmodalで表示
-            NewTweetView()
+            NewTweetView() {
+                // 投稿後は画面を更新
+                viewModel.fetchTweets()
+            }
         })
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -66,5 +66,8 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
+    deinit {
+        print("deinit ProfileViewModel")
+    }
     
 }

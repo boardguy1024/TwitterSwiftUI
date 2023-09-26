@@ -15,6 +15,11 @@ struct NewTweetView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @ObservedObject var uploadViewModel = UploadTweetViewModel()
     
+    var postCompletion: () -> Void
+    init(postCompletion: @escaping () -> Void) {
+        self.postCompletion = postCompletion
+    }
+
     var body: some View {
         VStack {
             HStack {
@@ -57,6 +62,7 @@ struct NewTweetView: View {
         }
         .onReceive(uploadViewModel.$didUploadTweet, perform: { success in
             if success {
+                postCompletion()
                 presentationMode.wrappedValue.dismiss()
             } else {
                 // show error
@@ -66,5 +72,5 @@ struct NewTweetView: View {
 }
 
 #Preview {
-    NewTweetView()
+    NewTweetView() { }
 }
