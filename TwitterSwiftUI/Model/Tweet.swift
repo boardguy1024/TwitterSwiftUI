@@ -16,4 +16,6 @@ struct Tweet: Identifiable, Decodable {
     var likes: Int
     
     var user: User?
+    //optionalの理由は firestoreからdecode時にdidLikeがないため
+    var didLike: Bool? = false
 }

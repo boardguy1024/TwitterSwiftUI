@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF2CB5892AC2DE4A007DAC1F /* TweetRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2CB5882AC2DE4A007DAC1F /* TweetRowViewModel.swift */; };
 		FF2EE4E72ABECC61000522CF /* UserRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE4E62ABECC61000522CF /* UserRowView.swift */; };
 		FF2EE4EC2ABEF082000522CF /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE4EB2ABEF082000522CF /* SideMenuView.swift */; };
 		FF2EE4EE2ABEF09C000522CF /* SideMenuRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE4ED2ABEF09C000522CF /* SideMenuRowView.swift */; };
@@ -78,6 +79,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF2CB5882AC2DE4A007DAC1F /* TweetRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetRowViewModel.swift; sourceTree = "<group>"; };
 		FF2EE4E62ABECC61000522CF /* UserRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRowView.swift; sourceTree = "<group>"; };
 		FF2EE4EB2ABEF082000522CF /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		FF2EE4ED2ABEF09C000522CF /* SideMenuRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuRowView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF2CB5862AC2DE18007DAC1F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FF2CB5882AC2DE4A007DAC1F /* TweetRowViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FF2CB5872AC2DE26007DAC1F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF44B9392ABC85FC005B87F4 /* TweetRowView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		FF2EE4E22ABECC13000522CF /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,7 +419,8 @@
 		FF44B9382ABC859A005B87F4 /* Tweets */ = {
 			isa = PBXGroup;
 			children = (
-				FF44B9392ABC85FC005B87F4 /* TweetRowView.swift */,
+				FF2CB5862AC2DE18007DAC1F /* ViewModel */,
+				FF2CB5872AC2DE26007DAC1F /* Views */,
 			);
 			path = Tweets;
 			sourceTree = "<group>";
@@ -597,6 +616,7 @@
 				FF44B9202ABC8117005B87F4 /* TwitterSwiftUIApp.swift in Sources */,
 				FF44B9432ABC8BEE005B87F4 /* ExploreView.swift in Sources */,
 				FF2EE4F02ABEF0C3000522CF /* SideMenuViewModel.swift in Sources */,
+				FF2CB5892AC2DE4A007DAC1F /* TweetRowViewModel.swift in Sources */,
 				FF2EE5062ABFE4D7000522CF /* CustomTextField.swift in Sources */,
 				FFFB5D5C2AC0504C00817497 /* UserService.swift in Sources */,
 				FF2EE5482AC01614000522CF /* ProfilePhotoSelectView.swift in Sources */,

@@ -10,14 +10,18 @@ import Kingfisher
 
 struct TweetRowView: View {
     
-    let tweet: Tweet
+    @ObservedObject var viewModel: TweetRowViewModel
+    
+    init(tweet: Tweet) {
+        self.viewModel = TweetRowViewModel(tweet: tweet)
+    }
     
     var body: some View {
         
         VStack(alignment: .leading) {
             HStack(alignment: .top, spacing: 12) {
                 
-                if let user = tweet.user {
+                if let user = viewModel.tweet.user {
                     KFImage(URL(string: user.profileImageUrl))
                         .resizable()
                         .scaledToFill()
@@ -39,7 +43,7 @@ struct TweetRowView: View {
                         }
                         
                         // tweet caption
-                        Text(tweet.caption)
+                        Text(viewModel.tweet.caption)
                             .font(.subheadline)
                             // テキストの左寄せ
                             .multilineTextAlignment(.leading)
@@ -68,12 +72,23 @@ struct TweetRowView: View {
                 
                 Spacer()
                 
-                Button {
-                    
-                } label: {
-                     Image(systemName: "heart")
-                        .font(.subheadline)
+                if viewModel.tweet.didLike ?? false {
+                    Button {
+                        viewModel.unlikeTweet()
+                    } label: {
+                         Image(systemName: "heart.fill")
+                            .font(.subheadline)
+                            .foregroundColor(.red)
+                    }
+                } else {
+                    Button {
+                        viewModel.likeTweet()
+                    } label: {
+                         Image(systemName: "heart")
+                            .font(.subheadline)
+                    }
                 }
+                
                 
                 Spacer()
                 
