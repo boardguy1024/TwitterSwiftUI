@@ -72,8 +72,9 @@ struct SideMenuView: View {
             Spacer()
             
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(.leading, 20)
+        .frame(width: UIScreen.main.bounds.width - 90, alignment: .leading)
+        .background(Color.white)
     }
 }
 

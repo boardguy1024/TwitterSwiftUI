@@ -39,10 +39,7 @@ struct FeedView: View {
                         Spacer()
                     }
                     
-                    Image("xlogo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 26, height: 26)
+                    xLogoSmall
                 }
                 .padding(.horizontal)
                                 
