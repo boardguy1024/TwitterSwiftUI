@@ -12,7 +12,7 @@ struct NewTweetView: View {
     
     @State private var caption = ""
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var uploadViewModel = UploadTweetViewModel()
+    @StateObject var uploadViewModel = UploadTweetViewModel()
     
     var postCompletion: () -> Void
     init(postCompletion: @escaping () -> Void) {

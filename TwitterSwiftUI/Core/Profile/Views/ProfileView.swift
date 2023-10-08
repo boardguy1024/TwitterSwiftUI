@@ -11,7 +11,7 @@ import Kingfisher
 struct ProfileView: View {
     
     @State private var selectedFilter: TweetFilterViewModel = .tweets
-    @ObservedObject var viewModel: ProfileViewModel
+    @StateObject var viewModel: ProfileViewModel
     // プロパティラッパー@Environmentを使用して、環境変数にアクセス
     // 環境変数は、ビュー階層全体で利用できる共有の値や設定を提供
     // presentationModeは環境変数の1つで、現在のViewの表示状態に関する情報を持っている
@@ -19,7 +19,7 @@ struct ProfileView: View {
     @Namespace var animation
     
     init(user: User) {
-        self.viewModel = ProfileViewModel(user: user)
+        _viewModel = .init(wrappedValue: ProfileViewModel(user: user))
     }
     
     var body: some View {
