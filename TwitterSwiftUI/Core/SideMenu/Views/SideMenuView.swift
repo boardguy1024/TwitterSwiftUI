@@ -9,61 +9,75 @@ import SwiftUI
 import Kingfisher
 
 struct SideMenuView: View {
-    
-    @EnvironmentObject var authViewModel: AuthViewModel
-    
+
+    @StateObject var viewModel: SideMenuViewModel
+    @Binding var showSideMenu: Bool
+
+    init(showSideMenu: Binding<Bool>) {
+        _showSideMenu = showSideMenu
+        _viewModel = .init(wrappedValue: SideMenuViewModel())
+    }
+
     var body: some View {
         
-        if let user = authViewModel.currentUser {
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading) {
-                    
-                    KFImage(URL(string: user.profileImageUrl))
+        VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading) {
+                
+                if let url = viewModel.user?.profileImageUrl {
+                    KFImage(URL(string: url))
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 48, height: 48)
                         .clipShape(Circle())
-                    
-                    Text(user.fullname)
-                        .font(.headline).bold()
-                    
-                    Text("@\(user.username)")
-                        .font(.caption)
-                        .foregroundStyle(.gray)
-                    
-                    UserStatsView()
-                        .padding(.vertical)
+                } else {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 48, height: 48)
+                        .clipShape(Circle())
                 }
                 
-                ForEach(SideMenuViewModel.allCases, id:\.rawValue) { item in
-                    switch item {
-                    case .profile:
-                        NavigationLink {
+                Text(viewModel.user?.fullname ?? "")
+                    .font(.headline).bold()
+                
+                Text("@\(viewModel.user?.username ?? "")")
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+                
+                UserStatsView()
+                    .padding(.vertical)
+            }
+            
+            ForEach(SideMenuListType.allCases, id: \.self) { type in
+                switch type {
+                case .profile:
+                    NavigationLink {
+                        if let user = viewModel.user {
                             ProfileView(user: user)
-                        } label: {
-                            SideMenuOptionRowView(viewModel: item)
                         }
-                    case .lists: SideMenuOptionRowView(viewModel: item)
-                    case .bookmarks: SideMenuOptionRowView(viewModel: item)
-                    case .logout:
-                        Button {
-                            authViewModel.signOut()
-                        } label: {
-                            SideMenuOptionRowView(viewModel: item)
-                        }
+                    } label: {
+                        SideMenuOptionRowView(type: type)
+                    }
+                case .lists: SideMenuOptionRowView(type: type)
+                case .bookmarks: SideMenuOptionRowView(type: type)
+                case .logout:
+                    Button {
+                        viewModel.singOut()
+                    } label: {
+                        SideMenuOptionRowView(type: type)
                     }
                 }
-                
-                Spacer()
-                
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
+            
+            Spacer()
+            
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
     }
 }
 
 #Preview {
-    SideMenuView()
+    SideMenuView(showSideMenu: .constant(false))
 }
 

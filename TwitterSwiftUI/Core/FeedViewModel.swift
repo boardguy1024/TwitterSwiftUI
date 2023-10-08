@@ -7,11 +7,26 @@
 
 import Foundation
 
+enum FeedTabFilter: Int, CaseIterable, Identifiable {
+    case recommend
+    case following
+    
+    var title: String {
+        switch self {
+        case .recommend: "おすすめ"
+        case .following: "フォロー中"
+        }
+    }
+    
+    var id: Int { self.rawValue }
+}
+
 class FeedViewModel: ObservableObject {
     
     let userService = UserService()
     let service = TweetService()
     @Published var tweets = [Tweet]()
+    @Published var currentTab: FeedTabFilter = .recommend
     
     init() {
         self.fetchTweets()

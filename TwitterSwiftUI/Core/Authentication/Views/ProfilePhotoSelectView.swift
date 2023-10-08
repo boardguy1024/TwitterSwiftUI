@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ProfilePhotoSelectView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
-    @State private var showImagePicker = false
-    @State private var image: UIImage?
+    @StateObject var viewModel: ProfilePhotoSelectViewModel
     
+    init() {
+        _viewModel = .init(wrappedValue: ProfilePhotoSelectViewModel())
+    }
+
     var body: some View {
         
         VStack {
@@ -20,9 +22,9 @@ struct ProfilePhotoSelectView: View {
                            title2: "Add a profile photo")
             
             Button {
-                showImagePicker.toggle()
+                viewModel.showImagePicker.toggle()
             } label: {
-                if let image = self.image {
+                if let image = self.viewModel.image {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
@@ -38,11 +40,11 @@ struct ProfilePhotoSelectView: View {
                 }
             }
             .padding(.vertical, 40)
-            .sheet(isPresented: $showImagePicker, content: {
-                ImagePicker(selectedImage: $image)
+            .sheet(isPresented: $viewModel.showImagePicker, content: {
+                ImagePicker(selectedImage: $viewModel.image)
             })
             
-            if let image = self.image {
+            if let image = self.viewModel.image {
                 Button {
                     viewModel.uploadProfileImage(image)
                 } label: {

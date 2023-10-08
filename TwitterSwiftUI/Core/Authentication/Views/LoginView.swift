@@ -9,10 +9,14 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
+    @StateObject var viewModel: LoginViewModel
     @State private var email = ""
     @State private var password = ""
     @Environment(\.presentationMode) var presentationMode
+
+    init() {
+        _viewModel = .init(wrappedValue: LoginViewModel())
+    }
 
     var body: some View {
         VStack {

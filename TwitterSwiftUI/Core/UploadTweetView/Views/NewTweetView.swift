@@ -12,7 +12,6 @@ struct NewTweetView: View {
     
     @State private var caption = ""
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var authViewModel: AuthViewModel
     @ObservedObject var uploadViewModel = UploadTweetViewModel()
     
     var postCompletion: () -> Void
@@ -48,7 +47,7 @@ struct NewTweetView: View {
             .padding()
             
             HStack(alignment: .top) {
-                if let user = authViewModel.currentUser {
+                if let user = AuthService.shared.currentUser {
                     KFImage(URL(string: user.profileImageUrl))
                         .resizable()
                         .scaledToFill()

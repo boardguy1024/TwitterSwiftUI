@@ -9,15 +9,15 @@ import SwiftUI
 
 struct SideMenuOptionRowView: View {
     
-    let viewModel: SideMenuViewModel
+    let type: SideMenuListType
     
     var body: some View {
         HStack(spacing: 16) {
-            Image(systemName: viewModel.imageName)
+            Image(systemName: type.imageName)
                 .font(.headline)
                 .foregroundColor(.gray)
             
-            Text(viewModel.title)
+            Text(type.title)
                 .font(.subheadline)
                 .foregroundStyle(.black)
         }
@@ -26,5 +26,5 @@ struct SideMenuOptionRowView: View {
 }
 
 #Preview {
-    SideMenuOptionRowView(viewModel: .profile)
+    SideMenuOptionRowView(type: .profile)
 }

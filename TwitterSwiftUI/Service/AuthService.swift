@@ -1,14 +1,16 @@
 //
-//  AuthViewModel.swift
+//  AuthService.swift
 //  TwitterSwiftUI
 //
-//  Created by パクギョンソク on 2023/09/24.
+//  Created by パクギョンソク on 2023/10/8.
 //
 
 import SwiftUI
 import Firebase
 
-class AuthViewModel: ObservableObject {
+class AuthService: ObservableObject {
+    
+    static let shared = AuthService()
     
     @Published var userSession: FirebaseAuth.User?
     @Published var didAuthenticateUser: Bool = false
@@ -21,7 +23,7 @@ class AuthViewModel: ObservableObject {
     @Published var currentUser: User?
     private let userService = UserService()
     
-    init() {
+    private init() {
         self.userSession = Auth.auth().currentUser
         print("DEBUG: User Session is: \(String(describing: self.userSession))")
         
@@ -80,6 +82,7 @@ class AuthViewModel: ObservableObject {
         currentUser = nil
         try? Auth.auth().signOut()
     }
+    
     
     func uploadProfileImage(_ image: UIImage) {
         guard let uid = tempUserSession?.uid else { return }

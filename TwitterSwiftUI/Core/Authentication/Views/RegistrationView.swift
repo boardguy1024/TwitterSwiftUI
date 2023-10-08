@@ -9,12 +9,12 @@ import SwiftUI
 
 struct RegistrationView: View {
     
-    @EnvironmentObject var viewModel: AuthViewModel
-    @State private var email = ""
-    @State private var username = ""
-    @State private var fullname = ""
-    @State private var password = ""
     @Environment(\.presentationMode) var presentationMode
+    @StateObject var viewModel: RegistrationViewModel
+
+    init() {
+        _viewModel = .init(wrappedValue: RegistrationViewModel())
+    }
     
     var body: some View {
         // 画面を遷移させるため使用
@@ -24,21 +24,18 @@ struct RegistrationView: View {
                 AuthHeaderView(title1: "Get Started.", title2: "Create your account.")
                 
                 VStack(spacing: 40) {
-                    CustomTextField(imageName: "envelope", placeholdeer: "Email", text: $email)
-                    CustomTextField(imageName: "person", placeholdeer: "User name", text: $username)
-                    CustomTextField(imageName: "person", placeholdeer: "Full name", text: $fullname)
+                    CustomTextField(imageName: "envelope", placeholdeer: "Email", text: $viewModel.email)
+                    CustomTextField(imageName: "person", placeholdeer: "User name", text: $viewModel.username)
+                    CustomTextField(imageName: "person", placeholdeer: "Full name", text: $viewModel.fullname)
                     CustomTextField(imageName: "lock",
                                     placeholdeer: "Password",
                                     isSecureField: true,
-                                    text: $password)
+                                    text: $viewModel.password)
                 }
                 .padding(32)
                 
                 AuthSubmitButton(title: "Sign Up", width: 340) {
-                    viewModel.register(withEmail: email,
-                                       password: password,
-                                       fullname: fullname,
-                                       username: username)
+                    viewModel.register()
                 }
                 
                 Spacer()

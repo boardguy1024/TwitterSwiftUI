@@ -37,20 +37,14 @@ import Firebase
 @main
 struct TwitterSwiftUIApp: App {
     
-    @StateObject var viewModel = AuthViewModel()
     // 上のinit処理を下の一行で完了
     init() {
         FirebaseApp.configure()
     }
-
+    
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                ContentView()
-            }
-            // AuthViewModelはいろんなViewで使われることになるので
-            // Viewから参照できるように、EnvironmentObjectとして設定
-            .environmentObject(viewModel)
+            ContentView()
         }
     }
 }

@@ -8,7 +8,7 @@
 import FirebaseFirestoreSwift
 import Firebase
 
-struct Tweet: Identifiable, Decodable {
+struct Tweet: Identifiable, Decodable, Hashable {
     @DocumentID var id: String?
     let caption: String
     let timestamp: Timestamp

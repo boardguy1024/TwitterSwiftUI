@@ -41,10 +41,8 @@ struct ProfileView: View {
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView(user: .init(username: "", fullname: "", profileImageUrl: "", email: ""))
-    }
+#Preview {
+    ProfileView(user: .init(username: "", fullname: "", profileImageUrl: "", email: ""))
 }
 
 extension ProfileView {
@@ -68,7 +66,7 @@ extension ProfileView {
                 KFImage(URL(string: viewModel.user.profileImageUrl))
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 72, height: 72)
+                    .frame(width: 60, height: 60)
                     .clipShape(Circle())
                     .offset(x: 16, y: 24)
             }

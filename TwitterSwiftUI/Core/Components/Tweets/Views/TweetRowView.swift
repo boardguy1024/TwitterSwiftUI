@@ -48,6 +48,7 @@ struct TweetRowView: View {
                             // テキストの左寄せ
                             .multilineTextAlignment(.leading)
                     }
+                    .foregroundColor(.black)
                 }
                 
                 
@@ -108,8 +109,7 @@ struct TweetRowView: View {
     }
 }
 
-struct TweetRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        TweetRowView(tweet: .init(caption: "", timestamp: .init(date: Date()), uid: "", likes: 0))
-    }
+#Preview {
+    TweetRowView(tweet: .init(caption: "", timestamp: .init(date: Date()), uid: "", likes: 0))
 }
+

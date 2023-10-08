@@ -13,8 +13,6 @@ struct MessagesView: View {
     }
 }
 
-struct MessagesView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessagesView()
-    }
+#Preview {
+    MessagesView()
 }
