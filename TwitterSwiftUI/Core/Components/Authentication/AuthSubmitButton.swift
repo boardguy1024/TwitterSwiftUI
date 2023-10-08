@@ -22,7 +22,7 @@ struct AuthSubmitButton: View {
                 .font(.headline)
                 .foregroundStyle(.white)
                 .frame(width: width, height: 50)
-                .background(Color(.systemBlue))
+                .background(.black)
                 .clipShape(Capsule())
         }
         .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 0)

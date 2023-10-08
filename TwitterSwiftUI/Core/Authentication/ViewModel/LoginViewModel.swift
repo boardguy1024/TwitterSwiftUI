@@ -11,8 +11,6 @@ import Combine
 class LoginViewModel: ObservableObject {
     
     @Published var email = ""
-    @Published var username = ""
-    @Published var fullname = ""
     @Published var password = ""
     
     @Published var didAuthenticateUser = false
@@ -23,7 +21,7 @@ class LoginViewModel: ObservableObject {
         setupSubcribers()
     }
 
-    func login(withEmail email: String, password: String) {
+    func login() {
         AuthService.shared.login(withEmail: email, password: password)
     }
     

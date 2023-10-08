@@ -13,13 +13,20 @@ extension View {
         Image("xlogo")
             .resizable()
             .scaledToFit()
-            .frame(width: 26, height: 26)
+            .frame(width: 24, height: 24)
     }
           
     var xLogo: some View {
         Image("xlogo")
             .resizable()
             .scaledToFit()
-            .frame(width: 40, height: 40)
+            .frame(width: 36, height: 36)
+    }
+    
+    var xLogoLarge: some View {
+        Image("xlogo")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 48, height: 48)
     }
 }

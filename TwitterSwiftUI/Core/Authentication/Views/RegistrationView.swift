@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RegistrationView: View {
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: RegistrationViewModel
 
     init() {
@@ -21,42 +21,29 @@ struct RegistrationView: View {
         NavigationStack {
 
             VStack {
-                AuthHeaderView(title1: "Get Started.", title2: "Create your account.")
+                AuthHeaderView(title: "アカウント作成", cancelTapped: {
+                    dismiss()
+                })
                 
                 VStack(spacing: 40) {
-                    CustomTextField(imageName: "envelope", placeholdeer: "Email", text: $viewModel.email)
-                    CustomTextField(imageName: "person", placeholdeer: "User name", text: $viewModel.username)
-                    CustomTextField(imageName: "person", placeholdeer: "Full name", text: $viewModel.fullname)
+                    CustomTextField(imageName: "envelope", placeholdeer: "メールアドレス", text: $viewModel.email)
+                    CustomTextField(imageName: "person", placeholdeer: "ニックネーム", text: $viewModel.username)
+                    CustomTextField(imageName: "person", placeholdeer: "名前", text: $viewModel.fullname)
                     CustomTextField(imageName: "lock",
-                                    placeholdeer: "Password",
+                                    placeholdeer: "パスワード",
                                     isSecureField: true,
                                     text: $viewModel.password)
                 }
                 .padding(32)
                 
-                AuthSubmitButton(title: "Sign Up", width: 340) {
+                AuthSubmitButton(title: "次へ", width: 340) {
                     viewModel.register()
                 }
                 
                 Spacer()
                 
-                NavigationLink {
-                    RegistrationView()
-                        .navigationBarHidden(true)
-                } label: {
-                    HStack {
-                        Text("Already have an account?")
-                            .font(.footnote)
-                        
-                        Text("Sign In")
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                    }
-                }
-                .foregroundColor(Color(.systemBlue))
-                .padding(.bottom, 32)
             }
-            .ignoresSafeArea()
+            .edgesIgnoringSafeArea(.bottom)
             .navigationDestination(isPresented: $viewModel.didAuthenticateUser) {
                 // ユーザー登録が完了したらプロフィール画像選択画面へ遷移
                 ProfilePhotoSelectView()

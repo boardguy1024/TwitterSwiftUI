@@ -15,6 +15,7 @@
 		FF170EEE2AD2D97900B90E2D /* EntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EED2AD2D97900B90E2D /* EntryViewModel.swift */; };
 		FF170EF02AD2DAB900B90E2D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EEF2AD2DAB900B90E2D /* UIImage+Extensions.swift */; };
 		FF170EF22AD2DB9700B90E2D /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EF12AD2DB9700B90E2D /* View+Extensions.swift */; };
+		FF170EF42AD2F2DB00B90E2D /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EF32AD2F2DB00B90E2D /* AuthHeaderView.swift */; };
 		FF2CB5892AC2DE4A007DAC1F /* TweetRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2CB5882AC2DE4A007DAC1F /* TweetRowViewModel.swift */; };
 		FF2EE4E72ABECC61000522CF /* UserRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE4E62ABECC61000522CF /* UserRowView.swift */; };
 		FF2EE4EC2ABEF082000522CF /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE4EB2ABEF082000522CF /* SideMenuView.swift */; };
@@ -28,7 +29,6 @@
 		FF2EE5022ABF20C0000522CF /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE5012ABF20C0000522CF /* RegistrationView.swift */; };
 		FF2EE5042ABF23EE000522CF /* RoundedShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE5032ABF23EE000522CF /* RoundedShape.swift */; };
 		FF2EE5062ABFE4D7000522CF /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE5052ABFE4D7000522CF /* CustomTextField.swift */; };
-		FF2EE5092ABFE6AB000522CF /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE5082ABFE6AB000522CF /* AuthHeaderView.swift */; };
 		FF2EE50B2ABFE905000522CF /* AuthSubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EE50A2ABFE905000522CF /* AuthSubmitButton.swift */; };
 		FF2EE50D2ABFF87A000522CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF2EE50C2ABFF87A000522CF /* GoogleService-Info.plist */; };
 		FF2EE5102ABFF904000522CF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FF2EE50F2ABFF904000522CF /* FirebaseAnalytics */; };
@@ -97,6 +97,7 @@
 		FF170EED2AD2D97900B90E2D /* EntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewModel.swift; sourceTree = "<group>"; };
 		FF170EEF2AD2DAB900B90E2D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		FF170EF12AD2DB9700B90E2D /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		FF170EF32AD2F2DB00B90E2D /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		FF2CB5882AC2DE4A007DAC1F /* TweetRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetRowViewModel.swift; sourceTree = "<group>"; };
 		FF2EE4E62ABECC61000522CF /* UserRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRowView.swift; sourceTree = "<group>"; };
 		FF2EE4EB2ABEF082000522CF /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
@@ -110,7 +111,6 @@
 		FF2EE5012ABF20C0000522CF /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		FF2EE5032ABF23EE000522CF /* RoundedShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedShape.swift; sourceTree = "<group>"; };
 		FF2EE5052ABFE4D7000522CF /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		FF2EE5082ABFE6AB000522CF /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		FF2EE50A2ABFE905000522CF /* AuthSubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmitButton.swift; sourceTree = "<group>"; };
 		FF2EE50C2ABFF87A000522CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FF2EE5452ABFFB4B000522CF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -310,8 +310,8 @@
 		FF2EE5072ABFE697000522CF /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				FF2EE5082ABFE6AB000522CF /* AuthHeaderView.swift */,
 				FF2EE50A2ABFE905000522CF /* AuthSubmitButton.swift */,
+				FF170EF32AD2F2DB00B90E2D /* AuthHeaderView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -653,7 +653,6 @@
 				FFFB5D582AC0210600817497 /* ImagePicker.swift in Sources */,
 				FF2EE50B2ABFE905000522CF /* AuthSubmitButton.swift in Sources */,
 				FF44B9222ABC8117005B87F4 /* ContentView.swift in Sources */,
-				FF2EE5092ABFE6AB000522CF /* AuthHeaderView.swift in Sources */,
 				FF2EE4EE2ABEF09C000522CF /* SideMenuRowView.swift in Sources */,
 				FFFB5D5E2AC052E000817497 /* User.swift in Sources */,
 				FF44B93A2ABC85FC005B87F4 /* TweetRowView.swift in Sources */,
@@ -682,6 +681,7 @@
 				FF170EE52AD2A09E00B90E2D /* RegistrationViewModel.swift in Sources */,
 				FFACF2B22AC1519E00A2C911 /* ExploreViewModel.swift in Sources */,
 				FF2EE4F42ABF0D5F000522CF /* SideMenuOptionRowView.swift in Sources */,
+				FF170EF42AD2F2DB00B90E2D /* AuthHeaderView.swift in Sources */,
 				FFFB5D5A2AC045D600817497 /* ImageUploader.swift in Sources */,
 				FFACF2B82AC1A53600A2C911 /* UploadTweetViewModel.swift in Sources */,
 				FF170EF02AD2DAB900B90E2D /* UIImage+Extensions.swift in Sources */,

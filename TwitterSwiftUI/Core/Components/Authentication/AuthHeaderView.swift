@@ -2,41 +2,54 @@
 //  AuthHeaderView.swift
 //  TwitterSwiftUI
 //
-//  Created by パクギョンソク on 2023/09/24.
+//  Created by パクギョンソク on 2023/10/08.
 //
 
 import SwiftUI
 
 struct AuthHeaderView: View {
     
-    let title1: String
-    let title2: String
+    let title: String
+    var cancelTapped: () -> Void
     
+    init(title: String, cancelTapped: @escaping () -> Void) {
+        self.title = title
+        self.cancelTapped = cancelTapped
+    }
+
     var body: some View {
         
-        // HeaderView
-        VStack(alignment: .leading) {
-            // frame.maxWidthを使うと要素が真ん中表示だが、
-            // Hstackを使うことで画面いっぱいで左寄せになる
-            HStack { Spacer() }
+        VStack(spacing: 0) {
+            // HeaderView
+            ZStack {
+                HStack {
+                    Button {
+                        cancelTapped()
+                    } label: {
+                        Text("キャンセル")
+                            .foregroundStyle(.black)
+                    }
+                    Spacer()
+                }
+                
+                xLogoSmall
+            }
+            .padding(.horizontal)
+            .padding(.top, 10)
             
-            Text(title1)
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-            
-            Text(title2)
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-            
+            Text(title)
+                .multilineTextAlignment(.leading)
+                .lineSpacing(8)
+                .font(.system(size: 24))
+                .fontWeight(.heavy)
+                .padding(.top, 40)
+                .padding(.horizontal)
         }
-        .frame(height: 260)
-        .padding(.leading)
-        .background(Color(.systemBlue))
-        .foregroundColor(.white)
-        .clipShape(RoundedShape(corners: [.bottomRight], cornerRadius: 80))
+        .padding(.bottom, 40)
+        
     }
 }
 
 #Preview {
-    AuthHeaderView(title1: "Hello", title2: "Welcome Back")
+    AuthHeaderView(title: "ログイン", cancelTapped: {})
 }

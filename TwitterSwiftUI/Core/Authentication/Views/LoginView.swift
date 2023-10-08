@@ -10,9 +10,8 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject var viewModel: LoginViewModel
-    @State private var email = ""
-    @State private var password = ""
-    @Environment(\.presentationMode) var presentationMode
+  
+    @Environment(\.dismiss) var dismiss
 
     init() {
         _viewModel = .init(wrappedValue: LoginViewModel())
@@ -20,60 +19,49 @@ struct LoginView: View {
 
     var body: some View {
         
-        NavigationStack {
-            VStack {
-                // HeaderView
-                AuthHeaderView(title1: "Hello.", title2: "Welcome Back.")
-                
-                VStack(spacing: 40) {
-                    CustomTextField(imageName: "envelope", placeholdeer: "Email", text: $email)
-                    CustomTextField(imageName: "lock",
-                                    placeholdeer: "Password",
-                                    isSecureField: true,
-                                    text: $password)
-                }
-                .padding(.horizontal, 32)
-                .padding(.top, 44)
-                
-                HStack {
-                    Spacer()
-                    
-                    NavigationLink {
-                        Text("Reset Password View")
-                    } label: {
-                        Text("Forgot Password")
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color(.systemBlue))
-                            .padding(.top)
-                            .padding(.trailing, 24)
-                    }
-                }
-                
-                AuthSubmitButton(title: "Sign In", width: 340) {
-                    viewModel.login(withEmail: email, password: password)
-                }
-                
-                Spacer()
-                
-                NavigationLink {
-                    RegistrationView()
-                } label: {
-                    HStack {
-                        Text("Don't have an account?")
-                            .font(.footnote)
-                        
-                        Text("Sign Up")
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                    }
-                }
-                .foregroundColor(Color(.systemBlue))
-                .padding(.bottom, 32)
+        VStack(spacing: 0) {
+           
+            AuthHeaderView(title: "始めるには、メールアドレスとパスワードを入力してください", cancelTapped: {
+                dismiss()
+            })
+            
+            VStack(spacing: 40) {
+                CustomTextField(imageName: "envelope", placeholdeer: "メールアドレス", text: $viewModel.email)
+                CustomTextField(imageName: "lock",
+                                placeholdeer: "パスワード",
+                                isSecureField: true,
+                                text: $viewModel.password)
             }
-            .ignoresSafeArea()
+            .padding(.horizontal, 25)
+
+            AuthSubmitButton(title: "ログイン", width: 340) {
+                viewModel.login()
+            }
+            .padding(.top, 20)
+            
+            Spacer()
+            
+            HStack {
+                Text("パスワードを忘れた場合はこちら")
+                    .font(.callout)
+                    .foregroundStyle(.black.opacity(0.7))
+                
+                Button {
+                    
+                } label: {
+                    Text("次へ")
+                        .font(.callout)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal)
+                        .background(.gray)
+                        .cornerRadius(20)
+                }
+            }
+            .padding(.bottom, 40)
         }
-        
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 

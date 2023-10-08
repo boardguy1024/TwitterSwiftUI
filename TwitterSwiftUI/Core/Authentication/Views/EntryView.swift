@@ -23,8 +23,31 @@ struct EntryView: View {
                 Spacer()
                 
                 Group {
-                    ForEach(AuthButtonType.allCases) { type in
-                        AuthButton(with: type)
+                    AuthButton(with: .signInWithGoole)
+                    AuthButton(with: .signInWithApple)
+                    
+                    HStack {
+                        Capsule()
+                            .fill(.gray)
+                            .frame(height: 0.8)
+                        
+                        Text("または")
+                            .font(.caption)
+                            .foregroundStyle(.gray)
+                        
+                        Capsule()
+                            .fill(.gray)
+                            .frame(height: 0.8)
+
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 15)
+                    
+                    NavigationLink {
+                        RegistrationView()
+                            .navigationBarBackButtonHidden()
+                    } label: {
+                        AuthButton(with: .createAccount)
                     }
                     
                     HStack {
@@ -45,8 +68,10 @@ struct EntryView: View {
                         Text("アカウントをお持ちの方は")
                             .foregroundStyle(Color.black.opacity(0.8))
                             .font(.footnote)
-                        Button {
-                            
+                        
+                        NavigationLink {
+                            LoginView()
+                                .navigationBarBackButtonHidden()
                         } label: {
                             Text("ログイン")
                                 .font(.footnote)
@@ -66,55 +91,26 @@ struct EntryView: View {
     
     @ViewBuilder
     func AuthButton(with type: AuthButtonType) -> some View {
-        
-        if type == .createAccount {
-            HStack {
-                Capsule()
-                    .fill(.gray)
-                    .frame(height: 0.8)
-                
-                Text("または")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-                
-                Capsule()
-                    .fill(.gray)
-                    .frame(height: 0.8)
-
+        HStack(spacing: 12) {
+            if let imagename = type.image {
+                Image(imagename)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 25, height: 25)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 15)
+    
+            Text(type.title)
+                .font(.subheadline).bold()
+                .foregroundStyle(type == .createAccount ? .white : .black)
         }
-        
-        Button {
-            // TODO: SNS連携実装
-            if type == .createAccount {
-                
-            }
-        } label: {
-            HStack(spacing: 12) {
-                if let imagename = type.image {
-                    Image(imagename)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                }
-        
-                Text(type.title)
-                    .font(.subheadline).bold()
-                    .foregroundStyle(type == .createAccount ? .white : .black)
-            }
-            .frame(height: 50)
-            .frame(maxWidth: .infinity)
-            .background(type.backgroundColor)
-            .cornerRadius(25)
-            .overlay(
-                RoundedRectangle(cornerRadius: 25)
-                    .strokeBorder(.gray.opacity(0.7), lineWidth: 1)
-            )
-            
-            
-        }
+        .frame(height: 50)
+        .frame(maxWidth: .infinity)
+        .background(type.backgroundColor)
+        .cornerRadius(25)
+        .overlay(
+            RoundedRectangle(cornerRadius: 25)
+                .strokeBorder(.gray.opacity(0.7), lineWidth: 1)
+        )
     }
 }
 
