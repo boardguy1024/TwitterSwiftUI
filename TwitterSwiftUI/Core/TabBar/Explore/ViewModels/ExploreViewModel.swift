@@ -11,9 +11,7 @@ class ExploreViewModel: ObservableObject {
     
     @Published var users = [User]()
     @Published var searchText = ""
-    
-    let service = UserService()
-    
+        
     var searchableUsers: [User] {
         if searchText.isEmpty {
             return self.users
@@ -29,13 +27,11 @@ class ExploreViewModel: ObservableObject {
     }
     
     init() {
-        self.fetchUsers()
+        Task { try await self.fetchUsers() }
     }
     
-    func fetchUsers() {
-        
-        service.fetchUsers { users in
-            self.users = users
-        }
+    @MainActor
+    func fetchUsers() async throws {
+        self.users = try await UserService.shared.fetchUsers()
     }
 }

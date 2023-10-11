@@ -93,7 +93,9 @@ struct FeedView: View {
                     }
                 }
                 .refreshable {
-                    viewModel.fetchTweets()
+                    Task {
+                       try await viewModel.fetchTweets()
+                    }
                 }
                 
                 Button {
@@ -118,7 +120,7 @@ struct FeedView: View {
             // 新しいTweet投稿画面をmodalで表示
             NewTweetView() {
                 // 投稿後は画面を更新
-                viewModel.fetchTweets()
+                Task { try await viewModel.fetchTweets() }
             }
         })
     }

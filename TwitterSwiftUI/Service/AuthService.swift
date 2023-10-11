@@ -23,29 +23,25 @@ class AuthService: ObservableObject {
     
     // User
     @Published var currentUser: User?
-    private let userService = UserService()
     
     private init() {
+        print("gggggg")
         self.userSession = Auth.auth().currentUser
-        print("DEBUG: User Session is: \(String(describing: self.userSession))")
-        
-        self.fetchUserProfile()
+        Task { try await self.fetchUserProfile() }
     }
-     
-    func login(withEmail email: String, password: String) {
+    
+    func login(withEmail email: String, password: String) async throws  {
         print("DEBUG: login with Email: \(email)")
 
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
-            if let error = error {
-                print("DEBUG: Failed to login with error: \(error.localizedDescription)")
-                // TODO: 必要によってエラーを表示する
-            }
-            
-            guard let user = result?.user else { return }
-            self?.userSession = user
-            print("DEBUG: Logged in user successfully")
-            
-            self?.fetchUserProfile()
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            self.userSession = result.user
+
+            try await self.fetchUserProfile()
+
+        } catch {
+            print("DEBUG: Failed to login with error: \(error.localizedDescription)")
+            // TODO: 必要によってエラーを表示する
         }
     }
     
@@ -102,11 +98,10 @@ class AuthService: ObservableObject {
         }
     }
     
-    private func fetchUserProfile() {
+    @MainActor
+    private func fetchUserProfile() async throws {
         guard let uid = userSession?.uid else { return }
-        userService.fetchProfile(withUid: uid) { [weak self] user in
-            self?.currentUser = user
-        }
+        self.currentUser = try await UserService.shared.fetchProfile(withUid: uid)
     }
 }
 

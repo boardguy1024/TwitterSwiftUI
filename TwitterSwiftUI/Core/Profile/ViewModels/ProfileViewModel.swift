@@ -11,9 +11,6 @@ class ProfileViewModel: ObservableObject {
     
     @Published var tweets = [Tweet]()
     @Published var likedTweets = [Tweet]()
-
-    private let userService = UserService()
-    private let service = TweetService()
     
     let user: User
     
@@ -24,8 +21,11 @@ class ProfileViewModel: ObservableObject {
     init(user: User) {
         self.user = user
         
-        self.fetchTweets()
-        self.fetchLikedTweets()
+        Task {
+            try await self.fetchTweets()
+            try await self.fetchLikedTweets()
+        }
+        
     }
     
     func tweets(forFilter filter: TweetFilterViewModel) -> [Tweet] {
@@ -39,35 +39,26 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
-    func fetchTweets() {
+    @MainActor
+    func fetchTweets() async throws {
         guard let uid = user.id else { return }
-        service.fetchTweets(forUid: uid) { [weak self] tweets in
-            
-            self?.tweets = tweets
-            
-            //自分が投稿したTweetsなので自分のuserをセット
-            self?.tweets.enumerated().forEach { index, _ in
-                self?.tweets[index].user = self?.user
-            }
+        let tweets = try await TweetService.shared.fetchTweets(forUid: uid)
+        self.tweets = tweets
+        //自分が投稿したTweetsなので自分のuserをセット
+        tweets.enumerated().forEach { index, _ in
+            self.tweets[index].user = self.user
         }
     }
     
-    func fetchLikedTweets() {
+    @MainActor
+    func fetchLikedTweets() async throws {
         guard let uid = user.id else { return }
-        service.fetchLikedTweets(forUid: uid) { [weak self] tweets in
-            self?.likedTweets = tweets
-            
+        let likedTweets = try await TweetService.shared.fetchLikedTweets(forUid: uid)
+        self.likedTweets = likedTweets
+        for index in likedTweets.indices {
             // tweetsのそれぞれUserデータをfetch
-            tweets.enumerated().forEach { index, tweet in
-                self?.userService.fetchProfile(withUid: tweet.uid, completion: { user in
-                    self?.likedTweets[index].user = user
-                })
-            }
+            let user = try await UserService.shared.fetchProfile(withUid: tweets[index].uid)
+            self.likedTweets[index].user = user
         }
     }
-    
-    deinit {
-        print("deinit ProfileViewModel")
-    }
-    
 }

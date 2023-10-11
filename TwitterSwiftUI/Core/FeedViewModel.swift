@@ -22,29 +22,26 @@ enum FeedTabFilter: Int, CaseIterable, Identifiable {
 }
 
 class FeedViewModel: ObservableObject {
-    
-    let userService = UserService()
-    let service = TweetService()
+  
     @Published var tweets = [Tweet]()
     @Published var currentTab: FeedTabFilter = .recommend
     
     init() {
-        self.fetchTweets()
+        Task {
+            try await self.fetchTweets()
+        }
     }
     
-    func fetchTweets() {
+    @MainActor
+    func fetchTweets() async throws {
         
-        service.fetchTweets { [weak self] tweets in
-            guard let self = self else { return }
-            //いったん画面に表示
-            self.tweets = tweets
+        let tweets = try await TweetService.shared.fetchTweets()
+        //いったん画面に表示
+        self.tweets = tweets
+        
+        for index in tweets.indices {
             //直後にそれぞれUserデータを取得して画面表示
-            self.tweets.enumerated().forEach { index, tweet in
-                
-                self.userService.fetchProfile(withUid: tweet.uid, completion: { user in
-                    self.tweets[index].user = user
-                })
-            }
+            self.tweets[index].user = try await UserService.shared.fetchProfile(withUid: tweets[index].uid)
         }
     }
 }

@@ -33,7 +33,7 @@ struct NewTweetView: View {
                 Spacer()
                 
                 Button {
-                    uploadViewModel.uploadTweet(withCaption: self.caption)
+                    Task { try await uploadViewModel.uploadTweet(withCaption: self.caption) }
                 } label: {
                     Text("Tweet")
                         .bold()

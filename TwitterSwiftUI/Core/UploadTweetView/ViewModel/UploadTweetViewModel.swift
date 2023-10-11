@@ -10,18 +10,10 @@ import SwiftUI
 class UploadTweetViewModel: ObservableObject {
     
     @Published var didUploadTweet = false
-    
-    let service = TweetService()
-    
-    func uploadTweet(withCaption caption: String) {
-        service.uploadTweet(caption: caption) { [weak self] success in
-            if success {
-                self?.didUploadTweet = true
-            } else {
-                // show error message to user.
-            }
-        }
+        
+    @MainActor
+    func uploadTweet(withCaption caption: String) async throws {
+        let success = try await TweetService.shared.uploadTweet(caption: caption)
+        if success { didUploadTweet = true }
     }
-    
-    
 }

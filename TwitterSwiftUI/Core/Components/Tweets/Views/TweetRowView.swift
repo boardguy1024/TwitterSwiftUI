@@ -75,7 +75,7 @@ struct TweetRowView: View {
                 
                 if viewModel.tweet.didLike ?? false {
                     Button {
-                        viewModel.unlikeTweet()
+                        Task { try await viewModel.unlikeTweet() }
                     } label: {
                          Image(systemName: "heart.fill")
                             .font(.subheadline)
@@ -83,13 +83,12 @@ struct TweetRowView: View {
                     }
                 } else {
                     Button {
-                        viewModel.likeTweet()
+                        Task { try await viewModel.likeTweet() }
                     } label: {
                          Image(systemName: "heart")
                             .font(.subheadline)
                     }
                 }
-                
                 
                 Spacer()
                 

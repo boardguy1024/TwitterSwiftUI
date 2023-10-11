@@ -35,7 +35,7 @@ struct LoginView: View {
             .padding(.horizontal, 25)
 
             AuthSubmitButton(title: "ログイン", width: 340) {
-                viewModel.login()
+                Task { try await viewModel.login() }
             }
             .padding(.top, 20)
             

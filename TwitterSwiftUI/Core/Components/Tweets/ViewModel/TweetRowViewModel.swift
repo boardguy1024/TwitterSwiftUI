@@ -9,31 +9,33 @@ import Foundation
 
 class TweetRowViewModel: ObservableObject {
     
-    private let service = TweetService()
     @Published var tweet: Tweet
     
     init(tweet: Tweet) {
         self.tweet = tweet
-        checkIfUserLikedTweet() // 自分がいいねを押したかどうかを反映するためのfetch
+        
+        // 自分がいいねを押したかどうかを反映するためのfetch
+        Task {
+            try await checkIfUserLikedTweet()
+        }
     }
     
-    func likeTweet() {
+    @MainActor
+    func likeTweet() async throws {
         // 「♡」をタップ
-        service.likeTweet(self.tweet) {
-            self.tweet.didLike = true
-        }
+        try await TweetService.shared.likeTweet(tweet)
+        self.tweet.didLike = true
     }
     
-    func unlikeTweet() {
+    @MainActor
+    func unlikeTweet() async throws {
         // 「❤︎」をタップ
-        service.unlikeTweet(self.tweet) {
-            self.tweet.didLike = false
-        }
+        try await TweetService.shared.unlikeTweet(tweet)
+        self.tweet.didLike = false
     }
     
-    func checkIfUserLikedTweet() {
-        service.checkIfUserLikedTweet(tweet) { [weak self] didLike in
-            self?.tweet.didLike = didLike
-        }
+    @MainActor
+    func checkIfUserLikedTweet() async throws {
+        self.tweet.didLike = try await TweetService.shared.checkIfUserLikedTweet(tweet)
     }
 }

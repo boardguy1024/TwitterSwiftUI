@@ -8,11 +8,15 @@
 import Firebase
 import FirebaseFirestore
 
-struct TweetService {
+class TweetService {
         
-    func uploadTweet(caption: String, completion: @escaping (Bool) -> Void) {
+    static let shared = TweetService()
+    
+    private init() { }
+    
+    func uploadTweet(caption: String) async throws -> Bool {
         
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return false }
         
         let data: [String: Any] = [
             "uid": uid,
@@ -21,112 +25,120 @@ struct TweetService {
             "timestamp": Timestamp(date: Date())
         ]
         
-        Firestore.firestore().collection("tweets").document()
-            .setData(data) { error in
-                if let error = error {
-                    print("DEBUG: Failed to upload tweet with error: \(error.localizedDescription)")
-                    completion(false)
-                }
-                
-                completion(true)
-            }
+        do {
+            try await Firestore.firestore().collection("tweets").document().setData(data)
+            return true
+        } catch {
+            print("DEBUG: Failed to upload tweet with error: \(error.localizedDescription)")
+            return false
+        }
     }
     
-    func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
-        Firestore.firestore().collection("tweets")
+    func fetchTweets() async throws -> [Tweet] {
+        let snapshot = try await Firestore.firestore()
+            .collection("tweets")
             .order(by: "timestamp", descending: true)
-            .getDocuments { snopshot, _ in
-                guard let documents = snopshot?.documents else { return }
-                
-                let tweets = documents.compactMap({ try? $0.data(as: Tweet.self )})
-                completion(tweets)
-            }
+            .getDocuments()
+
+        return snapshot.documents.compactMap({ try? $0.data(as: Tweet.self )})
     }
     
-    func fetchTweets(forUid uid: String, completion: @escaping ([Tweet]) -> Void) {
-        Firestore.firestore().collection("tweets")
+    func fetchTweets(forUid uid: String) async throws -> [Tweet] {
+        let snapshot = try await Firestore.firestore()
+            .collection("tweets")
             .whereField("uid", isEqualTo: uid)
-            .getDocuments { snopshot, _ in
-                guard let documents = snopshot?.documents else { return }
-                
-                let tweets = documents.compactMap({ try? $0.data(as: Tweet.self )})
-                completion(tweets.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue()}))
-            }
+            .getDocuments()
+        
+        let tweets = snapshot.documents.compactMap({ try? $0.data(as: Tweet.self )})
+        return tweets.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
     }
 }
 
 // MARK: - Likes
 
 extension TweetService {
+    
     // 他のユーザーのTweetの「♡」をタップ
-    func likeTweet(_ tweet: Tweet, completion: @escaping () -> Void) {
+    func likeTweet(_ tweet: Tweet) async throws {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let tweetId = tweet.id else { return }
         
         // tweetの likeを +1する
-        Firestore.firestore().collection("tweets").document(tweetId).updateData(["likes": tweet.likes + 1]) { _ in
-            
-            // likeのincrementの更新が完了したら、自分のuserに自分が likeした tweetの主のuidを保持する
-            // Profile画面に likeしたtweetを表示させるため
-            let userLikesRef = Firestore.firestore().collection("users").document(uid).collection("user-likes")
-            
-            // tweetIdだけを参照できれば tweetsからtweetデータを引っ張れるので、データは空で設定
-            userLikesRef.document(tweetId).setData([:]) { _ in
-                 completion()
-            }
-            
-        }
+        try await Firestore.firestore().collection("tweets").document(tweetId).updateData(["likes": tweet.likes + 1])
+        
+        // likeのincrementの更新が完了したら、自分のuserに自分が likeした tweetの主のuidを保持する
+        // Profile画面に likeしたtweetを表示させるため
+        let userLikesRef = Firestore.firestore().collection("users").document(uid).collection("user-likes")
+        
+        // tweetIdだけを参照できれば tweetsからtweetデータを引っ張れるので、データは空で設定
+        try await userLikesRef.document(tweetId).setData([:])
     }
-    
-    func unlikeTweet(_ tweet: Tweet, completion: @escaping () -> Void) {
+        
+    func unlikeTweet(_ tweet: Tweet) async throws {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let tweetId = tweet.id else { return }
         guard tweet.likes > 0 else { return }
         // tweetの likeを -1する
-        Firestore.firestore().collection("tweets").document(tweetId).updateData(["likes": tweet.likes - 1]) { _ in
-            
-            let userLikesRef = Firestore.firestore().collection("users").document(uid).collection("user-likes")
-            
-            // tweetIdだけを参照できれば tweetsからtweetデータを引っ張れるので、データは空で設定
-            userLikesRef.document(tweetId).delete { _ in
-                completion()
-            }
-        }
+        try await Firestore.firestore().collection("tweets").document(tweetId).updateData(["likes": tweet.likes - 1])
+        let userLikesRef = Firestore.firestore().collection("users").document(uid).collection("user-likes")
+        
+        // tweetIdだけを参照できれば tweetsからtweetデータを引っ張れるので、データは空で設定
+        try await userLikesRef.document(tweetId).delete()
     }
+    
     
     // tweetリストに自分がいいねを押したかどうかを反映
-    func checkIfUserLikedTweet(_ tweet: Tweet, completion: @escaping (Bool) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        guard let tweetId = tweet.id else { return }
+    func checkIfUserLikedTweet(_ tweet: Tweet) async throws -> Bool {
+        guard let uid = Auth.auth().currentUser?.uid, let tweetId = tweet.id else { return false }
         
-        Firestore.firestore().collection("users").document(uid)
+        let snapshot = try await Firestore.firestore().collection("users").document(uid)
             .collection("user-likes")
-            .document(tweetId).getDocument { snapshot, _ in
-                guard let snapshot = snapshot else { return }
-                completion(snapshot.exists) // snapshotがあれば didLike=true
-            }
+            .document(tweetId).getDocument()
+        
+        // snapshotがあれば didLike=true
+        return snapshot.exists
     }
     
-    func fetchLikedTweets(forUid uid: String, completion: @escaping ([Tweet]) -> Void) {
+    func fetchLikedTweets(forUid uid: String) async throws -> [Tweet] {
         var tweets = [Tweet]()
         
-        Firestore.firestore().collection("users").document(uid).collection("user-likes")
-            .getDocuments { snapshot, _ in
-                guard let docs = snapshot?.documents else { return }
-                
-                docs.forEach { snapshot in
-                    let tweetId = snapshot.documentID
-                    
-                    Firestore.firestore().collection("tweets").document(tweetId).getDocument { snapshot, _ in
-                        guard let tweet = try? snapshot?.data(as: Tweet.self) else { return }
-                        tweets.append(tweet)
-                        
-                        // 取得ごとにcompletionで画面を表示（すべてのtweetsを取得した後に completionを実行しなくても良い）
-                        completion(tweets)
-                    }
-                }
+        let snapshot = try await Firestore.firestore()
+            .collection("users")
+            .document(uid)
+            .collection("user-likes")
+            .getDocuments()
+        
+        for doc in snapshot.documents {
+            let tweetId = doc.documentID
+            let snapshot = try await Firestore.firestore().collection("tweets").document(tweetId).getDocument()
+            if let tweet = try? snapshot.data(as: Tweet.self) {
+                tweets.append(tweet)
             }
+            
+        }
+        return tweets
     }
+    
+//    func fetchLikedTweets(forUid uid: String, completion: @escaping ([Tweet]) -> Void) {
+//        var tweets = [Tweet]()
+//        
+//        Firestore.firestore().collection("users").document(uid).collection("user-likes")
+//            .getDocuments { snapshot, _ in
+//                guard let docs = snapshot?.documents else { return }
+//                
+//                docs.forEach { snapshot in
+//                    let tweetId = snapshot.documentID
+//                    
+//                    Firestore.firestore().collection("tweets").document(tweetId).getDocument { snapshot, _ in
+//                        guard let tweet = try? snapshot?.data(as: Tweet.self) else { return }
+//                        tweets.append(tweet)
+//                        
+//                        // 取得ごとにcompletionで画面を表示（すべてのtweetsを取得した後に completionを実行しなくても良い）
+//                        completion(tweets)
+//                    }
+//                }
+//            }
+//    }
 }
