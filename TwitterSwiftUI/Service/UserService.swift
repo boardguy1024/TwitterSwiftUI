@@ -36,4 +36,64 @@ class UserService {
             return []
         }
     }
+    
+    func checkIfUserIsFollowing(for uid: String) async throws -> Bool {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return false }
+        
+        // followers(フォロワーたち)から該当ユーザーを探し、そのユーザーがフォローしている人に自分がいるかどうかをチェック
+        do {
+            let isFollowing = try await Firestore.firestore().collection("followers")
+               .document(uid)
+               .collection("user-followers").document(currentUserId).getDocument().exists
+            return isFollowing
+        } catch {
+            print("Failed checkIfUserIsFollowing: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    func followUser(uid: String) async throws -> Bool {
+        
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return false }
+        do {
+            // Me Follow to someone
+            try await Firestore.firestore().collection("following")
+               .document(currentUserId)
+               .collection("user-following")
+               .document(uid) // <<< follow対象の uid
+               .setData([:])
+            
+            
+            try await Firestore.firestore().collection("followers")
+                .document(uid)
+                .collection("user-followers")
+                .document(currentUserId).setData([:])
+            
+            return true
+        } catch {
+            print("Faild FollowUser: \(error.localizedDescription) ")
+            return false
+        }
+    }
+    
+    func unfollowUser(uid: String) async throws -> Bool {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return false }
+        do {
+            // Me Follow to someone
+            try await Firestore.firestore().collection("following")
+               .document(currentUserId)
+               .collection("user-following")
+               .document(uid).delete()
+            
+            try await Firestore.firestore().collection("followers")
+                .document(uid)
+                .collection("user-followers")
+                .document(currentUserId).delete()
+            
+            return true
+        } catch {
+            print("Faild UnfollowUser: \(error.localizedDescription) ")
+            return false
+        }
+    }
 }

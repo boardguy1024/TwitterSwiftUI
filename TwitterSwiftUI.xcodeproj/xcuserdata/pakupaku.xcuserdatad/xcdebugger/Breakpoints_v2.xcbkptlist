@@ -100,5 +100,53 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "64502884-EBEF-4C78-BD16-72822D0D7A2D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TwitterSwiftUI/Core/Profile/ViewModels/ProfileViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "ProfileViewModel"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "64502884-EBEF-4C78-BD16-72822D0D7A2D - bf9681d6d241ccc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TwitterSwiftUI.ProfileViewModel.unfollow() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pakupaku/XCode_Projects/SwiftUI_Project/TwitterSwiftUI/TwitterSwiftUI/Core/Profile/ViewModels/ProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "64502884-EBEF-4C78-BD16-72822D0D7A2D - e0b566fec5d980c4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for TwitterSwiftUI.ProfileViewModel.unfollow() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pakupaku/XCode_Projects/SwiftUI_Project/TwitterSwiftUI/TwitterSwiftUI/Core/Profile/ViewModels/ProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
+                  offsetFromSymbolStart = "48">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

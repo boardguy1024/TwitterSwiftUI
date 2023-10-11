@@ -12,10 +12,12 @@ class ProfileViewModel: ObservableObject {
     @Published var tweets = [Tweet]()
     @Published var likedTweets = [Tweet]()
     
+    @Published var isFollowed = false
+    
     let user: User
     
     var actionButtonTitle: String {
-        user.isCurrentUser ? "Edit Profile" : "Follow"
+        user.isCurrentUser ? "Edit Profile" : isFollowed ? "フォロー中" : "フォローする"
     }
     
     init(user: User) {
@@ -23,9 +25,49 @@ class ProfileViewModel: ObservableObject {
         
         Task {
             try await self.fetchTweets()
+            try await self.checkIfUserIsFollowing()
             try await self.fetchLikedTweets()
         }
+    }
+    
+    // MARK: From View
+    func actionButtonTapped() {
         
+        if user.isCurrentUser { 
+            // Edit Profile
+
+        } else {
+            // Follow or Following
+            Task {
+                if isFollowed {
+                    try await unfollow()
+                } else {
+                    try await follow()
+                }
+            }
+           
+        }
+    }
+    
+    @MainActor
+    private func checkIfUserIsFollowing() async throws {
+        guard let uid = user.id else { return }
+        self.isFollowed = try await UserService.shared.checkIfUserIsFollowing(for: uid)
+    }
+    
+    // MARK: Privates
+    
+    @MainActor
+    private func follow() async throws {
+        guard let uid = user.id else { return }
+        self.isFollowed = try await UserService.shared.followUser(uid: uid)
+    }
+    
+    @MainActor
+    func unfollow() async throws {
+        guard let uid = user.id else { return }
+        let unfollowed = try await UserService.shared.unfollowUser(uid: uid)
+        self.isFollowed = !unfollowed
     }
     
     func tweets(forFilter filter: TweetFilterViewModel) -> [Tweet] {

@@ -13,9 +13,7 @@ struct ProfileView: View {
     @State private var selectedFilter: TweetFilterViewModel = .tweets
     @StateObject var viewModel: ProfileViewModel
     // プロパティラッパー@Environmentを使用して、環境変数にアクセス
-    // 環境変数は、ビュー階層全体で利用できる共有の値や設定を提供
-    // presentationModeは環境変数の1つで、現在のViewの表示状態に関する情報を持っている
-    @Environment(\.presentationMode) var mode
+    @Environment(\.dismiss) var dismiss
     @Namespace var animation
     
     init(user: User) {
@@ -54,8 +52,7 @@ extension ProfileView {
 
             VStack(spacing: 0) {
                 Button {
-                    // PresentationModeへアクセスしてdismiss
-                    mode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Image(systemName: "arrow.left")
                         .resizable()
@@ -86,12 +83,16 @@ extension ProfileView {
                 .overlay(Circle().stroke(Color.gray, lineWidth: 0.75))
             
             Button {
-                
+                viewModel.actionButtonTapped()
             } label: {
                 Text(viewModel.actionButtonTitle)
                     .font(.subheadline).bold()
                     .frame(width: 120, height: 32)
-                    .foregroundColor(.primary)
+                    .foregroundColor(viewModel.isFollowed ? .white : .black)
+                    .background(
+                        Color(viewModel.isFollowed ? .black : .clear)
+                            .cornerRadius(20)
+                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.gray, lineWidth: 0.75)
