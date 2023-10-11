@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FeedView: View {
     
@@ -19,63 +20,7 @@ struct FeedView: View {
         
         NavigationStack {
             
-            // Header
-            VStack(spacing: 0) {
-                ZStack {
-                    HStack {
-                        Button {
-                            showSideMenu.toggle()
-                        } label: {
-                            Image(systemName: "person.fill")
-                                .resizable()
-                                .scaledToFill()
-                                .foregroundColor(.gray)
-                                .padding(.all, 4)
-                                .background(.gray.opacity(0.3))
-                                .frame(width: 35, height: 35)
-                                .clipShape(Circle())
-                        }
-                        
-                        Spacer()
-                    }
-                    
-                    xLogoSmall
-                }
-                .padding(.horizontal)
-                                
-                HStack {
-                    ForEach(FeedTabFilter.allCases) { tab in
-                        VStack(spacing: 0) {
-                            Text(tab.title)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .frame(height: 35)
-                                .foregroundStyle(viewModel.currentTab == tab ? .black : .gray)
-                            
-                            if viewModel.currentTab == tab {
-                                Capsule()
-                                    .fill(Color(.systemBlue))
-                                    .frame(maxWidth: .infinity)
-                                    .matchedGeometryEffect(id: "FEED_TAB", in: animation)
-                                    .frame(height: 3)
-                                    .padding(.horizontal, 50)
-                            } else {
-                                Capsule()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 3)
-                                    .opacity(0)
-                                    .padding(.horizontal, 50)
-                            }
-                        }
-                        .onTapGesture {
-                            withAnimation(.spring) {
-                                viewModel.currentTab = tab
-                            }
-                        }
-                    }
-                }
-                .overlay(Divider(), alignment: .bottom)
-            }
+            headerView
             
             ZStack(alignment: .bottomTrailing) {
                 ScrollView {
@@ -87,7 +32,6 @@ struct FeedView: View {
                                 }
                             } label: {
                                 TweetRowView(tweet: tweet)
-
                             }
                         }
                     }
@@ -123,6 +67,75 @@ struct FeedView: View {
                 Task { try await viewModel.fetchTweets() }
             }
         })
+    }
+}
+
+extension FeedView {
+    var headerView: some View {
+        VStack(spacing: 0) {
+            ZStack {
+                HStack {
+                    Button {
+                        showSideMenu.toggle()
+                    } label: {
+                        Group {
+                            if let iconUrl = viewModel.currentUser?.profileImageUrl {
+                                KFImage(URL(string: iconUrl))
+                                    .resizable()
+                                    .scaledToFill()
+                            } else {
+                                Image(systemName: "person.fill")
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                        }
+                        .foregroundColor(.gray)
+                        .padding(.all, 4)
+                        .background(.gray.opacity(0.3))
+                        .frame(width: 35, height: 35)
+                        .clipShape(Circle())
+                    }
+                    
+                    Spacer()
+                }
+                
+                xLogoSmall
+            }
+            .padding(.horizontal)
+                            
+            HStack {
+                ForEach(FeedTabFilter.allCases) { tab in
+                    VStack(spacing: 0) {
+                        Text(tab.title)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .frame(height: 35)
+                            .foregroundStyle(viewModel.currentTab == tab ? .black : .gray)
+                        
+                        if viewModel.currentTab == tab {
+                            Capsule()
+                                .fill(Color(.systemBlue))
+                                .frame(maxWidth: .infinity)
+                                .matchedGeometryEffect(id: "FEED_TAB", in: animation)
+                                .frame(height: 3)
+                                .padding(.horizontal, 50)
+                        } else {
+                            Capsule()
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 3)
+                                .opacity(0)
+                                .padding(.horizontal, 50)
+                        }
+                    }
+                    .onTapGesture {
+                        withAnimation(.spring) {
+                            viewModel.currentTab = tab
+                        }
+                    }
+                }
+            }
+            .overlay(Divider(), alignment: .bottom)
+        }
     }
 }
 

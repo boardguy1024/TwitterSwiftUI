@@ -5,7 +5,8 @@
 //  Created by パクギョンソク on 2023/09/25.
 //
 
-import Foundation
+import SwiftUI
+import Combine
 
 enum FeedTabFilter: Int, CaseIterable, Identifiable {
     case recommend
@@ -25,11 +26,23 @@ class FeedViewModel: ObservableObject {
   
     @Published var tweets = [Tweet]()
     @Published var currentTab: FeedTabFilter = .recommend
+    @Published var currentUser: User?
+    
+    private var cancellable = Set<AnyCancellable>()
     
     init() {
+        setupSubscribers()
+        
         Task {
             try await self.fetchTweets()
         }
+    }
+    
+    private func setupSubscribers() {
+        AuthService.shared.$currentUser.sink { [weak self] user in
+            self?.currentUser = user
+        }
+        .store(in: &cancellable)
     }
     
     @MainActor
