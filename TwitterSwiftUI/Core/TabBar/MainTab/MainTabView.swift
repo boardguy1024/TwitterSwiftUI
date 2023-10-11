@@ -72,7 +72,7 @@ struct MainTabView: View {
                     }
             )
         }
-        .animation(.linear(duration: 0.15), value: offset == 0)
+        .animation(.easeInOut(duration: 0.2), value: offset == 0)
         // サイドメニューとMainViewが同時に移動するため
         .frame(width: sideBarWidth + UIScreen.main.bounds.width)
         .offset(x: -sideBarWidth / 2) // サイドメニューを左側に隠す
