@@ -110,10 +110,10 @@
             filePath = "TwitterSwiftUI/Core/Profile/ViewModels/ProfileViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "ProfileViewModel"
-            landmarkType = "3">
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "follow()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "64502884-EBEF-4C78-BD16-72822D0D7A2D - bf9681d6d241ccc3"

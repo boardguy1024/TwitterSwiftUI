@@ -7,16 +7,18 @@
 
 import Foundation
 
-enum TweetFilterViewModel: Int, CaseIterable {
+enum ProfileTweetsTabType: Int, CaseIterable, Identifiable {
     case tweets
     case replies
     case likes
     
     var title: String {
         switch self {
-        case .tweets: return "Tweets"
-        case .replies: return "Replies"
-        case .likes: return "Likes"
+        case .tweets: return "ポスト"
+        case .replies: return "返信"
+        case .likes: return "いいね"
         }
     }
+    
+    var id: Int { self.rawValue }
 }

@@ -10,7 +10,7 @@ import Kingfisher
 
 struct ProfileView: View {
     
-    @State private var selectedFilter: TweetFilterViewModel = .tweets
+    @State private var selectedTab: Int = ProfileTweetsTabType.tweets.rawValue
     @StateObject var viewModel: ProfileViewModel
     // プロパティラッパー@Environmentを使用して、環境変数にアクセス
     @Environment(\.dismiss) var dismiss
@@ -26,17 +26,34 @@ struct ProfileView: View {
             headerView
             
             actionButtons
-          
+            
             userInfoDetails
             
-            tweetFilterBar
-            
-            tweetsview
-            
-            Spacer()
+            PagerTabView(selected: $selectedTab, tabs:
+                            [
+                                TabLabel(type: .tweets),
+                                TabLabel(type: .replies),
+                                TabLabel(type: .likes)
+                            ]) {
+                                ForEach(ProfileTweetsTabType.allCases) { type in
+                                    TweetListView(user: viewModel.user, tabType: type)
+                                        .frame(width: UIScreen.main.bounds.width)
+                                }
+                            }
         }
         .navigationBarHidden(true)
     }
+    
+    @ViewBuilder
+    func TabLabel(type: ProfileTweetsTabType) -> some View {
+        Text(type.title)
+            .font(.subheadline)
+            .fontWeight(.bold)
+            .padding(.horizontal, 40)
+            .padding(.vertical, 6)
+            .background(Color.white) 
+    }
+    
 }
 
 #Preview {
@@ -49,7 +66,7 @@ extension ProfileView {
         ZStack(alignment: .bottomLeading) {
             Color(.systemCyan)
                 .ignoresSafeArea()
-
+            
             VStack(spacing: 0) {
                 Button {
                     dismiss()
@@ -67,7 +84,6 @@ extension ProfileView {
                     .clipShape(Circle())
                     .offset(x: 16, y: 24)
             }
-
         }
         .frame(height: 96)
     }
@@ -125,7 +141,7 @@ extension ProfileView {
                     Image(systemName: "mappin.and.ellipse")
                     Text("Gotham, NY")
                 }
-                                    
+                
                 HStack {
                     Image(systemName: "link")
                     Text("www.thejoker.com")
@@ -136,21 +152,21 @@ extension ProfileView {
             
             // Following / Follower
             UserStatsView()
-            .padding(.vertical)
+                .padding(.vertical)
         }
         .padding(.horizontal)
     }
     
-    var tweetFilterBar: some View {
+    var tabBarButtonsView: some View {
         HStack {
-            ForEach(TweetFilterViewModel.allCases, id: \.rawValue) { item in
+            ForEach(ProfileTweetsTabType.allCases, id: \.rawValue) { item in
                 VStack {
                     Text(item.title)
                         .font(.subheadline)
-                        .fontWeight(selectedFilter == item ? .semibold : .regular)
-                        .foregroundStyle(selectedFilter == item ? .black : .gray)
+                        .fontWeight(selectedTab == item.rawValue ? .semibold : .regular)
+                        .foregroundStyle(selectedTab == item.rawValue ? .black : .gray)
                     
-                    if selectedFilter == item {
+                    if selectedTab == item.rawValue {
                         Capsule()
                             .foregroundStyle(Color(.systemBlue))
                             .frame(height: 3)
@@ -163,7 +179,7 @@ extension ProfileView {
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut) {
-                        selectedFilter = item
+                        selectedTab = item.rawValue
                     }
                 }
             }
@@ -172,15 +188,5 @@ extension ProfileView {
             Divider()
                 .offset(x: 0, y: 16)
         )
-    }
-    
-    var tweetsview: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(viewModel.tweets(forFilter: selectedFilter)) { tweet in
-                    TweetRowView(tweet: tweet)
-                }
-            }
-        }
     }
 }
