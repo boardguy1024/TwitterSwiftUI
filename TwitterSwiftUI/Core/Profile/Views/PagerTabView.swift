@@ -68,12 +68,10 @@ struct PagerTabView<Tab: View, Content: View>: View {
         
         let position = self.offset / screenWidth
 
-        let progress = CGFloat(currentTab) - position
+        let progress = abs(CGFloat(currentTab) - position)
         
-        print("id: \(currentTab) prog: \(progress)")
         // current=1 or other=0.6
-        let opacity = 1 - min(1, progress) * 0.4
-        
+        let opacity = 1 - (min(1, progress) * 0.4)
         return opacity
     }
 }
@@ -86,18 +84,14 @@ extension PagerTabView {
                 item.tabView
                     .frame(maxWidth: .infinity)
                     .onTapGesture {
-                        
+
                         self.selectedTab = item.id
                         
                         let contentOffset = screenWidth * CGFloat(item.id)
                         // ボタンをタップした位置に PageViewをoffset
                         
-                        print("offset: \(offset)")
-                        print("contentOffset: \(contentOffset)")
-                        offset = contentOffset
-
                         withAnimation {
-                            
+                            offset = contentOffset
                             // ボタンをタップした位置に UnderlineViewを位置させる
                             underlineViewOffset = contentOffset / 3
                         }
