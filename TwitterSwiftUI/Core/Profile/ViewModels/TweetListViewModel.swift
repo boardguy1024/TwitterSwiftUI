@@ -43,7 +43,7 @@ class TweetListViewModel: ObservableObject {
         self.likedTweets = likedTweets
         for index in likedTweets.indices {
             // tweetsのそれぞれUserデータをfetch
-            let user = try await UserService.shared.fetchProfile(withUid: tweets[index].uid)
+            let user = try await UserService.shared.fetchProfile(withUid: likedTweets[index].uid)
             self.likedTweets[index].user = user
         }
     }
