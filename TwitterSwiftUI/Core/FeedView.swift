@@ -23,9 +23,7 @@ struct FeedView: View {
             headerView
             
             ZStack(alignment: .bottomTrailing) {
-                
-                
-                
+
                 PagerTabView(selected: $viewModel.currentTab, tabs:
                                 [
                                     TabLabel(type: .recommend),
@@ -39,34 +37,9 @@ struct FeedView: View {
                                 }
                                 .refreshable {
                                     Task {
-                                       try await viewModel.fetchTweets()
+                                        try await viewModel.fetchTweets()
                                     }
                                 }
-                
-                
-                
-                
-                
-                
-//                ScrollView {
-//                    LazyVStack {
-//                        ForEach(viewModel.tweets) { tweet in
-//                            NavigationLink {
-//                                if let user = tweet.user {
-//                                    ProfileView(user: user)
-//                                }
-//                            } label: {
-//                                TweetRowView(tweet: tweet)
-//                            }
-//                        }
-//                    }
-//                }
-//                .refreshable {
-//                    Task {
-//                       try await viewModel.fetchTweets()
-//                    }
-//                }
-                
                 Button {
                     showNewTweetView.toggle()
                 } label: {

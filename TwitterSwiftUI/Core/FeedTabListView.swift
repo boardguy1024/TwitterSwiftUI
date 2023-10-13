@@ -15,10 +15,16 @@ struct FeedTabListView: View {
     
     var body: some View {
         VStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack {
                     ForEach(viewModel.tweets) { tweet in
-                        TweetRowView(tweet: tweet)
+                        NavigationLink {
+                            if let user = tweet.user {
+                                ProfileView(user: user)
+                            }
+                        } label: {
+                            TweetRowView(tweet: tweet)
+                        }
                     }
                 }
             }
