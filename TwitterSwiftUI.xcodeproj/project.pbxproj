@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D89D9DC2AD9844200F20E91 /* FeedTabListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89D9DB2AD9844200F20E91 /* FeedTabListView.swift */; };
+		2D89D9DE2AD9846C00F20E91 /* FeedTabListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89D9DD2AD9846C00F20E91 /* FeedTabListViewModel.swift */; };
 		FF170EE32AD29E7800B90E2D /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE22AD29E7800B90E2D /* PreviewProvider.swift */; };
 		FF170EE52AD2A09E00B90E2D /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE42AD2A09E00B90E2D /* RegistrationViewModel.swift */; };
 		FF170EE82AD2A27D00B90E2D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE72AD2A27D00B90E2D /* LoginViewModel.swift */; };
@@ -73,7 +75,6 @@
 		FF44B94B2ABC8D6A005B87F4 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44B94A2ABC8D6A005B87F4 /* ProfileView.swift */; };
 		FF4C5D7B2AD289E4003F3E90 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C5D7A2AD289E4003F3E90 /* MainTabBarViewModel.swift */; };
 		FF5F92742ABEC64E00A33B9C /* ProfileTweetsTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F92732ABEC64E00A33B9C /* ProfileTweetsTabType.swift */; };
-		FF6359072AD7DEEE00A7B114 /* OffsetPageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6359062AD7DEEE00A7B114 /* OffsetPageTabView.swift */; };
 		FF63590A2AD7E2E500A7B114 /* PagerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6359092AD7E2E500A7B114 /* PagerTabView.swift */; };
 		FF63590C2AD7E84800A7B114 /* TweetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63590B2AD7E84800A7B114 /* TweetListView.swift */; };
 		FF63590E2AD7EA6700A7B114 /* TweetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63590D2AD7EA6700A7B114 /* TweetListViewModel.swift */; };
@@ -93,6 +94,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D89D9DB2AD9844200F20E91 /* FeedTabListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabListView.swift; sourceTree = "<group>"; };
+		2D89D9DD2AD9846C00F20E91 /* FeedTabListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabListViewModel.swift; sourceTree = "<group>"; };
 		FF170EE22AD29E7800B90E2D /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		FF170EE42AD2A09E00B90E2D /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		FF170EE72AD2A27D00B90E2D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -134,7 +137,6 @@
 		FF44B94A2ABC8D6A005B87F4 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FF4C5D7A2AD289E4003F3E90 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
 		FF5F92732ABEC64E00A33B9C /* ProfileTweetsTabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTweetsTabType.swift; sourceTree = "<group>"; };
-		FF6359062AD7DEEE00A7B114 /* OffsetPageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetPageTabView.swift; sourceTree = "<group>"; };
 		FF6359092AD7E2E500A7B114 /* PagerTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabView.swift; sourceTree = "<group>"; };
 		FF63590B2AD7E84800A7B114 /* TweetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetListView.swift; sourceTree = "<group>"; };
 		FF63590D2AD7EA6700A7B114 /* TweetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetListViewModel.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				FF2EE4E42ABECC40000522CF /* Users */,
 				FF44B9382ABC859A005B87F4 /* Tweets */,
 				FF2EE4FA2ABF1C2F000522CF /* TextAreaView.swift */,
+				FF6359092AD7E2E500A7B114 /* PagerTabView.swift */,
 				FF2EE5032ABF23EE000522CF /* RoundedShape.swift */,
 				FF2EE5052ABFE4D7000522CF /* CustomTextField.swift */,
 				FFACF2B32AC15A3400A2C911 /* SearchBar.swift */,
@@ -438,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				FFACF2B92AC1A78400A2C911 /* FeedViewModel.swift */,
+				2D89D9DD2AD9846C00F20E91 /* FeedTabListViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -446,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				FF44B9362ABC8257005B87F4 /* FeedView.swift */,
+				2D89D9DB2AD9844200F20E91 /* FeedTabListView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -517,8 +522,6 @@
 			children = (
 				FF44B94A2ABC8D6A005B87F4 /* ProfileView.swift */,
 				FF63590B2AD7E84800A7B114 /* TweetListView.swift */,
-				FF6359092AD7E2E500A7B114 /* PagerTabView.swift */,
-				FF6359062AD7DEEE00A7B114 /* OffsetPageTabView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -650,11 +653,11 @@
 			files = (
 				FFACF2BA2AC1A78400A2C911 /* FeedViewModel.swift in Sources */,
 				FF170EEA2AD2A84F00B90E2D /* ProfilePhotoSelectViewModel.swift in Sources */,
-				FF6359072AD7DEEE00A7B114 /* OffsetPageTabView.swift in Sources */,
 				FF44B9472ABC8C21005B87F4 /* MessagesView.swift in Sources */,
 				FF44B94B2ABC8D6A005B87F4 /* ProfileView.swift in Sources */,
 				FFACF2BC2AC1A82C00A2C911 /* Tweet.swift in Sources */,
 				FF63590E2AD7EA6700A7B114 /* TweetListViewModel.swift in Sources */,
+				2D89D9DC2AD9844200F20E91 /* FeedTabListView.swift in Sources */,
 				FF2EE4FB2ABF1C2F000522CF /* TextAreaView.swift in Sources */,
 				FFFB5D582AC0210600817497 /* ImagePicker.swift in Sources */,
 				FF2EE50B2ABFE905000522CF /* AuthSubmitButton.swift in Sources */,
@@ -678,6 +681,7 @@
 				FFFB5D5C2AC0504C00817497 /* UserService.swift in Sources */,
 				FF2EE5482AC01614000522CF /* ProfilePhotoSelectView.swift in Sources */,
 				FF9A90192AD2998100874BC5 /* ContentViewModel.swift in Sources */,
+				2D89D9DE2AD9846C00F20E91 /* FeedTabListViewModel.swift in Sources */,
 				FF2EE4F92ABF144E000522CF /* NewTweetView.swift in Sources */,
 				FF2EE4E72ABECC61000522CF /* UserRowView.swift in Sources */,
 				FF63590C2AD7E84800A7B114 /* TweetListView.swift in Sources */,

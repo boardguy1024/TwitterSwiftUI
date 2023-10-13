@@ -25,7 +25,7 @@ enum FeedTabFilter: Int, CaseIterable, Identifiable {
 class FeedViewModel: ObservableObject {
   
     @Published var tweets = [Tweet]()
-    @Published var currentTab: FeedTabFilter = .recommend
+    @Published var currentTab: Int = FeedTabFilter.recommend.rawValue
     @Published var currentUser: User?
     
     private var cancellable = Set<AnyCancellable>()

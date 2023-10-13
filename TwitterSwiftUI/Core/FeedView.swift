@@ -23,24 +23,49 @@ struct FeedView: View {
             headerView
             
             ZStack(alignment: .bottomTrailing) {
-                ScrollView {
-                    LazyVStack {
-                        ForEach(viewModel.tweets) { tweet in
-                            NavigationLink {
-                                if let user = tweet.user {
-                                    ProfileView(user: user)
+                
+                
+                
+                PagerTabView(selected: $viewModel.currentTab, tabs:
+                                [
+                                    TabLabel(type: .recommend),
+                                    TabLabel(type: .following),
+                                ]) {
+                                    ForEach(FeedTabFilter.allCases) { type in
+                                        FeedTabListView()
+                                            .environmentObject(self.viewModel)
+                                            .frame(width: UIScreen.main.bounds.width)
+                                    }
                                 }
-                            } label: {
-                                TweetRowView(tweet: tweet)
-                            }
-                        }
-                    }
-                }
-                .refreshable {
-                    Task {
-                       try await viewModel.fetchTweets()
-                    }
-                }
+                                .refreshable {
+                                    Task {
+                                       try await viewModel.fetchTweets()
+                                    }
+                                }
+                
+                
+                
+                
+                
+                
+//                ScrollView {
+//                    LazyVStack {
+//                        ForEach(viewModel.tweets) { tweet in
+//                            NavigationLink {
+//                                if let user = tweet.user {
+//                                    ProfileView(user: user)
+//                                }
+//                            } label: {
+//                                TweetRowView(tweet: tweet)
+//                            }
+//                        }
+//                    }
+//                }
+//                .refreshable {
+//                    Task {
+//                       try await viewModel.fetchTweets()
+//                    }
+//                }
                 
                 Button {
                     showNewTweetView.toggle()
@@ -68,6 +93,17 @@ struct FeedView: View {
             }
         })
     }
+    
+    @ViewBuilder
+    func TabLabel(type: FeedTabFilter) -> some View {
+        Text(type.title)
+            .font(.subheadline)
+            .fontWeight(.bold)
+            .padding(.horizontal, 40)
+            .padding(.vertical, 6)
+            .background(Color.white)
+    }
+    
 }
 
 extension FeedView {
@@ -102,39 +138,6 @@ extension FeedView {
                 xLogoSmall
             }
             .padding(.horizontal)
-                            
-            HStack {
-                ForEach(FeedTabFilter.allCases) { tab in
-                    VStack(spacing: 0) {
-                        Text(tab.title)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .frame(height: 35)
-                            .foregroundStyle(viewModel.currentTab == tab ? .black : .gray)
-                        
-                        if viewModel.currentTab == tab {
-                            Capsule()
-                                .fill(Color(.systemBlue))
-                                .frame(maxWidth: .infinity)
-                                .matchedGeometryEffect(id: "FEED_TAB", in: animation)
-                                .frame(height: 3)
-                                .padding(.horizontal, 50)
-                        } else {
-                            Capsule()
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 3)
-                                .opacity(0)
-                                .padding(.horizontal, 50)
-                        }
-                    }
-                    .onTapGesture {
-                        withAnimation(.spring) {
-                            viewModel.currentTab = tab
-                        }
-                    }
-                }
-            }
-            .overlay(Divider(), alignment: .bottom)
         }
     }
 }
