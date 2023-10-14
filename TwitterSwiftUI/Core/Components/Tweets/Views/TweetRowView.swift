@@ -99,7 +99,8 @@ struct TweetRowView: View {
                         .font(.subheadline)
                 }
             }
-            .padding()
+            .padding(.horizontal, 25)
+            .padding(.vertical, 8)
             .foregroundColor(.primary)
             
             Divider()

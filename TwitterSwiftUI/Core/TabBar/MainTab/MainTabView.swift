@@ -64,7 +64,7 @@ struct MainTabView: View {
                         }
                         .padding(.top, 15)
                         .padding(.bottom, 10)
-                        .background(Color.black.opacity(0.03)) // 確認のため背景をかける
+                        .background(Color.clear.opacity(0.03)) // 確認のため背景をかける
                     }
                 }
                 .overlay(

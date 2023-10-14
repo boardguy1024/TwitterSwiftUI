@@ -22,19 +22,29 @@ struct FeedView: View {
             
             headerView
             
-            PagerTabView(
-                selected: $viewModel.currentTab, tabs:
-                    [
-                        TabLabel(type: .recommend),
-                        TabLabel(type: .following),
-                    ]
-            ) {
-                ForEach(FeedTabFilter.allCases) { type in
-                    FeedTabListView()
-                        .environmentObject(self.viewModel)
-                        .frame(width: UIScreen.main.bounds.width)
+            ZStack(alignment: .leading) {
+               
+                
+                PagerTabView(
+                    selected: $viewModel.currentTab, tabs:
+                        [
+                            TabLabel(type: .recommend),
+                            TabLabel(type: .following),
+                        ]
+                ) {
+                    ForEach(FeedTabFilter.allCases) { type in
+                        FeedTabListView()
+                            .environmentObject(self.viewModel)
+                            .frame(width: UIScreen.main.bounds.width)
+                    }
                 }
+                
+                // 左エッジからDragしてSideMenuのoffsetがtriggerするように
+                // 左に透明のViewを設ける
+                Color.white.opacity(0.0001)
+                    .frame(width: 30)
             }
+            
             .refreshable {
                 Task {
                     try await viewModel.fetchTweets()
