@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		2D89D9DC2AD9844200F20E91 /* FeedTabListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89D9DB2AD9844200F20E91 /* FeedTabListView.swift */; };
 		2D89D9DE2AD9846C00F20E91 /* FeedTabListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89D9DD2AD9846C00F20E91 /* FeedTabListViewModel.swift */; };
+		2D89D9E02AD9955900F20E91 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89D9DF2AD9955900F20E91 /* ChatViewModel.swift */; };
+		2DC291462ADA2B7D006E9E23 /* ConversationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC291452ADA2B7D006E9E23 /* ConversationsView.swift */; };
+		2DC291482ADA3D49006E9E23 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC291472ADA3D49006E9E23 /* Message.swift */; };
+		2DC2914A2ADA3FC9006E9E23 /* ConversationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC291492ADA3FC9006E9E23 /* ConversationsViewModel.swift */; };
+		2DC2914C2ADA504C006E9E23 /* ConversationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2914B2ADA504C006E9E23 /* ConversationRowView.swift */; };
 		FF170EE32AD29E7800B90E2D /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE22AD29E7800B90E2D /* PreviewProvider.swift */; };
 		FF170EE52AD2A09E00B90E2D /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE42AD2A09E00B90E2D /* RegistrationViewModel.swift */; };
 		FF170EE82AD2A27D00B90E2D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE72AD2A27D00B90E2D /* LoginViewModel.swift */; };
@@ -71,7 +76,7 @@
 		FF44B93D2ABC8A97005B87F4 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44B93C2ABC8A97005B87F4 /* MainTabView.swift */; };
 		FF44B9432ABC8BEE005B87F4 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44B9422ABC8BEE005B87F4 /* ExploreView.swift */; };
 		FF44B9452ABC8C0D005B87F4 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44B9442ABC8C0D005B87F4 /* NotificationsView.swift */; };
-		FF44B9472ABC8C21005B87F4 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44B9462ABC8C21005B87F4 /* MessagesView.swift */; };
+		FF44B9472ABC8C21005B87F4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44B9462ABC8C21005B87F4 /* ChatView.swift */; };
 		FF44B94B2ABC8D6A005B87F4 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44B94A2ABC8D6A005B87F4 /* ProfileView.swift */; };
 		FF4C5D7B2AD289E4003F3E90 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C5D7A2AD289E4003F3E90 /* MainTabBarViewModel.swift */; };
 		FF5F92742ABEC64E00A33B9C /* ProfileTweetsTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F92732ABEC64E00A33B9C /* ProfileTweetsTabType.swift */; };
@@ -96,6 +101,11 @@
 /* Begin PBXFileReference section */
 		2D89D9DB2AD9844200F20E91 /* FeedTabListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabListView.swift; sourceTree = "<group>"; };
 		2D89D9DD2AD9846C00F20E91 /* FeedTabListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabListViewModel.swift; sourceTree = "<group>"; };
+		2D89D9DF2AD9955900F20E91 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		2DC291452ADA2B7D006E9E23 /* ConversationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsView.swift; sourceTree = "<group>"; };
+		2DC291472ADA3D49006E9E23 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		2DC291492ADA3FC9006E9E23 /* ConversationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsViewModel.swift; sourceTree = "<group>"; };
+		2DC2914B2ADA504C006E9E23 /* ConversationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRowView.swift; sourceTree = "<group>"; };
 		FF170EE22AD29E7800B90E2D /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		FF170EE42AD2A09E00B90E2D /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		FF170EE72AD2A27D00B90E2D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -133,7 +143,7 @@
 		FF44B93C2ABC8A97005B87F4 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FF44B9422ABC8BEE005B87F4 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		FF44B9442ABC8C0D005B87F4 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
-		FF44B9462ABC8C21005B87F4 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		FF44B9462ABC8C21005B87F4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FF44B94A2ABC8D6A005B87F4 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FF4C5D7A2AD289E4003F3E90 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
 		FF5F92732ABEC64E00A33B9C /* ProfileTweetsTabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTweetsTabType.swift; sourceTree = "<group>"; };
@@ -408,6 +418,7 @@
 			children = (
 				FFFB5D5D2AC052E000817497 /* User.swift */,
 				FFACF2BB2AC1A82C00A2C911 /* Tweet.swift */,
+				2DC291472ADA3D49006E9E23 /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -490,12 +501,16 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
-		FF44B9402ABC8B97005B87F4 /* Messages */ = {
+		FF44B9402ABC8B97005B87F4 /* Conversations */ = {
 			isa = PBXGroup;
 			children = (
-				FF44B9462ABC8C21005B87F4 /* MessagesView.swift */,
+				2DC291452ADA2B7D006E9E23 /* ConversationsView.swift */,
+				2DC291492ADA3FC9006E9E23 /* ConversationsViewModel.swift */,
+				FF44B9462ABC8C21005B87F4 /* ChatView.swift */,
+				2D89D9DF2AD9955900F20E91 /* ChatViewModel.swift */,
+				2DC2914B2ADA504C006E9E23 /* ConversationRowView.swift */,
 			);
-			path = Messages;
+			path = Conversations;
 			sourceTree = "<group>";
 		};
 		FF44B9412ABC8BB9005B87F4 /* Profile */ = {
@@ -533,7 +548,7 @@
 				FF44B9332ABC817F005B87F4 /* Feed */,
 				FF44B93E2ABC8B7B005B87F4 /* Explore */,
 				FF44B93F2ABC8B88005B87F4 /* Notifications */,
-				FF44B9402ABC8B97005B87F4 /* Messages */,
+				FF44B9402ABC8B97005B87F4 /* Conversations */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -653,7 +668,7 @@
 			files = (
 				FFACF2BA2AC1A78400A2C911 /* FeedViewModel.swift in Sources */,
 				FF170EEA2AD2A84F00B90E2D /* ProfilePhotoSelectViewModel.swift in Sources */,
-				FF44B9472ABC8C21005B87F4 /* MessagesView.swift in Sources */,
+				FF44B9472ABC8C21005B87F4 /* ChatView.swift in Sources */,
 				FF44B94B2ABC8D6A005B87F4 /* ProfileView.swift in Sources */,
 				FFACF2BC2AC1A82C00A2C911 /* Tweet.swift in Sources */,
 				FF63590E2AD7EA6700A7B114 /* TweetListViewModel.swift in Sources */,
@@ -664,12 +679,14 @@
 				FF44B9222ABC8117005B87F4 /* ContentView.swift in Sources */,
 				FF2EE4EE2ABEF09C000522CF /* SideMenuRowView.swift in Sources */,
 				FFFB5D5E2AC052E000817497 /* User.swift in Sources */,
+				2DC291482ADA3D49006E9E23 /* Message.swift in Sources */,
 				FF44B93A2ABC85FC005B87F4 /* TweetRowView.swift in Sources */,
 				FF170EE32AD29E7800B90E2D /* PreviewProvider.swift in Sources */,
 				FF5F92742ABEC64E00A33B9C /* ProfileTweetsTabType.swift in Sources */,
 				FFACF2B62AC1937A00A2C911 /* TweetService.swift in Sources */,
 				FF44B9372ABC8257005B87F4 /* FeedView.swift in Sources */,
 				FF2EE4EC2ABEF082000522CF /* SideMenuView.swift in Sources */,
+				2DC2914C2ADA504C006E9E23 /* ConversationRowView.swift in Sources */,
 				FF44B9202ABC8117005B87F4 /* TwitterSwiftUIApp.swift in Sources */,
 				FF44B9432ABC8BEE005B87F4 /* ExploreView.swift in Sources */,
 				FF4C5D7B2AD289E4003F3E90 /* MainTabBarViewModel.swift in Sources */,
@@ -685,11 +702,13 @@
 				FF2EE4F92ABF144E000522CF /* NewTweetView.swift in Sources */,
 				FF2EE4E72ABECC61000522CF /* UserRowView.swift in Sources */,
 				FF63590C2AD7E84800A7B114 /* TweetListView.swift in Sources */,
+				2D89D9E02AD9955900F20E91 /* ChatViewModel.swift in Sources */,
 				FFACF2B42AC15A3400A2C911 /* SearchBar.swift in Sources */,
 				FF2EE5042ABF23EE000522CF /* RoundedShape.swift in Sources */,
 				FF170EEC2AD2D95000B90E2D /* EntryView.swift in Sources */,
 				FFACF2BE2AC1BD2A00A2C911 /* ProfileViewModel.swift in Sources */,
 				FF170EE52AD2A09E00B90E2D /* RegistrationViewModel.swift in Sources */,
+				2DC291462ADA2B7D006E9E23 /* ConversationsView.swift in Sources */,
 				FFACF2B22AC1519E00A2C911 /* ExploreViewModel.swift in Sources */,
 				FF2EE4F42ABF0D5F000522CF /* SideMenuOptionRowView.swift in Sources */,
 				FF170EF42AD2F2DB00B90E2D /* AuthHeaderView.swift in Sources */,
@@ -702,6 +721,7 @@
 				FF170EEE2AD2D97900B90E2D /* EntryViewModel.swift in Sources */,
 				FF2EE5002ABF20B6000522CF /* LoginView.swift in Sources */,
 				FF44B9452ABC8C0D005B87F4 /* NotificationsView.swift in Sources */,
+				2DC2914A2ADA3FC9006E9E23 /* ConversationsViewModel.swift in Sources */,
 				FF2EE4F22ABEF43A000522CF /* UserStatsView.swift in Sources */,
 				FF2EE5022ABF20C0000522CF /* RegistrationView.swift in Sources */,
 			);

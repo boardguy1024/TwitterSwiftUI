@@ -54,7 +54,7 @@ struct MainTabView: View {
                     }
                     .tag(2)
                 
-                MessagesView()
+                ConversationsView()
                     .onTapGesture {
                         self.selectedIndex = 3
                     }

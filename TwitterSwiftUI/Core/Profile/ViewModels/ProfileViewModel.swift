@@ -14,7 +14,7 @@ class ProfileViewModel: ObservableObject {
     let user: User
     
     var actionButtonTitle: String {
-        user.isCurrentUser ? "Edit Profile" : isFollowed ? "フォロー中" : "フォローする"
+        user.isCurrentUser ? "プロフィールを編集" : isFollowed ? "フォロー中" : "フォローする"
     }
     
     init(user: User) {

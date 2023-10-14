@@ -103,7 +103,7 @@ extension ProfileView {
             } label: {
                 Text(viewModel.actionButtonTitle)
                     .font(.subheadline).bold()
-                    .frame(width: 120, height: 32)
+                    .frame(width: 150, height: 32)
                     .foregroundColor(viewModel.isFollowed ? .white : .black)
                     .background(
                         Color(viewModel.isFollowed ? .black : .clear)
@@ -113,6 +113,22 @@ extension ProfileView {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.gray, lineWidth: 0.75)
                     )
+            }
+            
+            if !viewModel.user.isCurrentUser {
+                NavigationLink {
+                    ChatView(user: viewModel.user)
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Text("メッセージ")
+                        .font(.subheadline).bold()
+                        .frame(width: 100, height: 32)
+                        .foregroundColor(.black)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.gray, lineWidth: 0.75)
+                        )
+                }
             }
         }
         .padding(.trailing)
