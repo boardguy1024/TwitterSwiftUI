@@ -14,63 +14,84 @@ struct MainTabView: View {
     @State private var selectedIndex: Int = 0
     
     private let sideBarWidth = UIScreen.main.bounds.width - 90
-
+    
     @State private var offset: CGFloat = 0
     @State private var lastStoredOffset: CGFloat = 0
     @GestureState private var gestureOffset: CGFloat = 0
-
+    
+    init() {
+        // カスタムTabBarを使うため、default tabBarを隠す
+        UITabBar.appearance().isHidden = true
+    }
+    
     var body: some View {
         
         HStack(spacing: 0) {
             
             SideMenuView(showSideMenu: $showSideMenu)
             
-            TabView(selection: $selectedIndex) {
+            ZStack(alignment: .bottomTrailing) {
                 
-                FeedView(showSideMenu: $showSideMenu)
-                    .onTapGesture {
-                        self.selectedIndex = 0
+                VStack(spacing: 0) {
+                    TabView(selection: $selectedIndex) {
+                        
+                        FeedView(showSideMenu: $showSideMenu)
+                            .tag(0)
+                        
+                        ExploreView()
+                            .tag(1)
+                        
+                        NotificationsView()
+                            .tag(2)
+                        
+                        ConversationsView()
+                            .tag(3)
                     }
-                    .tabItem {
-                        Image(systemName: "house")
+                    
+                    VStack(spacing: 0) {
+                        
+                        Divider()
+                        
+                        // CustomTabBar
+                        HStack(spacing: 0) {
+                            TabButton(image: "Home", tag: 0)
+                            
+                            TabButton(image: "Search", tag: 1)
+                            
+                            TabButton(image: "Notifications", tag: 2)
+                            
+                            TabButton(image: "Message", tag: 3)
+                        }
+                        .padding(.top, 15)
+                        .padding(.bottom, 10)
+                        .background(Color.black.opacity(0.03)) // 確認のため背景をかける
                     }
-                    .tag(0)
+                }
+                .overlay(
+                    Color.black  //   ( 1 or 0 ) / 5 =  1の場合 opacityは 0.2
+                        .opacity( (offset / sideBarWidth) / 5.0 )
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            showSideMenu = false
+                        }
+                )
                 
-                ExploreView()
-                    .onTapGesture {
-                        self.selectedIndex = 1
-                    }
-                    .tabItem {
-                        Image(systemName: "magnifyingglass")
-                    }
-                    .tag(1)
-                
-                NotificationsView()
-                    .onTapGesture {
-                        self.selectedIndex = 2
-                    }
-                    .tabItem {
-                        Image(systemName: "bell")
-                    }
-                    .tag(2)
-                
-                ConversationsView()
-                    .onTapGesture {
-                        self.selectedIndex = 3
-                    }
-                    .tabItem {
-                        Image(systemName: "envelope")
-                    }
-                    .tag(3)
+                Button {
+                    // showNewTweetView.toggle()
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                }
+                .background(
+                    Circle()
+                        .fill(Color(.systemBlue))
+                        .frame(width: 54, height: 54)
+                )
+                .padding(.trailing, 36)
+                .padding(.bottom, 70)
             }
-            .overlay(
-                Color.black  //   ( 1 or 0 ) / 5 =  1の場合 opacityは 0.2
-                    .opacity( (offset / sideBarWidth) / 5.0 )
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        showSideMenu = false
-                    }
-            )
+            
         }
         .animation(.easeInOut(duration: 0.2), value: offset == 0)
         // サイドメニューとMainViewが同時に移動するため
@@ -88,12 +109,13 @@ struct MainTabView: View {
                 offset = 0
                 lastStoredOffset = 0
             }
-  
+            
         }
         .onChange(of: gestureOffset) { _ in
             
+            
             if gestureOffset != 0 {
-                                
+                
                 // Draggingしたwidthが SideBarWidth以内の場合
                 if gestureOffset + lastStoredOffset < sideBarWidth && (gestureOffset + lastStoredOffset) > 0 {
                     
@@ -114,7 +136,7 @@ struct MainTabView: View {
                     out = value.translation.width
                 })
                 .onEnded({ value in
-
+                    
                     withAnimation(.spring(duration: 0.15)) {
                         
                         if value.translation.width > 0 {
@@ -123,12 +145,11 @@ struct MainTabView: View {
                             // 指を離した位置が sideBarWidthの半分を超えた場合
                             // (注意: valueは draggingにより 0から始まる
                             if value.translation.width > sideBarWidth / 2 {
-
+                                
                                 offset = sideBarWidth
                                 lastStoredOffset = sideBarWidth
                                 showSideMenu = true
                             } else {
-                                
                                 // sideMenuが開いている状態で右端の方にdraggingした際には誤って閉じないように回避させる
                                 if value.translation.width > sideBarWidth && showSideMenu {
                                     offset = 0
@@ -156,7 +177,7 @@ struct MainTabView: View {
                                 
                                 // sideMenuが閉じている状態で左の方にDraggingする場合には
                                 // この処理を回避させる
-                                guard showSideMenu else { 
+                                guard showSideMenu else {
                                     return }
                                 
                                 // 指を離した位置が半分以下でも <<<左のDragging加速度が早ければ sideMenuを閉じる
@@ -167,14 +188,30 @@ struct MainTabView: View {
                                     offset = sideBarWidth
                                     showSideMenu = true
                                 }
-                                                               
                             }
                         }
                     }
-                   
+                    
                     lastStoredOffset = offset
                 })
         )
+    }
+    
+    @ViewBuilder
+    func TabButton(image: String, tag: Int) -> some View {
+        Button {
+            withAnimation {
+                selectedIndex = tag
+            }
+        } label: {
+            Image(image)
+                .resizable()
+                .renderingMode(.template)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 23, height: 23)
+                .foregroundColor(selectedIndex == tag ? .primary : .gray)
+                .frame(maxWidth: .infinity)
+        }
     }
 }
 

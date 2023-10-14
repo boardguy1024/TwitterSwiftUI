@@ -22,38 +22,23 @@ struct FeedView: View {
             
             headerView
             
-            ZStack(alignment: .bottomTrailing) {
-
-                PagerTabView(selected: $viewModel.currentTab, tabs:
-                                [
-                                    TabLabel(type: .recommend),
-                                    TabLabel(type: .following),
-                                ]) {
-                                    ForEach(FeedTabFilter.allCases) { type in
-                                        FeedTabListView()
-                                            .environmentObject(self.viewModel)
-                                            .frame(width: UIScreen.main.bounds.width)
-                                    }
-                                }
-                                .refreshable {
-                                    Task {
-                                        try await viewModel.fetchTweets()
-                                    }
-                                }
-                Button {
-                    showNewTweetView.toggle()
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.title2)
-                        .foregroundColor(.white)
+            PagerTabView(
+                selected: $viewModel.currentTab, tabs:
+                    [
+                        TabLabel(type: .recommend),
+                        TabLabel(type: .following),
+                    ]
+            ) {
+                ForEach(FeedTabFilter.allCases) { type in
+                    FeedTabListView()
+                        .environmentObject(self.viewModel)
+                        .frame(width: UIScreen.main.bounds.width)
                 }
-                .background(
-                    Circle()
-                        .fill(Color(.systemBlue))
-                        .frame(width: 54, height: 54)
-                )
-                .padding(.trailing, 32)
-                .padding(.bottom, 32)
+            }
+            .refreshable {
+                Task {
+                    try await viewModel.fetchTweets()
+                }
             }
         }
         .toolbar(.hidden, for: .navigationBar)

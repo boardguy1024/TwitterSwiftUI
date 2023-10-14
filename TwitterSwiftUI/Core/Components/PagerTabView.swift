@@ -21,6 +21,7 @@ struct PagerTabView<Tab: View, Content: View>: View {
     
     @Binding var selectedTab: Int
     
+    
     init(selected: Binding<Int>,
          tabs: [Tab],
          @ViewBuilder content: @escaping () -> Content) {
@@ -52,6 +53,8 @@ struct PagerTabView<Tab: View, Content: View>: View {
             }
         }
         .onChange(of: offset) { _ in
+            
+            
             // SwipeでPagingする時のみ、UnderlineViewを移動させる
             if isScrolling {
                 underlineViewOffset = offset / CGFloat(tabs.count)
@@ -161,9 +164,7 @@ fileprivate struct OffsetPageTabView<Content: View>: UIViewRepresentable {
         scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
-        
         scrollView.delegate = context.coordinator
-        
         return scrollView
     }
     
@@ -188,7 +189,8 @@ extension OffsetPageTabView {
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            parent.offset = scrollView.contentOffset.x
+            let offsetX = scrollView.contentOffset.x
+            parent.offset = offsetX
             parent.isScrolling = (scrollView.isDragging || scrollView.isTracking || scrollView.isDecelerating)
         }
         
