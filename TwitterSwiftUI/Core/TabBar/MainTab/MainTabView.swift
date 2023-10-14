@@ -11,7 +11,7 @@ import SwiftUI
 struct MainTabView: View {
     
     @State private var showSideMenu: Bool = false
-    @State private var selectedIndex: Int = 0
+    @State private var selectedTab: MainTabBarFilter = .home
     
     private let sideBarWidth = UIScreen.main.bounds.width - 90
     
@@ -19,6 +19,7 @@ struct MainTabView: View {
     @State private var lastStoredOffset: CGFloat = 0
     @GestureState private var gestureOffset: CGFloat = 0
     
+   
     init() {
         // カスタムTabBarを使うため、default tabBarを隠す
         UITabBar.appearance().isHidden = true
@@ -33,19 +34,19 @@ struct MainTabView: View {
             ZStack(alignment: .bottomTrailing) {
                 
                 VStack(spacing: 0) {
-                    TabView(selection: $selectedIndex) {
+                    TabView(selection: $selectedTab) {
                         
                         FeedView(showSideMenu: $showSideMenu)
-                            .tag(0)
+                            .tag(MainTabBarFilter.home)
                         
                         ExploreView()
-                            .tag(1)
+                            .tag(MainTabBarFilter.explore)
                         
                         NotificationsView()
-                            .tag(2)
+                            .tag(MainTabBarFilter.notifications)
                         
                         ConversationsView()
-                            .tag(3)
+                            .tag(MainTabBarFilter.messages)
                     }
                     
                     VStack(spacing: 0) {
@@ -54,17 +55,13 @@ struct MainTabView: View {
                         
                         // CustomTabBar
                         HStack(spacing: 0) {
-                            TabButton(image: "Home", tag: 0)
-                            
-                            TabButton(image: "Search", tag: 1)
-                            
-                            TabButton(image: "Notifications", tag: 2)
-                            
-                            TabButton(image: "Message", tag: 3)
+                            ForEach(MainTabBarFilter.allCases) { tab in
+                                TabButton(tab: tab)
+                            }
                         }
                         .padding(.top, 15)
                         .padding(.bottom, 10)
-                        .background(Color.clear.opacity(0.03)) // 確認のため背景をかける
+                        .background(Color.clear.opacity(0.03)) 
                     }
                 }
                 .overlay(
@@ -76,20 +73,7 @@ struct MainTabView: View {
                         }
                 )
                 
-                Button {
-                    // showNewTweetView.toggle()
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                }
-                .background(
-                    Circle()
-                        .fill(Color(.systemBlue))
-                        .frame(width: 54, height: 54)
-                )
-                .padding(.trailing, 36)
-                .padding(.bottom, 70)
+                NewTweetButton(selectedTab: $selectedTab)
             }
             
         }
@@ -198,18 +182,18 @@ struct MainTabView: View {
     }
     
     @ViewBuilder
-    func TabButton(image: String, tag: Int) -> some View {
+    func TabButton(tab: MainTabBarFilter) -> some View {
         Button {
             withAnimation {
-                selectedIndex = tag
+                selectedTab = tab
             }
         } label: {
-            Image(image)
+            Image(tab.image)
                 .resizable()
                 .renderingMode(.template)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 23, height: 23)
-                .foregroundColor(selectedIndex == tag ? .primary : .gray)
+                .foregroundColor(selectedTab == tab ? .primary : .gray)
                 .frame(maxWidth: .infinity)
         }
     }
