@@ -45,7 +45,7 @@ struct MainTabView: View {
                         NotificationsView()
                             .tag(MainTabBarFilter.notifications)
                         
-                        ConversationsView()
+                        ConversationsView(showSideMenu: $showSideMenu)
                             .tag(MainTabBarFilter.messages)
                     }
                     

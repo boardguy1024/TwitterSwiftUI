@@ -6,16 +6,30 @@
 //
 
 import Firebase
+import Combine
 
 class ConversationsViewModel: ObservableObject {
     
     @Published var recentMessages: [Message] = []
+    @Published var currentUser: User?
+    @Published var showLoading: Bool = false
+    
+    var cancellable = Set<AnyCancellable>()
     
     // Recentメッセージはユーザーに対して1つのメッセージのみを保証
     private var recentMessagesDic = [String: Message]()
     
     init() {
+        setupSubscribers()
         fetchRecentMessages()
+    }
+    
+    func setupSubscribers() {
+     
+        AuthService.shared.$currentUser.sink { [weak self] user in
+            self?.currentUser = user
+        }
+        .store(in: &cancellable)
     }
     
     func fetchRecentMessages() {
@@ -24,6 +38,7 @@ class ConversationsViewModel: ObservableObject {
         let recentMessagesRef = Firestore.firestore().collection("messages").document(currentUid).collection("recent-messages")
         recentMessagesRef.order(by: "timestamp", descending: true)
         
+        showLoading = true
         recentMessagesRef.addSnapshotListener { [weak self] snapshot, error in
             guard let changes = snapshot?.documentChanges, let self = self else { return }
             
@@ -38,7 +53,7 @@ class ConversationsViewModel: ObservableObject {
                     
                     //最新データがトップにくるように並べ替え
                     self.sortMessagesByLatest()
-
+                    self.showLoading = false
                 } else {
                     
                     Firestore.firestore().collection("users").document(partnerUId).getDocument { [weak self] snapshot, _ in
@@ -49,6 +64,7 @@ class ConversationsViewModel: ObservableObject {
                        
                         //最新データがトップにくるように並べ替え
                         sortMessagesByLatest()
+                        self.showLoading = false
                     }
                 }
             }

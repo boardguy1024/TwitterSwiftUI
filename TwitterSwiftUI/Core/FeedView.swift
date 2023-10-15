@@ -20,11 +20,10 @@ struct FeedView: View {
         
         NavigationStack {
             
-            headerView
+            NavigationHeaderView(showSideMenu: $showSideMenu, user: $viewModel.currentUser)
             
             ZStack(alignment: .leading) {
                
-                
                 PagerTabView(
                     selected: $viewModel.currentTab, tabs:
                         [
@@ -72,42 +71,6 @@ struct FeedView: View {
             .background(Color.white)
     }
     
-}
-
-extension FeedView {
-    var headerView: some View {
-        VStack(spacing: 0) {
-            ZStack {
-                HStack {
-                    Button {
-                        showSideMenu.toggle()
-                    } label: {
-                        Group {
-                            if let iconUrl = viewModel.currentUser?.profileImageUrl {
-                                KFImage(URL(string: iconUrl))
-                                    .resizable()
-                                    .scaledToFill()
-                            } else {
-                                Image(systemName: "person.fill")
-                                    .resizable()
-                                    .scaledToFill()
-                            }
-                        }
-                        .foregroundColor(.gray)
-                        .padding(.all, 4)
-                        .background(.gray.opacity(0.3))
-                        .frame(width: 35, height: 35)
-                        .clipShape(Circle())
-                    }
-                    
-                    Spacer()
-                }
-                
-                xLogoSmall
-            }
-            .padding(.horizontal)
-        }
-    }
 }
 
 #Preview {
