@@ -16,19 +16,18 @@ struct ConversationsView: View {
         _showSideMenu = showSideMenu
         _viewModel = .init(wrappedValue: ConversationsViewModel())
     }
-
+    
     var body: some View {
         
         NavigationStack {
-            
-            NavigationHeaderView(showSideMenu: $showSideMenu, user: $viewModel.currentUser, headerTitle: "メッセージ")
         
             ZStack {
-                ScrollView(.vertical, showsIndicators: false) {
-                    
-                    if viewModel.recentMessages.isEmpty && !viewModel.showLoading {
-                        emptyView
-                    } else {
+                if viewModel.recentMessages.isEmpty && !viewModel.showLoading {
+                    emptyView
+                } else {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        Spacer()
+                            .frame(height: 50)
                         LazyVStack {
                             ForEach(viewModel.recentMessages) { message in
                                 
@@ -41,13 +40,19 @@ struct ConversationsView: View {
                             }
                         }
                     }
-                    
-                    if viewModel.showLoading { ProgressView() }
                 }
+                
+                if viewModel.showLoading { ProgressView() }
             }
-            
+            .overlay(
+                // Custom Header
+                NavigationHeaderView(showSideMenu: $showSideMenu, user: $viewModel.currentUser, headerTitle: "メッセージ")
+                , alignment: .top)
         }
+        .background(Color.red)
+        
     }
+    
 }
 
 extension ConversationsView {
@@ -78,7 +83,7 @@ extension ConversationsView {
                 }
             }
             .padding(.top, 20)
-
+            
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal)

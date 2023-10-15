@@ -51,7 +51,6 @@ struct PagerTabView<Tab: View, Content: View>: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            .preference(key: PagerTabViewScrollOffsetPreferenceKey.self, value: offset)
         }
         .onChange(of: offset) { _ in
             
@@ -125,15 +124,6 @@ extension PagerTabView {
         UIScreen.main.bounds.width
     }
 }
-
-struct PagerTabViewScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-}
-
 
 fileprivate struct OffsetPageTabView<Content: View>: UIViewRepresentable {
     

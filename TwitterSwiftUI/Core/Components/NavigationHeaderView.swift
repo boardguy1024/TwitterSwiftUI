@@ -54,7 +54,9 @@ struct NavigationHeaderView: View {
                 
             }
             .padding(.horizontal)
+            .padding(.bottom, 6)
         }
+        .background(BlurView().ignoresSafeArea())
     }
 }
 

@@ -67,7 +67,8 @@ struct FeedView: View {
             .font(.subheadline)
             .fontWeight(.bold)
             .padding(.horizontal, 40)
-            .padding(.vertical, 6)
+            .padding(.top, 3)
+            .padding(.bottom, 6)
             .background(Color.white)
     }
     
