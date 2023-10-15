@@ -26,13 +26,29 @@ class UserService {
         }
     }
     
-    @MainActor
     func fetchUsers() async throws -> [User] {
         do {
             let snapshot = try await Firestore.firestore().collection("users").getDocuments()
             return snapshot.documents.compactMap({ try? $0.data(as: User.self) })
         } catch {
             print("DEBUG: Failed fetching users data with error: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    // ヒットしたユーザーリストを取得
+    func fetchUsers(with query: String) async throws -> [User] {
+        guard !query.isEmpty else { return [] }
+        let lowercasedQuery = query.lowercased()
+        do {
+            let snapshot = try await Firestore.firestore().collection("users")
+                .whereField("username_lowercase", isGreaterThanOrEqualTo: lowercasedQuery)
+                .whereField("username_lowercase", isLessThan: lowercasedQuery + "\u{f8ff}")
+                .getDocuments()
+            
+            return snapshot.documents.compactMap({ try? $0.data(as: User.self) })
+        } catch {
+            print("DEBUG: Failed fetchUsersWithQuery: \(error.localizedDescription)")
             return []
         }
     }

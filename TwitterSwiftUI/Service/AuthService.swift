@@ -25,7 +25,6 @@ class AuthService: ObservableObject {
     @Published var currentUser: User?
     
     private init() {
-        print("gggggg")
         self.userSession = Auth.auth().currentUser
         Task { try await self.fetchUserProfile() }
     }
@@ -41,7 +40,6 @@ class AuthService: ObservableObject {
 
         } catch {
             print("DEBUG: Failed to login with error: \(error.localizedDescription)")
-            // TODO: 必要によってエラーを表示する
         }
     }
     
@@ -50,7 +48,6 @@ class AuthService: ObservableObject {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("DEBUG: Failed to register with error: \(error.localizedDescription)")
-                // TODO: 必要によってエラーを表示する
                 return
             }
             
@@ -60,6 +57,8 @@ class AuthService: ObservableObject {
             
             //ユーザー登録が成功した場合、紐づくデータをDataBaseにPost
             let userDataDic = ["email": email,
+                               // 検索でユーザーを小文字でヒットさせるための工夫
+                               "username_lowercase": username.lowercased(),
                                "username": username,
                                "fullname": fullname,
                                "uid": user.uid]

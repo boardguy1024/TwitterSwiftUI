@@ -11,6 +11,7 @@ import SwiftUI
 struct MainTabView: View {
     
     @State private var showSideMenu: Bool = false
+    @State private var showNewMessageView: Bool = false
     @State private var selectedTab: MainTabBarFilter = .home
     
     private let sideBarWidth = UIScreen.main.bounds.width - 90
@@ -73,10 +74,17 @@ struct MainTabView: View {
                         }
                 )
                 
-                NewTweetButton(selectedTab: $selectedTab)
+                NewTweetButton(selectedTab: $selectedTab) { tab in
+                    if tab == .messages {
+                        showNewMessageView = true
+                    }
+                }
             }
             
         }
+        .sheet(isPresented: $showNewMessageView, content: {
+            NewMessageView()
+        })
         .animation(.easeInOut(duration: 0.2), value: offset == 0)
         // サイドメニューとMainViewが同時に移動するため
         .frame(width: sideBarWidth + UIScreen.main.bounds.width)

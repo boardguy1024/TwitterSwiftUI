@@ -15,14 +15,17 @@ struct NewTweetButton: View {
     @State private var isRotated: Bool = false
     @State private var scaleEffect: CGFloat = 1.0
     
-    init(selectedTab: Binding<MainTabBarFilter>) {
+    var buttonTapped: (MainTabBarFilter) -> Void
+    
+    init(selectedTab: Binding<MainTabBarFilter>,
+         buttonCompletion: @escaping (MainTabBarFilter) -> Void)  {
         _selectedTab = selectedTab
+        self.buttonTapped = buttonCompletion
     }
     
     var body: some View {
         Button {
-           
-            // showNewTweetView.toggle()
+            buttonTapped(selectedTab)
         } label: {
             if selectedTab == .messages {
                 Image("Message")
@@ -74,5 +77,5 @@ struct NewTweetButton: View {
 }
 
 #Preview {
-    NewTweetButton(selectedTab: .constant(.home))
+    NewTweetButton(selectedTab: .constant(.home), buttonCompletion: { _ in })
 }
