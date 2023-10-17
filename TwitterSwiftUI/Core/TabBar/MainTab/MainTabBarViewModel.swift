@@ -30,11 +30,23 @@ class MainTabBarViewModel: ObservableObject {
     @Published var showSideMenu: Bool = false
     @Published var hiddenNewTweetButton: Bool = false
     @Published var showNewMessageView: Bool = false
+    @Published var showNewTweetView: Bool = false
     @Published var selectedTab: MainTabBarFilter = .home
 
     func updateNewTweetButton(isHidden: Bool) {
         withAnimation {
             hiddenNewTweetButton = isHidden
+        }
+    }
+    
+    func newTweetButtonTapped(tap: MainTabBarFilter) {
+        switch tap {
+        case .messages:
+            showNewMessageView = true
+        case .home, .explore:
+            showNewTweetView = true
+        case .notifications:
+            break
         }
     }
 }

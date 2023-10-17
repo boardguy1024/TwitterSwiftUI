@@ -13,9 +13,9 @@ struct FeedView: View {
     @Binding var showSideMenu: Bool
     
     @Namespace var animation
-    @State private var showNewTweetView = false
     @StateObject var viewModel = FeedViewModel()
-    
+    @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
+
     var body: some View {
         
         NavigationStack {
@@ -51,13 +51,9 @@ struct FeedView: View {
             }
         }
         .toolbar(.hidden, for: .navigationBar)
-        // FullScreen ModalView
-        .fullScreenCover(isPresented: $showNewTweetView, content: {
+        .fullScreenCover(isPresented: $tabBarViewModel.showNewTweetView, content: {
             // 新しいTweet投稿画面をmodalで表示
-            NewTweetView() {
-                // 投稿後は画面を更新
-                Task { try await viewModel.fetchTweets() }
-            }
+            NewTweetView()
         })
     }
     

@@ -16,10 +16,10 @@ enum SideMenuListType: Int, CaseIterable {
     
     var title: String {
         switch self {
-        case .profile: return "Profile"
-        case .lists: return "Lists"
-        case .bookmarks: return "Bookmarks"
-        case .logout: return "Logout"
+        case .profile: return "プロフィール"
+        case .lists: return "リスト"
+        case .bookmarks: return "ブックマーク"
+        case .logout: return "ログアウト"
         }
     }
     

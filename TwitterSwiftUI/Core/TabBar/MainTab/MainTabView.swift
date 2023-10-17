@@ -74,9 +74,7 @@ struct MainTabView: View {
                 )
                 
                 NewTweetButton(selectedTab: $viewModel.selectedTab) { tab in
-                    if tab == .messages {
-                        viewModel.showNewMessageView = true
-                    }
+                    viewModel.newTweetButtonTapped(tap: tab)
                 }
                 .opacity(viewModel.hiddenNewTweetButton ? 0 : 1)
             }
@@ -100,7 +98,6 @@ struct MainTabView: View {
             
         }
         .onChange(of: gestureOffset) { _ in
-            
             
             if gestureOffset != 0 {
                 

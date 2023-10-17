@@ -1,5 +1,5 @@
 //
-//  UploadTweetViewModel.swift
+//  NewTweetViewModel.swift
 //  TwitterSwiftUI
 //
 //  Created by パクギョンソク on 2023/09/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class UploadTweetViewModel: ObservableObject {
+class NewTweetViewModel: ObservableObject {
     
     @Published var didUploadTweet = false
         

@@ -10,6 +10,8 @@ import SwiftUI
 struct ExploreView: View {
     
     @StateObject var viewModel = ExploreViewModel()
+    @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
+
     var body: some View {
         
         NavigationStack {
@@ -29,6 +31,10 @@ struct ExploreView: View {
                     }
                 }
             }
+            .fullScreenCover(isPresented: $tabBarViewModel.showNewTweetView, content: {
+                // 新しいTweet投稿画面をmodalで表示
+                NewTweetView()
+            })
         }
         .navigationBarTitleDisplayMode(.inline)
     }

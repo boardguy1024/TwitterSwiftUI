@@ -11,23 +11,18 @@ import Kingfisher
 struct NewTweetView: View {
     
     @State private var caption = ""
-    @Environment(\.presentationMode) var presentationMode
-    @StateObject var uploadViewModel = UploadTweetViewModel()
-    
-    var postCompletion: () -> Void
-    init(postCompletion: @escaping () -> Void) {
-        self.postCompletion = postCompletion
-    }
+    @Environment(\.dismiss) var dismiss
+    @StateObject var uploadViewModel = NewTweetViewModel()
 
     var body: some View {
         VStack {
             HStack {
                 Button {
                     // TODO: caption.isEmpTy == falseの場合にはアラートを出す
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
-                    Text("Cancel")
-                        .foregroundStyle(Color(.systemBlue))
+                    Text("キャンセル")
+                        .foregroundStyle(.black)
                 }
                 
                 Spacer()
@@ -35,7 +30,8 @@ struct NewTweetView: View {
                 Button {
                     Task { try await uploadViewModel.uploadTweet(withCaption: self.caption) }
                 } label: {
-                    Text("Tweet")
+                    Text("ポストする")
+                        .font(.caption)
                         .bold()
                         .foregroundStyle(Color.white)
                         .padding(.horizontal, 16)
@@ -51,18 +47,19 @@ struct NewTweetView: View {
                     KFImage(URL(string: user.profileImageUrl))
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 64, height: 64)
+                        .frame(width: 30, height: 30)
                         .clipShape(Circle())
                 }
                 
-                TextAreaView("What's happening?", text: $caption)
+                TextAreaView("いまどうしている？", text: $caption)
+                    .offset(y: -8)
+                
             }
             .padding()
         }
         .onReceive(uploadViewModel.$didUploadTweet, perform: { success in
             if success {
-                postCompletion()
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             } else {
                 // show error
             }
@@ -71,5 +68,5 @@ struct NewTweetView: View {
 }
 
 #Preview {
-    NewTweetView() { }
+    NewTweetView()
 }
