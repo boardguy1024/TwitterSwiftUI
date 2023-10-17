@@ -59,13 +59,11 @@ struct SideMenuView: View {
             ForEach(SideMenuListType.allCases, id: \.self) { type in
                 switch type {
                 case .profile:
-                    NavigationLink {
-                        if let user = viewModel.user {
-                            ProfileView(user: user)
+                    SideMenuOptionRowView(type: type)
+                        .onTapGesture {
+                            showSideMenu = false
+                            tabBarViewModel.showUserProfile = true
                         }
-                    } label: {
-                        SideMenuOptionRowView(type: type)
-                    }
                 case .lists: SideMenuOptionRowView(type: type)
                 case .bookmarks: SideMenuOptionRowView(type: type)
                 case .logout:

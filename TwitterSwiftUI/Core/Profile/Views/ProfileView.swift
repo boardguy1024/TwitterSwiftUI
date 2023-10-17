@@ -97,17 +97,19 @@ extension ProfileView {
             
             Spacer()
             
-            Image(systemName: "bell.badge")
-                .font(.title3)
-                .padding(6)
-                .overlay(Circle().stroke(Color.gray, lineWidth: 0.75))
+            if !viewModel.user.isCurrentUser {
+                Image(systemName: "bell.badge")
+                    .font(.title3)
+                    .padding(6)
+                    .overlay(Circle().stroke(Color.gray, lineWidth: 0.75))
+            }
             
             Button {
                 viewModel.actionButtonTapped()
             } label: {
                 Text(viewModel.actionButtonTitle)
                     .font(.subheadline).bold()
-                    .frame(width: 150, height: 32)
+                    .frame(width: viewModel.user.isCurrentUser ? 150 : 100, height: 32)
                     .foregroundColor(viewModel.isFollowed ? .white : .black)
                     .background(
                         Color(viewModel.isFollowed ? .black : .clear)
