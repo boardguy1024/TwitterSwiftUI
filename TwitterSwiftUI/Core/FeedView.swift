@@ -20,35 +20,47 @@ struct FeedView: View {
         
         NavigationStack {
             
-            NavigationHeaderView(showSideMenu: $showSideMenu, user: $viewModel.currentUser)
-            
-            ZStack(alignment: .leading) {
-               
-                PagerTabView(
-                    selected: $viewModel.currentTab, tabs:
-                        [
-                            TabLabel(type: .recommend),
-                            TabLabel(type: .following),
-                        ]
-                ) {
-                    ForEach(FeedTabFilter.allCases) { type in
-                        FeedTabListView()
-                            .environmentObject(self.viewModel)
-                            .frame(width: UIScreen.main.bounds.width)
-                    }
-                }
+            VStack(spacing: 0) {
+             
+                NavigationHeaderView(showSideMenu: $showSideMenu, user: $viewModel.currentUser)
                 
-                // 左エッジからDragしてSideMenuのoffsetがtriggerするように
-                // 左に透明のViewを設ける
-                Color.white.opacity(0.0001)
-                    .frame(width: 30)
+                ZStack(alignment: .leading) {
+                   
+                    PagerTabView(
+                        selected: $viewModel.currentTab, tabs:
+                            [
+                                TabLabel(type: .recommend),
+                                TabLabel(type: .following),
+                            ]
+                    ) {
+                        ForEach(FeedTabFilter.allCases) { type in
+                            FeedTabListView()
+                                .environmentObject(self.viewModel)
+                                .frame(width: UIScreen.main.bounds.width)
+                        }
+                    }
+                    
+                    // 左エッジからDragしてSideMenuのoffsetがtriggerするように
+                    // 左に透明のViewを設ける
+                    Color.white.opacity(0.0001)
+                        .frame(width: 30)
+                }
             }
-            
             .refreshable {
                 Task {
                     try await viewModel.fetchTweets()
                 }
             }
+            .onChange(of: tabBarViewModel.showUserProfile) { _ in
+                if tabBarViewModel.selectedTab == .home {
+                    viewModel.showUserProfile = true
+                }
+            }
+            .navigationDestination(isPresented: $viewModel.showUserProfile, destination: {
+                if let user = viewModel.currentUser {
+                    ProfileView(user: user)
+                }
+            })
         }
         .toolbar(.hidden, for: .navigationBar)
         .fullScreenCover(isPresented: $tabBarViewModel.showNewTweetView, content: {

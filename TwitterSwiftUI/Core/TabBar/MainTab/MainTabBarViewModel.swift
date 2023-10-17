@@ -31,6 +31,7 @@ class MainTabBarViewModel: ObservableObject {
     @Published var hiddenNewTweetButton: Bool = false
     @Published var showNewMessageView: Bool = false
     @Published var showNewTweetView: Bool = false
+    @Published var showUserProfile: Bool = false
     @Published var selectedTab: MainTabBarFilter = .home
 
     func updateNewTweetButton(isHidden: Bool) {
@@ -38,7 +39,7 @@ class MainTabBarViewModel: ObservableObject {
             hiddenNewTweetButton = isHidden
         }
     }
-    
+  
     func newTweetButtonTapped(tap: MainTabBarFilter) {
         switch tap {
         case .messages:

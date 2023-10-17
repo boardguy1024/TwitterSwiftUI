@@ -12,6 +12,7 @@ struct SideMenuView: View {
 
     @StateObject var viewModel: SideMenuViewModel
     @Binding var showSideMenu: Bool
+    @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
 
     init(showSideMenu: Binding<Bool>) {
         _showSideMenu = showSideMenu
@@ -23,26 +24,33 @@ struct SideMenuView: View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading) {
                 
-                if let url = viewModel.user?.profileImageUrl {
-                    KFImage(URL(string: url))
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 48, height: 48)
-                        .clipShape(Circle())
-                } else {
-                    Image(systemName: "person.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 48, height: 48)
-                        .clipShape(Circle())
+                Group {
+                    if let url = viewModel.user?.profileImageUrl {
+                        KFImage(URL(string: url))
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 48, height: 48)
+                            .clipShape(Circle())
+                            
+                    } else {
+                        Image(systemName: "person.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 48, height: 48)
+                            .clipShape(Circle())
+                    }
+                    
+                    Text(viewModel.user?.fullname ?? "")
+                        .font(.headline).bold()
+
+                    Text("@\(viewModel.user?.username ?? "")")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
                 }
-                
-                Text(viewModel.user?.fullname ?? "")
-                    .font(.headline).bold()
-                
-                Text("@\(viewModel.user?.username ?? "")")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
+                .onTapGesture {
+                    showSideMenu = false
+                    tabBarViewModel.showUserProfile = true
+                }
                 
                 UserStatsView()
                     .padding(.vertical)

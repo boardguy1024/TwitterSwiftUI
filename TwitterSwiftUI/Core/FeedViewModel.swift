@@ -27,6 +27,7 @@ class FeedViewModel: ObservableObject {
     @Published var tweets = [Tweet]()
     @Published var currentTab: Int = FeedTabFilter.recommend.rawValue
     @Published var currentUser: User?
+    @Published var showUserProfile: Bool = false
     
     private var cancellable = Set<AnyCancellable>()
     

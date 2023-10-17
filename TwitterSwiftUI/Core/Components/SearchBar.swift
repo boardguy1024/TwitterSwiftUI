@@ -13,11 +13,11 @@ struct SearchBar: View {
     
     var body: some View {
         HStack {
-            TextField("Search...", text: $text, axis: .vertical)
-                .padding(8)
+            TextField("検索", text: $text, axis: .vertical)
+                .padding(6)
                 .padding(.horizontal, 24)
                 .background(Color(.systemGray6))
-                .cornerRadius(8)
+                .cornerRadius(20)
                 .overlay(
                     HStack {
                         Image(systemName: "magnifyingglass")

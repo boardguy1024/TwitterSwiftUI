@@ -12,6 +12,7 @@ struct ProfileView: View {
     
     @State private var selectedTab: Int = ProfileTweetsTabType.tweets.rawValue
     @StateObject var viewModel: ProfileViewModel
+    @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
     // プロパティラッパー@Environmentを使用して、環境変数にアクセス
     @Environment(\.dismiss) var dismiss
     @Namespace var animation
@@ -40,6 +41,9 @@ struct ProfileView: View {
                                         .frame(width: UIScreen.main.bounds.width)
                                 }
                             }
+        }
+        .onAppear {
+            tabBarViewModel.showUserProfile = false
         }
         .navigationBarHidden(true)
     }

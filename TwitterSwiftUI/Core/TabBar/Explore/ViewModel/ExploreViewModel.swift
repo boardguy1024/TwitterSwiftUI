@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import Combine
 
 class ExploreViewModel: ObservableObject {
     
     @Published var users = [User]()
     @Published var searchText = ""
-        
+    @Published var currentUser: User?
+    @Published var showUserProfile: Bool = false
+    
+    private var cancellable = Set<AnyCancellable>()
+    
     var searchableUsers: [User] {
         if searchText.isEmpty {
             return self.users
@@ -27,7 +32,15 @@ class ExploreViewModel: ObservableObject {
     }
     
     init() {
+        setupSubscribers()
         Task { try await self.fetchUsers() }
+    }
+    
+    private func setupSubscribers() {
+        AuthService.shared.$currentUser.sink { [weak self] user in
+            self?.currentUser = user
+        }
+        .store(in: &cancellable)
     }
     
     @MainActor
