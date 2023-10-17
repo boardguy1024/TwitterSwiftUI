@@ -9,11 +9,17 @@ import SwiftUI
 
 struct ConversationsView: View {
     
+    @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
+
     @Binding var showSideMenu: Bool
+    @Binding var showNewMessageView: Bool
     @StateObject var viewModel: ConversationsViewModel
+    @State private var navigateToChatView: Bool = false
+    @State private var chatUser: User?
     
-    init(showSideMenu: Binding<Bool>) {
+    init(showSideMenu: Binding<Bool>, showNewMessageView: Binding<Bool>) {
         _showSideMenu = showSideMenu
+        _showNewMessageView = showNewMessageView
         _viewModel = .init(wrappedValue: ConversationsViewModel())
     }
     
@@ -41,9 +47,27 @@ struct ConversationsView: View {
                         }
                     }
                 }
-                
+              
                 if viewModel.showLoading { ProgressView() }
             }
+            .onAppear {
+                tabBarViewModel.updateNewTweetButton(isHidden: false)
+            }
+            .navigationDestination(isPresented: $navigateToChatView, destination: {
+                if let user = self.chatUser {
+                    ChatView(user: user)
+                        .navigationBarBackButtonHidden()
+                } else {
+                    // TODO: ErrorViewを完成させる
+                    Text("ユーザーを取得できませんでした")
+                }
+            })
+            .sheet(isPresented: $showNewMessageView, content: {
+                NewMessageView() { user in
+                    self.chatUser = user
+                    self.navigateToChatView = true
+                }
+            })
             .overlay(
                 // Custom Header
                 NavigationHeaderView(showSideMenu: $showSideMenu, user: $viewModel.currentUser, headerTitle: "メッセージ")
@@ -93,6 +117,6 @@ extension ConversationsView {
     }
 }
 
-#Preview {
-    ConversationsView(showSideMenu: .constant(false))
-}
+//#Preview {
+//    ConversationsView(showSideMenu: .constant(false))
+//}

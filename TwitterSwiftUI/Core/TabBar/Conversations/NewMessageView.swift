@@ -13,7 +13,10 @@ struct NewMessageView: View {
     
     @StateObject var viewModel: NewMessageViewModel
     
-    init() {
+    var userSelectCompletion: (User) -> Void
+    
+    init(userSelectCompletion: @escaping (User) -> Void) {
+        self.userSelectCompletion = userSelectCompletion
         _viewModel = .init(wrappedValue: NewMessageViewModel())
     }
     
@@ -28,6 +31,10 @@ struct NewMessageView: View {
                 LazyVStack {
                     ForEach(viewModel.users) { user in
                         UserRowView(user: user)
+                            .onTapGesture {
+                                userSelectCompletion(user)
+                                dismiss()
+                            }
                     }
                 }
             }
@@ -79,5 +86,5 @@ extension NewMessageView {
 }
 
 #Preview {
-    NewMessageView()
+    NewMessageView(userSelectCompletion: { _ in })
 }

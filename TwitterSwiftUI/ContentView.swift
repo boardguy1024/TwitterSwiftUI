@@ -22,6 +22,7 @@ struct ContentView: View {
             EntryView()
         } else {
             MainTabView()
+                .environmentObject(MainTabBarViewModel())
         }
     }
 }

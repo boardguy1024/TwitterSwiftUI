@@ -5,7 +5,8 @@
 //  Created by パクギョンソク on 2023/10/08.
 //
 
-import Foundation
+
+import SwiftUI
 
 enum MainTabBarFilter: Int, CaseIterable, Identifiable {
     case home
@@ -27,4 +28,13 @@ enum MainTabBarFilter: Int, CaseIterable, Identifiable {
 
 class MainTabBarViewModel: ObservableObject {
     @Published var showSideMenu: Bool = false
+    @Published var hiddenNewTweetButton: Bool = false
+    @Published var showNewMessageView: Bool = false
+    @Published var selectedTab: MainTabBarFilter = .home
+
+    func updateNewTweetButton(isHidden: Bool) {
+        withAnimation {
+            hiddenNewTweetButton = isHidden
+        }
+    }
 }

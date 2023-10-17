@@ -10,7 +10,8 @@ import SwiftUI
 struct ChatView: View {
     
     @Environment(\.dismiss) var dismiss
-    
+    @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
+
     let viewModel: ChatViewModel
     
     @State var message: String = ""
@@ -22,7 +23,10 @@ struct ChatView: View {
     var body: some View {
      
         VStack {
+            navigationHeader
+            
             Spacer()
+            
             HStack(alignment: .bottom) {
                 TextField("メッセージを書く", text: $message, axis: .vertical)
                     .textFieldStyle(PlainTextFieldStyle())
@@ -57,21 +61,30 @@ struct ChatView: View {
             .background()
             .padding()
         }
-        .toolbar(content: {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    HStack {
-                        Image(systemName:"chevron.left")
-                        Text(viewModel.user.username)
-                            .bold()
-                    }
+        .onAppear {
+            tabBarViewModel.updateNewTweetButton(isHidden: true)
+        }
+    }
+}
+
+extension ChatView {
+    var navigationHeader: some View {
+        HStack {
+            Button {
+                dismiss()
+            } label: {
+                HStack {
+                    Image(systemName:"chevron.left")
+                    Text(viewModel.user.username)
+                        .bold()
                 }
-                .font(.subheadline)
-                .foregroundColor(.black)
             }
-        })
+            .font(.subheadline)
+            .foregroundColor(.black)
+            
+            Spacer()
+        }
+        .padding(.leading)
     }
 }
 
