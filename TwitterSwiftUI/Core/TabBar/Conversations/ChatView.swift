@@ -25,6 +25,8 @@ struct ChatView: View {
             
             ScrollViewReader { proxy in
                 ScrollView(.vertical, showsIndicators: false) {
+                    Spacer()
+                        .frame(height: 40)
                     
                     LazyVStack {
                         ForEach(viewModel.messages) { message in
