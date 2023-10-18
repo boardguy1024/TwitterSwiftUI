@@ -8,27 +8,38 @@
 import SwiftUI
 
 struct UserStatsView: View {
+    
+    @State var following: Int
+    @State var followers: Int
+    
+    init(following: Int, followers: Int) {
+        self.following = following
+        self.followers = followers
+    }
+    
     var body: some View {
         HStack(spacing: 24) {
             HStack {
-                Text("807").bold()
+                Text("\(following)").bold()
                     .font(.subheadline).bold()
-                Text("Following")
+                    .foregroundColor(.black)
+                Text("フォロー中")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
             }
                                 
             HStack {
-                Text("6.9M").bold()
+                Text("\(followers)").bold()
                     .font(.subheadline).bold()
-                Text("Followers ")
+                    .foregroundColor(.black)
+                Text("フォロワー")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
             }
         }
+        .foregroundColor(.gray)
+
     }
 }
 
 #Preview {
-    UserStatsView()
+    UserStatsView(following: 140, followers: 15)
 }

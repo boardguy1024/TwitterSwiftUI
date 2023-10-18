@@ -8,11 +8,12 @@
 import SwiftUI
 
 class NewTweetViewModel: ObservableObject {
-    
+
+    @Published var caption = ""
     @Published var didUploadTweet = false
         
     @MainActor
-    func uploadTweet(withCaption caption: String) async throws {
+    func uploadTweet() async throws {
         let success = try await TweetService.shared.uploadTweet(caption: caption)
         if success { didUploadTweet = true }
     }

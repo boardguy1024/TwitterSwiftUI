@@ -51,6 +51,15 @@ struct FeedView: View {
                     try await viewModel.fetchTweets()
                 }
             }
+            .onChange(of: tabBarViewModel.showUserStatusDetail) { _ in
+                if tabBarViewModel.selectedTab == .home {
+                    viewModel.showUserStatusDetail = true
+                }
+            }
+            .navigationDestination(isPresented: $viewModel.showUserStatusDetail, destination: {
+                UserStatusDetailView()
+                    .navigationBarBackButtonHidden()
+            })
             .onChange(of: tabBarViewModel.showUserProfile) { _ in
                 if tabBarViewModel.selectedTab == .home {
                     viewModel.showUserProfile = true

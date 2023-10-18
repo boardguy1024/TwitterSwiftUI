@@ -14,6 +14,7 @@ class ExploreViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var currentUser: User?
     @Published var showUserProfile: Bool = false
+    @Published var showUserStatusDetail: Bool = false
     
     private var cancellable = Set<AnyCancellable>()
     

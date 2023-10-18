@@ -31,8 +31,16 @@ struct ExploreView: View {
                     }
                 }
             }
+            .onChange(of: tabBarViewModel.showUserStatusDetail) { _ in
+                if tabBarViewModel.selectedTab == .explore {
+                    viewModel.showUserStatusDetail = true
+                }
+            }
+            .navigationDestination(isPresented: $viewModel.showUserStatusDetail, destination: {
+                UserStatusDetailView()
+                    .navigationBarBackButtonHidden()
+            })
             .onChange(of: tabBarViewModel.showUserProfile) { _ in
-                print("showUserProfile!!!: \(tabBarViewModel.showUserProfile)")
                 if tabBarViewModel.selectedTab == .explore {
                     viewModel.showUserProfile = true
                 }

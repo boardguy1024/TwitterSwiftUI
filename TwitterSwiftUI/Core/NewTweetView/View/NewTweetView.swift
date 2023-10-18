@@ -10,9 +10,8 @@ import Kingfisher
 
 struct NewTweetView: View {
     
-    @State private var caption = ""
     @Environment(\.dismiss) var dismiss
-    @StateObject var uploadViewModel = NewTweetViewModel()
+    @StateObject var viewModel: NewTweetViewModel = NewTweetViewModel()
 
     var body: some View {
         VStack {
@@ -28,7 +27,7 @@ struct NewTweetView: View {
                 Spacer()
                 
                 Button {
-                    Task { try await uploadViewModel.uploadTweet(withCaption: self.caption) }
+                    Task { try await viewModel.uploadTweet() }
                 } label: {
                     Text("ポストする")
                         .font(.caption)
@@ -36,10 +35,13 @@ struct NewTweetView: View {
                         .foregroundStyle(Color.white)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 6)
-                        .background(Color(.systemBlue))
+                        .background(viewModel.caption.isEmpty ? .gray.opacity(0.7) : Color(.systemBlue))
                         .clipShape(Capsule())
                 }
-            } 
+                .disabled(viewModel.caption.isEmpty)
+
+
+            }
             .padding()
             
             HStack(alignment: .top) {
@@ -51,13 +53,12 @@ struct NewTweetView: View {
                         .clipShape(Circle())
                 }
                 
-                TextAreaView("いまどうしている？", text: $caption)
+                TextAreaView("いまどうしている？", text: $viewModel.caption)
                     .offset(y: -8)
-                
             }
             .padding()
         }
-        .onReceive(uploadViewModel.$didUploadTweet, perform: { success in
+        .onReceive(viewModel.$didUploadTweet, perform: { success in
             if success {
                 dismiss()
             } else {

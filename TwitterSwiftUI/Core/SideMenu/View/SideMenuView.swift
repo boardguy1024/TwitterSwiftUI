@@ -52,8 +52,12 @@ struct SideMenuView: View {
                     tabBarViewModel.showUserProfile = true
                 }
                 
-                UserStatsView()
+                UserStatsView(following: 120, followers: 100)
                     .padding(.vertical)
+                    .onTapGesture {
+                        showSideMenu = false
+                        tabBarViewModel.showUserStatusDetail = true
+                    }
             }
             
             ForEach(SideMenuListType.allCases, id: \.self) { type in

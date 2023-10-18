@@ -25,7 +25,7 @@ struct TweetRowView: View {
                     KFImage(URL(string: user.profileImageUrl))
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 56, height: 56)
+                        .frame(width: 40, height: 40)
                         .clipShape(Circle())
                     
                     VStack(alignment: .leading, spacing: 4) {

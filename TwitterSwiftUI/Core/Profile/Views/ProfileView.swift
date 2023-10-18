@@ -173,8 +173,13 @@ extension ProfileView {
             .foregroundColor(.gray)
             
             // Following / Follower
-            UserStatsView()
-                .padding(.vertical)
+            NavigationLink {
+                UserStatusDetailView()
+                    .navigationBarBackButtonHidden()
+            } label: {
+                UserStatsView(following: 123, followers: 123)
+                    .padding(.vertical)
+            }
         }
         .padding(.horizontal)
     }
