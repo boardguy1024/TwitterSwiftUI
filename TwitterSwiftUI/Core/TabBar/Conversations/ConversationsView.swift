@@ -28,26 +28,32 @@ struct ConversationsView: View {
         NavigationStack {
         
             ZStack {
-                if viewModel.recentMessages.isEmpty && !viewModel.showLoading {
-                    emptyView
-                } else {
-                    ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    if viewModel.recentMessages.isEmpty && !viewModel.showLoading {
+                        emptyView
+                            .padding(.top, 50)
+                        
                         Spacer()
-                            .frame(height: 50)
-                        LazyVStack {
-                            ForEach(viewModel.recentMessages) { message in
-                                
-                                NavigationLink {
-                                    ChatView(user: message.user)
-                                        .navigationBarBackButtonHidden()
-                                } label: {
-                                    ConversationRowView(message: message)
+                        
+                    } else {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            Spacer()
+                                .frame(height: 50)
+                            LazyVStack {
+                                ForEach(viewModel.recentMessages) { message in
+                                    
+                                    NavigationLink {
+                                        ChatView(user: message.user)
+                                            .navigationBarBackButtonHidden()
+                                    } label: {
+                                        ConversationRowView(message: message)
+                                    }
                                 }
                             }
                         }
                     }
                 }
-              
+    
                 if viewModel.showLoading { ProgressView() }
             }
             .onAppear {

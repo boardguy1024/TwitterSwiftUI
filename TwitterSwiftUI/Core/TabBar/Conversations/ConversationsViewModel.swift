@@ -42,6 +42,8 @@ class ConversationsViewModel: ObservableObject {
         recentMessagesRef.addSnapshotListener { [weak self] snapshot, error in
             guard let changes = snapshot?.documentChanges, let self = self else { return }
             
+            if changes.isEmpty { self.showLoading = false }
+            
             changes.forEach { change in
                 let messageData = change.document.data()
                 let partnerUId = change.document.documentID

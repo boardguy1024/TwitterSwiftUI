@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D58392B2AE006A700EC2C67 /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D58392A2AE006A700EC2C67 /* ChatBubbleView.swift */; };
+		2D6173EA2AE011260089F1E7 /* Timestamp+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6173E92AE011250089F1E7 /* Timestamp+Extensions.swift */; };
 		2D7CD6522ADEC894006DECA4 /* UserStatusDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7CD6512ADEC894006DECA4 /* UserStatusDetailView.swift */; };
 		2D89D9DC2AD9844200F20E91 /* FeedTabListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89D9DB2AD9844200F20E91 /* FeedTabListView.swift */; };
 		2D89D9DE2AD9846C00F20E91 /* FeedTabListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89D9DD2AD9846C00F20E91 /* FeedTabListViewModel.swift */; };
@@ -105,6 +107,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D58392A2AE006A700EC2C67 /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
+		2D6173E92AE011250089F1E7 /* Timestamp+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timestamp+Extensions.swift"; sourceTree = "<group>"; };
 		2D7CD6512ADEC894006DECA4 /* UserStatusDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusDetailView.swift; sourceTree = "<group>"; };
 		2D89D9DB2AD9844200F20E91 /* FeedTabListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabListView.swift; sourceTree = "<group>"; };
 		2D89D9DD2AD9846C00F20E91 /* FeedTabListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabListViewModel.swift; sourceTree = "<group>"; };
@@ -422,6 +426,7 @@
 				FF170EE22AD29E7800B90E2D /* PreviewProvider.swift */,
 				FF170EEF2AD2DAB900B90E2D /* UIImage+Extensions.swift */,
 				FF170EF12AD2DB9700B90E2D /* View+Extensions.swift */,
+				2D6173E92AE011250089F1E7 /* Timestamp+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -523,6 +528,7 @@
 				2DC291452ADA2B7D006E9E23 /* ConversationsView.swift */,
 				2DC291492ADA3FC9006E9E23 /* ConversationsViewModel.swift */,
 				FF44B9462ABC8C21005B87F4 /* ChatView.swift */,
+				2D58392A2AE006A700EC2C67 /* ChatBubbleView.swift */,
 				2D89D9DF2AD9955900F20E91 /* ChatViewModel.swift */,
 				2DC2914B2ADA504C006E9E23 /* ConversationRowView.swift */,
 				2DC4D9462ADBF5B30066FF02 /* NewMessageView.swift */,
@@ -693,6 +699,7 @@
 				2D7CD6522ADEC894006DECA4 /* UserStatusDetailView.swift in Sources */,
 				FFACF2BC2AC1A82C00A2C911 /* Tweet.swift in Sources */,
 				FF63590E2AD7EA6700A7B114 /* TweetListViewModel.swift in Sources */,
+				2D58392B2AE006A700EC2C67 /* ChatBubbleView.swift in Sources */,
 				2DE08BE72ADAEBF900DAA3C4 /* NewTweetButton.swift in Sources */,
 				2D89D9DC2AD9844200F20E91 /* FeedTabListView.swift in Sources */,
 				FF2EE4FB2ABF1C2F000522CF /* TextAreaView.swift in Sources */,
@@ -725,6 +732,7 @@
 				FF2EE4F92ABF144E000522CF /* NewTweetView.swift in Sources */,
 				FF2EE4E72ABECC61000522CF /* UserRowView.swift in Sources */,
 				FF63590C2AD7E84800A7B114 /* TweetListView.swift in Sources */,
+				2D6173EA2AE011260089F1E7 /* Timestamp+Extensions.swift in Sources */,
 				2D89D9E02AD9955900F20E91 /* ChatViewModel.swift in Sources */,
 				FFACF2B42AC15A3400A2C911 /* SearchBar.swift in Sources */,
 				FF2EE5042ABF23EE000522CF /* RoundedShape.swift in Sources */,

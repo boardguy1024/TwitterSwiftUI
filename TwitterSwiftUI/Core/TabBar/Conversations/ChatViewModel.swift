@@ -8,11 +8,16 @@
 import SwiftUI
 import Firebase
 
-struct ChatViewModel {
+class ChatViewModel: ObservableObject {
     let user: User
-        
+
+    @Published var messages = [Message]()
+    @Published var inputMessage: String = ""
+
     init(user: User) {
         self.user = user
+        
+        fetchMessages()
     }
     
     func sendButtonTapped(with message: String, completion: @escaping () -> Void) async throws {
@@ -24,9 +29,36 @@ struct ChatViewModel {
         }
     }
     
-    private func fetchMessages() {
+    func fetchMessages() {
+        guard let currentUser = AuthService.shared.currentUser,
+                let currentUid = currentUser.id,
+                let partherId = user.id else { return }
+
+        let ref = Firestore.firestore().collection("messages")
+            .document(currentUid)
+            .collection(partherId)
+            .order(by: "timestamp", descending: false)
         
+        ref.addSnapshotListener { [weak self] snapshot, error in
+            // type = .add | .modified | .removed
+            guard let self = self, let changes = snapshot?.documentChanges.filter({ $0.type == .added }) else { return }
+            
+            changes.forEach { change in
+                let messageData = change.document.data()
+                guard let fromId = messageData["fromId"] as? String else { return }
+                
+                let messageOwner: User = fromId == currentUid ? currentUser : self.user
+                // 本来であれば、データの整合性のために取得が望ましいが、チャットのやりとりは 自分と self.Userが確定なので
+                // fetchせず、持っているUserデータを使う
+//                Firestore.firestore().collection("users").document(fromId).getDocument { snapshot, _ in
+//                    let user = User.decode(dic: snapshot?.data())
+//                    self.messages.append(.init(user: user, dic: messageData))
+//                }
+                self.messages.append(.init(user: messageOwner, dic: messageData))
+            }
+        }
     }
+    
     
     @MainActor
     private func sendMessage(_ messageText: String, to user: User) async throws {
