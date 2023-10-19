@@ -52,7 +52,8 @@ struct SideMenuView: View {
                     tabBarViewModel.showUserProfile = true
                 }
                 
-                UserStatsView(following: 120, followers: 100)
+                UserStatsView(following: $viewModel.follwoingCount,
+                              followers: $viewModel.followersCount)
                     .padding(.vertical)
                     .onTapGesture {
                         showSideMenu = false

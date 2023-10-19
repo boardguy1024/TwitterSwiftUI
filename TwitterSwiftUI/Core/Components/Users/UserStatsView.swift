@@ -9,12 +9,12 @@ import SwiftUI
 
 struct UserStatsView: View {
     
-    @State var following: Int
-    @State var followers: Int
+    @Binding var following: Int
+    @Binding var followers: Int
     
-    init(following: Int, followers: Int) {
-        self.following = following
-        self.followers = followers
+    init(following: Binding<Int>, followers: Binding<Int>) {
+        _following = following
+        _followers = followers
     }
     
     var body: some View {
@@ -41,5 +41,5 @@ struct UserStatsView: View {
 }
 
 #Preview {
-    UserStatsView(following: 140, followers: 15)
+    UserStatsView(following: .constant(100), followers: .constant(100))
 }

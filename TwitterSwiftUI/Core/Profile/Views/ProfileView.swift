@@ -174,10 +174,11 @@ extension ProfileView {
             
             // Following / Follower
             NavigationLink {
-                UserStatusDetailView()
+                UserStatusDetailView(user: viewModel.user)
                     .navigationBarBackButtonHidden()
             } label: {
-                UserStatsView(following: 123, followers: 123)
+                UserStatsView(following: $viewModel.follwoingCount,
+                              followers: $viewModel.followersCount)
                     .padding(.vertical)
             }
         }

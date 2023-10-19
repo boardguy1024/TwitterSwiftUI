@@ -52,6 +52,44 @@ class UserService {
             return []
         }
     }
+}
+
+
+//MARK: - Following & Followers
+
+extension UserService {
+    
+
+    func fetchFollowingCount(with uid: String) async throws -> Int {
+        let snapshot = try await Firestore.firestore().collection("following").document(uid).collection("user-following")
+            .getDocuments()
+        return snapshot.documents.count
+    }
+    
+
+    func fetchFollowersCount(with uid: String) async throws -> Int {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return 0 }
+        let snapshot = try await Firestore.firestore().collection("followers").document(uid).collection("user-followers")
+            .getDocuments()
+        return snapshot.documents.count
+    }
+    
+    
+    func fetchFollowers() async throws -> [User] {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return [] }
+
+        let snapshot = try await Firestore.firestore().collection("followers").document(currentUserId).collection("user-followers")
+            .getDocuments()
+        
+        snapshot.documents.forEach { snapshot in
+            let followerId = snapshot.documentID
+            
+            print("id!!!!: \(followerId)")
+        }
+        
+        return []
+    }
+    
     
     func checkIfUserIsFollowing(for uid: String) async throws -> Bool {
         guard let currentUserId = Auth.auth().currentUser?.uid else { return false }

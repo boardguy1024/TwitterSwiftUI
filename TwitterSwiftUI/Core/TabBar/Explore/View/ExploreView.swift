@@ -37,8 +37,10 @@ struct ExploreView: View {
                 }
             }
             .navigationDestination(isPresented: $viewModel.showUserStatusDetail, destination: {
-                UserStatusDetailView()
-                    .navigationBarBackButtonHidden()
+                if let user = viewModel.currentUser {
+                    UserStatusDetailView(user: user)
+                        .navigationBarBackButtonHidden()
+                }
             })
             .onChange(of: tabBarViewModel.showUserProfile) { _ in
                 if tabBarViewModel.selectedTab == .explore {

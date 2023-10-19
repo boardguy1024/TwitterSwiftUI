@@ -38,6 +38,8 @@ enum SideMenuListType: Int, CaseIterable {
 class SideMenuViewModel: ObservableObject {
 
     @Published var user: User?
+    @Published var followersCount: Int = 0
+    @Published var follwoingCount: Int = 0
     
     private var cancellable = Set<AnyCancellable>()
     
@@ -54,5 +56,29 @@ class SideMenuViewModel: ObservableObject {
             self?.user = user
         }
         .store(in: &cancellable)
+        
+        //Userが変更されたタイミングでFollow&Followingのカウントを取得
+        $user.compactMap { $0?.id }
+            .sink { [weak self] userId in
+                guard let self = self else { return }
+                Task {
+                    try await self.fetchFollowingCount()
+                    try await self.fetchFollowersCount()
+                }
+            }
+            .store(in: &cancellable)
+    }
+    
+    @MainActor
+    private func fetchFollowingCount() async throws {
+        guard let userId = user?.id else { return }
+        follwoingCount = try await UserService.shared.fetchFollowingCount(with: userId)
+
+    }
+    
+    @MainActor
+    private func fetchFollowersCount() async throws {
+        guard let userId = user?.id else { return }
+        followersCount = try await UserService.shared.fetchFollowersCount(with: userId)
     }
 }

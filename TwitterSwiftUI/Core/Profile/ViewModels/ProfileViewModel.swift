@@ -10,6 +10,8 @@ import Foundation
 class ProfileViewModel: ObservableObject {
     
     @Published var isFollowed = false
+    @Published var followersCount: Int = 0
+    @Published var follwoingCount: Int = 0
     
     let user: User
     
@@ -21,7 +23,9 @@ class ProfileViewModel: ObservableObject {
         self.user = user
         
         Task {
-            try await self.checkIfUserIsFollowing()
+            try await checkIfUserIsFollowing()
+            try await fetchFollowingCount()
+            try await fetchFollowersCount()
         }
     }
     
@@ -63,5 +67,17 @@ class ProfileViewModel: ObservableObject {
         guard let uid = user.id else { return }
         let unfollowed = try await UserService.shared.unfollowUser(uid: uid)
         self.isFollowed = !unfollowed
+    }
+    
+    @MainActor
+    private func fetchFollowingCount() async throws {
+        guard let userId = user.id else { return }
+        follwoingCount = try await UserService.shared.fetchFollowingCount(with: userId)
+    }
+    
+    @MainActor
+    private func fetchFollowersCount() async throws {
+        guard let userId = user.id else { return }
+        followersCount = try await UserService.shared.fetchFollowersCount(with: userId)
     }
 }
