@@ -58,7 +58,7 @@ struct FeedView: View {
             }
             .navigationDestination(isPresented: $viewModel.showUserStatusDetail, destination: {
                 if let user = viewModel.currentUser {
-                    UserStatusDetailView(user: user)
+                    UserStatusDetailView(initialTab: tabBarViewModel.userStatueInitialTap, user: user)
                         .navigationBarBackButtonHidden()
                 }
             })

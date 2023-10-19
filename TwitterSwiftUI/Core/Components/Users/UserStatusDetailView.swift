@@ -14,23 +14,24 @@ struct UserStatusDetailView: View {
     @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
     @StateObject var viewModel: UserStatusDetailViewModel
     
-    init(user: User) {
-        _viewModel = .init(wrappedValue: UserStatusDetailViewModel(user: user))
+    init(initialTab: FollowStatusType, user: User) {
+        _viewModel = .init(wrappedValue: UserStatusDetailViewModel(initialTab: initialTab, user: user))
     }
     var body: some View {
         VStack(spacing: 0) {
             PagerTabView(selected: $viewModel.selectedTab, tabs:
                             [
-                                TabLabel(type: .followers),
-                                TabLabel(type: .following)
+                                TabLabel(type: .following),
+                                TabLabel(type: .followers)
                             ]) {
                                 ForEach(FollowStatusType.allCases) { type in
-                                    FeedTabListView()
+                                    FollowingUserListView(tabType: type)
                                         .environmentObject(self.viewModel)
                                         .frame(width: UIScreen.main.bounds.width)
                                 }
                             }
         }
+        .padding(.top, 30)
         .overlay(navigationHeader.edgesIgnoringSafeArea(.top), alignment: .top)
         .onAppear {
             tabBarViewModel.showUserStatusDetail = false
@@ -73,5 +74,5 @@ extension UserStatusDetailView {
 }
 
 #Preview {
-    UserStatusDetailView(user: PreviewProvider.shared.user)
+    UserStatusDetailView(initialTab: .followers, user: PreviewProvider.shared.user)
 }

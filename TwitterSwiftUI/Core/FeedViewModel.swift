@@ -56,7 +56,7 @@ class FeedViewModel: ObservableObject {
         
         for index in tweets.indices {
             //直後にそれぞれUserデータを取得して画面表示
-            self.tweets[index].user = try await UserService.shared.fetchProfile(withUid: tweets[index].uid)
+            self.tweets[index].user = try await UserService.shared.fetchUser(withUid: tweets[index].uid)
         }
     }
 }

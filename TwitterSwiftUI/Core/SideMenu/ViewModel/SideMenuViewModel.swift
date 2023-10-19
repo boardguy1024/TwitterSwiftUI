@@ -73,7 +73,6 @@ class SideMenuViewModel: ObservableObject {
     private func fetchFollowingCount() async throws {
         guard let userId = user?.id else { return }
         follwoingCount = try await UserService.shared.fetchFollowingCount(with: userId)
-
     }
     
     @MainActor

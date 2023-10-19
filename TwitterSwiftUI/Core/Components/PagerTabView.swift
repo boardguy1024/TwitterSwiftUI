@@ -29,6 +29,7 @@ struct PagerTabView<Tab: View, Content: View>: View {
         self.tabs = tabs.enumerated().map { index, tab in
             TabItem(id: index, tabView: tab)}
         self.content = content()
+        
     }
     
     @State private var underlineViewOffset: CGFloat = 0
@@ -50,6 +51,13 @@ struct PagerTabView<Tab: View, Content: View>: View {
                     content
                         .frame(maxWidth: .infinity)
                 }
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                let contentOffset = screenWidth * CGFloat(selectedTab)
+                offset = contentOffset
+                underlineViewOffset = contentOffset / CGFloat(tabs.count)
             }
         }
         .onChange(of: offset) { _ in
@@ -115,7 +123,6 @@ extension PagerTabView {
                 .padding(.top, 2)
                 .padding(.horizontal, padding / 2)
                 .offset(x: underlineViewOffset)
-            
             Spacer()
         }
     }

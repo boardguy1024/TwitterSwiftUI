@@ -9,16 +9,16 @@ import SwiftUI
 import Kingfisher
 
 struct SideMenuView: View {
-
+    
     @StateObject var viewModel: SideMenuViewModel
     @Binding var showSideMenu: Bool
     @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
-
+    
     init(showSideMenu: Binding<Bool>) {
         _showSideMenu = showSideMenu
         _viewModel = .init(wrappedValue: SideMenuViewModel())
     }
-
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 20) {
@@ -31,7 +31,7 @@ struct SideMenuView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 48, height: 48)
                             .clipShape(Circle())
-                            
+                        
                     } else {
                         Image(systemName: "person.fill")
                             .resizable()
@@ -42,7 +42,7 @@ struct SideMenuView: View {
                     
                     Text(viewModel.user?.fullname ?? "")
                         .font(.headline).bold()
-
+                    
                     Text("@\(viewModel.user?.username ?? "")")
                         .font(.caption)
                         .foregroundStyle(.gray)
@@ -52,13 +52,15 @@ struct SideMenuView: View {
                     tabBarViewModel.showUserProfile = true
                 }
                 
-                UserStatsView(following: $viewModel.follwoingCount,
-                              followers: $viewModel.followersCount)
-                    .padding(.vertical)
-                    .onTapGesture {
+                UserStatsView(
+                    following: $viewModel.follwoingCount,
+                    followers: $viewModel.followersCount,
+                    buttonTapped: { status in
                         showSideMenu = false
+                        tabBarViewModel.userStatueInitialTap = status
                         tabBarViewModel.showUserStatusDetail = true
-                    }
+                    })
+                .padding(.vertical)
             }
             
             ForEach(SideMenuListType.allCases, id: \.self) { type in

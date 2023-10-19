@@ -32,9 +32,11 @@ class MainTabBarViewModel: ObservableObject {
     @Published var showNewMessageView: Bool = false
     @Published var showNewTweetView: Bool = false
     @Published var showUserProfile: Bool = false
-    @Published var showUserStatusDetail: Bool = false
     @Published var selectedTab: MainTabBarFilter = .home
 
+    @Published var showUserStatusDetail: Bool = false
+    @Published var userStatueInitialTap: FollowStatusType = .followers
+    
     func updateNewTweetButton(isHidden: Bool) {
         withAnimation {
             hiddenNewTweetButton = isHidden

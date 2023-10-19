@@ -100,7 +100,7 @@ class AuthService: ObservableObject {
     @MainActor
     private func fetchUserProfile() async throws {
         guard let uid = userSession?.uid else { return }
-        self.currentUser = try await UserService.shared.fetchProfile(withUid: uid)
+        self.currentUser = try await UserService.shared.fetchUser(withUid: uid)
     }
 }
 

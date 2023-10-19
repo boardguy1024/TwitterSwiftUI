@@ -15,7 +15,7 @@ class UserService {
     private init() { }
     
     @MainActor
-    func fetchProfile(withUid uid: String) async throws -> User? {
+    func fetchUser(withUid uid: String) async throws -> User? {
         
         do {
             let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
@@ -59,37 +59,49 @@ class UserService {
 
 extension UserService {
     
-
+    
     func fetchFollowingCount(with uid: String) async throws -> Int {
         let snapshot = try await Firestore.firestore().collection("following").document(uid).collection("user-following")
             .getDocuments()
         return snapshot.documents.count
     }
     
-
+    
     func fetchFollowersCount(with uid: String) async throws -> Int {
-        guard let currentUserId = Auth.auth().currentUser?.uid else { return 0 }
         let snapshot = try await Firestore.firestore().collection("followers").document(uid).collection("user-followers")
             .getDocuments()
         return snapshot.documents.count
     }
     
-    
-    func fetchFollowers() async throws -> [User] {
-        guard let currentUserId = Auth.auth().currentUser?.uid else { return [] }
-
-        let snapshot = try await Firestore.firestore().collection("followers").document(currentUserId).collection("user-followers")
+    func fetchFollowers(with uid: String) async throws -> [User] {
+        let snapshot = try await Firestore.firestore().collection("followers").document(uid).collection("user-followers")
             .getDocuments()
         
-        snapshot.documents.forEach { snapshot in
-            let followerId = snapshot.documentID
-            
-            print("id!!!!: \(followerId)")
-        }
+        var users: [User] = []
         
-        return []
+        for document in snapshot.documents {
+            let followerId = document.documentID
+            if let user = try await self.fetchUser(withUid: followerId) {
+                users.append(user)
+            }
+        }
+        return users
     }
     
+    func fetchFollowing(with uid: String) async throws -> [User] {
+        let snapshot = try await Firestore.firestore().collection("following").document(uid).collection("user-following")
+            .getDocuments()
+        
+        var users: [User] = []
+        
+        for document in snapshot.documents {
+            let followerId = document.documentID
+            if let user = try await self.fetchUser(withUid: followerId) {
+                users.append(user)
+            }
+        }
+        return users
+    }
     
     func checkIfUserIsFollowing(for uid: String) async throws -> Bool {
         guard let currentUserId = Auth.auth().currentUser?.uid else { return false }
@@ -97,8 +109,8 @@ extension UserService {
         // followers(フォロワーたち)から該当ユーザーを探し、そのユーザーがフォローしている人に自分がいるかどうかをチェック
         do {
             let isFollowing = try await Firestore.firestore().collection("followers")
-               .document(uid)
-               .collection("user-followers").document(currentUserId).getDocument().exists
+                .document(uid)
+                .collection("user-followers").document(currentUserId).getDocument().exists
             return isFollowing
         } catch {
             print("Failed checkIfUserIsFollowing: \(error.localizedDescription)")
@@ -112,10 +124,10 @@ extension UserService {
         do {
             // Me Follow to someone
             try await Firestore.firestore().collection("following")
-               .document(currentUserId)
-               .collection("user-following")
-               .document(uid) // <<< follow対象の uid
-               .setData([:])
+                .document(currentUserId)
+                .collection("user-following")
+                .document(uid) // <<< follow対象の uid
+                .setData([:])
             
             
             try await Firestore.firestore().collection("followers")
@@ -135,9 +147,9 @@ extension UserService {
         do {
             // Me Follow to someone
             try await Firestore.firestore().collection("following")
-               .document(currentUserId)
-               .collection("user-following")
-               .document(uid).delete()
+                .document(currentUserId)
+                .collection("user-following")
+                .document(uid).delete()
             
             try await Firestore.firestore().collection("followers")
                 .document(uid)

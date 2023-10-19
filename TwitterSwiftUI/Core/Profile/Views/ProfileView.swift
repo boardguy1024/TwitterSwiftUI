@@ -55,7 +55,7 @@ struct ProfileView: View {
             .fontWeight(.bold)
             .padding(.horizontal, 40)
             .padding(.vertical, 6)
-            .background(Color.white) 
+            .background(Color.white)
     }
     
 }
@@ -174,12 +174,16 @@ extension ProfileView {
             
             // Following / Follower
             NavigationLink {
-                UserStatusDetailView(user: viewModel.user)
+                UserStatusDetailView(initialTab: tabBarViewModel.userStatueInitialTap, user: viewModel.user)
                     .navigationBarBackButtonHidden()
             } label: {
-                UserStatsView(following: $viewModel.follwoingCount,
-                              followers: $viewModel.followersCount)
-                    .padding(.vertical)
+                UserStatsView(
+                    following: $viewModel.follwoingCount,
+                    followers: $viewModel.followersCount,
+                    buttonTapped: { status in
+                        // TODO: 
+                    })
+                .padding(.vertical)
             }
         }
         .padding(.horizontal)

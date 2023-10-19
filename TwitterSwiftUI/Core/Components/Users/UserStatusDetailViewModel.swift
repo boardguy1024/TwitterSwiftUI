@@ -8,13 +8,13 @@
 import Foundation
 
 enum FollowStatusType: Int, CaseIterable, Identifiable {
-    case followers
     case following
+    case followers
     
     var title: String {
         switch self {
-        case .followers: "フォロワー"
         case .following: "フォロー中"
+        case .followers: "フォロワー"
         }
     }
     
@@ -28,14 +28,27 @@ class UserStatusDetailViewModel: ObservableObject {
     @Published var followers = [User]()
     @Published var following = [User]()
     
-    @Published var selectedTab: Int = FollowStatusType.followers.rawValue
+    @Published var selectedTab: Int
     
-    init(user: User) {
+    init(initialTab: FollowStatusType, user: User) {
+        self.selectedTab = initialTab.rawValue
         self.user = user
+        
+        Task {
+            try await fetchFollowers()
+            try await fetchFollowing()
+        }
     }
     
-    func fetchFollowers() {
-        
-        
+    @MainActor
+    func fetchFollowers() async throws {
+        guard let userId = user.id else { return }
+        followers = try await UserService.shared.fetchFollowers(with: userId)
+    }
+    
+    @MainActor
+    func fetchFollowing() async throws {
+        guard let userId = user.id else { return }
+        following = try await UserService.shared.fetchFollowing(with: userId)
     }
 }

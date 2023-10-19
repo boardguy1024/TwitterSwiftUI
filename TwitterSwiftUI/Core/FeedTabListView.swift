@@ -10,9 +10,7 @@ import SwiftUI
 struct FeedTabListView: View {
     
     @EnvironmentObject var viewModel: FeedViewModel
-    
-    @State var tabType: FeedTabFilter = .recommend
-    
+        
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
