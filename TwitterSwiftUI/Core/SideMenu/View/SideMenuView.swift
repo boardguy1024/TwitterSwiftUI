@@ -58,7 +58,7 @@ struct SideMenuView: View {
                     buttonTapped: { status in
                         showSideMenu = false
                         tabBarViewModel.userStatueInitialTap = status
-                        tabBarViewModel.showUserStatusDetail = true
+                        tabBarViewModel.showUserStatusDetail.toggle()
                     })
                 .padding(.vertical)
             }

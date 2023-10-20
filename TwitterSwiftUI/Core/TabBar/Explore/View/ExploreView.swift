@@ -33,7 +33,7 @@ struct ExploreView: View {
             }
             .onChange(of: tabBarViewModel.showUserStatusDetail) { _ in
                 if tabBarViewModel.selectedTab == .explore {
-                    viewModel.showUserStatusDetail = true
+                    viewModel.showUserStatusDetail.toggle()
                 }
             }
             .navigationDestination(isPresented: $viewModel.showUserStatusDetail, destination: {

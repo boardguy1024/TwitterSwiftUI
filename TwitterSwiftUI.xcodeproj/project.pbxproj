@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D0C6CC12AE2C31F00D8F733 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C6CC02AE2C31F00D8F733 /* ProfileEditView.swift */; };
+		2D0C6CC32AE2C32E00D8F733 /* ProfileEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C6CC22AE2C32E00D8F733 /* ProfileEditViewModel.swift */; };
 		2D58392B2AE006A700EC2C67 /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D58392A2AE006A700EC2C67 /* ChatBubbleView.swift */; };
 		2D6173EA2AE011260089F1E7 /* Timestamp+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6173E92AE011250089F1E7 /* Timestamp+Extensions.swift */; };
 		2D7CD6522ADEC894006DECA4 /* UserStatusDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7CD6512ADEC894006DECA4 /* UserStatusDetailView.swift */; };
@@ -109,6 +111,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D0C6CC02AE2C31F00D8F733 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		2D0C6CC22AE2C32E00D8F733 /* ProfileEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewModel.swift; sourceTree = "<group>"; };
 		2D58392A2AE006A700EC2C67 /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		2D6173E92AE011250089F1E7 /* Timestamp+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timestamp+Extensions.swift"; sourceTree = "<group>"; };
 		2D7CD6512ADEC894006DECA4 /* UserStatusDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusDetailView.swift; sourceTree = "<group>"; };
@@ -546,29 +550,31 @@
 		FF44B9412ABC8BB9005B87F4 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				FF44B9492ABC8D59005B87F4 /* Views */,
-				FF44B9482ABC8D54005B87F4 /* ViewModels */,
+				FF44B9492ABC8D59005B87F4 /* View */,
+				FF44B9482ABC8D54005B87F4 /* ViewModel */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		FF44B9482ABC8D54005B87F4 /* ViewModels */ = {
+		FF44B9482ABC8D54005B87F4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				FF5F92732ABEC64E00A33B9C /* ProfileTweetsTabType.swift */,
 				FFACF2BD2AC1BD2A00A2C911 /* ProfileViewModel.swift */,
 				FF63590D2AD7EA6700A7B114 /* TweetListViewModel.swift */,
+				2D0C6CC22AE2C32E00D8F733 /* ProfileEditViewModel.swift */,
 			);
-			path = ViewModels;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		FF44B9492ABC8D59005B87F4 /* Views */ = {
+		FF44B9492ABC8D59005B87F4 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				FF44B94A2ABC8D6A005B87F4 /* ProfileView.swift */,
+				2D0C6CC02AE2C31F00D8F733 /* ProfileEditView.swift */,
 				FF63590B2AD7E84800A7B114 /* TweetListView.swift */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 		FF4C5D742AD27A3C003F3E90 /* TabBar */ = {
@@ -706,6 +712,7 @@
 				FFACF2BC2AC1A82C00A2C911 /* Tweet.swift in Sources */,
 				FF63590E2AD7EA6700A7B114 /* TweetListViewModel.swift in Sources */,
 				2D58392B2AE006A700EC2C67 /* ChatBubbleView.swift in Sources */,
+				2D0C6CC32AE2C32E00D8F733 /* ProfileEditViewModel.swift in Sources */,
 				2DE08BE72ADAEBF900DAA3C4 /* NewTweetButton.swift in Sources */,
 				2D89D9DC2AD9844200F20E91 /* FeedTabListView.swift in Sources */,
 				FF2EE4FB2ABF1C2F000522CF /* TextAreaView.swift in Sources */,
@@ -751,6 +758,7 @@
 				FF2EE4F42ABF0D5F000522CF /* SideMenuOptionRowView.swift in Sources */,
 				FF170EF42AD2F2DB00B90E2D /* AuthHeaderView.swift in Sources */,
 				FFFB5D5A2AC045D600817497 /* ImageUploader.swift in Sources */,
+				2D0C6CC12AE2C31F00D8F733 /* ProfileEditView.swift in Sources */,
 				FFACF2B82AC1A53600A2C911 /* NewTweetViewModel.swift in Sources */,
 				FF170EF02AD2DAB900B90E2D /* UIImage+Extensions.swift in Sources */,
 				FF63590A2AD7E2E500A7B114 /* PagerTabView.swift in Sources */,

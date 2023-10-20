@@ -12,6 +12,7 @@ class ProfileViewModel: ObservableObject {
     @Published var isFollowed = false
     @Published var followersCount: Int = 0
     @Published var follwoingCount: Int = 0
+    @Published var showProfileEdit: Bool = false
     
     let user: User
     
@@ -33,7 +34,7 @@ class ProfileViewModel: ObservableObject {
     func actionButtonTapped() {
         
         if user.isCurrentUser {
-            // Edit Profile
+            showProfileEdit.toggle()
             
         } else {
             // Follow or Following

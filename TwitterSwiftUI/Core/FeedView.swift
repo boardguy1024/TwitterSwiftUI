@@ -53,7 +53,7 @@ struct FeedView: View {
             }
             .onChange(of: tabBarViewModel.showUserStatusDetail) { _ in
                 if tabBarViewModel.selectedTab == .home {
-                    viewModel.showUserStatusDetail = true
+                    viewModel.showUserStatusDetail.toggle()
                 }
             }
             .navigationDestination(isPresented: $viewModel.showUserStatusDetail, destination: {

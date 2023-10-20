@@ -10,7 +10,6 @@ import SwiftUI
 struct UserStatusDetailView: View {
     
     @Environment(\.dismiss) var dismiss
-    
     @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
     @StateObject var viewModel: UserStatusDetailViewModel
     
@@ -33,9 +32,6 @@ struct UserStatusDetailView: View {
         }
         .padding(.top, 30)
         .overlay(navigationHeader.edgesIgnoringSafeArea(.top), alignment: .top)
-        .onAppear {
-            tabBarViewModel.showUserStatusDetail = false
-        }
     }
     
     @ViewBuilder
@@ -74,5 +70,9 @@ extension UserStatusDetailView {
 }
 
 #Preview {
-    UserStatusDetailView(initialTab: .followers, user: PreviewProvider.shared.user)
+    UserStatusDetailView(initialTab: .followers,
+                         user: .init(username: "username",
+                                     fullname: "fullname",
+                                     profileImageUrl: "profileImageUrl",
+                                     email: "email"))
 }
