@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FollowStatusType: Int, CaseIterable, Identifiable {
+enum FollowButtonType: Int, CaseIterable, Identifiable {
     case following
     case followers
     
@@ -30,7 +30,7 @@ class UserStatusDetailViewModel: ObservableObject {
     
     @Published var selectedTab: Int
     
-    init(initialTab: FollowStatusType, user: User) {
+    init(initialTab: FollowButtonType, user: User) {
         self.selectedTab = initialTab.rawValue
         self.user = user
         

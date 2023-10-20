@@ -35,7 +35,7 @@ class MainTabBarViewModel: ObservableObject {
     @Published var selectedTab: MainTabBarFilter = .home
 
     @Published var showUserStatusDetail: Bool = false
-    @Published var userStatueInitialTap: FollowStatusType = .followers
+    @Published var userStatueInitialTap: FollowButtonType = .followers
     
     func updateNewTweetButton(isHidden: Bool) {
         withAnimation {

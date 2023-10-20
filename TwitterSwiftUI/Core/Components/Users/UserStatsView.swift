@@ -12,11 +12,11 @@ struct UserStatsView: View {
     @Binding var following: Int
     @Binding var followers: Int
         
-    var buttonTapped: (FollowStatusType) -> Void
+    var buttonTapped: (FollowButtonType) -> Void
     
     init(following: Binding<Int>,
          followers: Binding<Int>,
-         buttonTapped: @escaping (FollowStatusType) -> Void) {
+         buttonTapped: @escaping (FollowButtonType) -> Void) {
         _following = following
         _followers = followers
         self.buttonTapped = buttonTapped
@@ -31,7 +31,7 @@ struct UserStatsView: View {
                     Text("\(following)").bold()
                         .font(.subheadline).bold()
                         .foregroundColor(.black)
-                    Text(FollowStatusType.following.title)
+                    Text(FollowButtonType.following.title)
                         .font(.subheadline)
                 }
             }
@@ -43,7 +43,7 @@ struct UserStatsView: View {
                     Text("\(followers)").bold()
                         .font(.subheadline).bold()
                         .foregroundColor(.black)
-                    Text(FollowStatusType.followers.title)
+                    Text(FollowButtonType.followers.title)
                         .font(.subheadline)
                 }
             }

@@ -11,7 +11,7 @@ struct FollowingUserListView: View {
     
     @EnvironmentObject var viewModel: UserStatusDetailViewModel
     
-    var tabType: FollowStatusType
+    var tabType: FollowButtonType
     
     var body: some View {
         VStack(spacing: 0) {

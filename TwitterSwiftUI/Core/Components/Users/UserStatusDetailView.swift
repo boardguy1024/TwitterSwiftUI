@@ -13,7 +13,7 @@ struct UserStatusDetailView: View {
     @EnvironmentObject var tabBarViewModel: MainTabBarViewModel
     @StateObject var viewModel: UserStatusDetailViewModel
     
-    init(initialTab: FollowStatusType, user: User) {
+    init(initialTab: FollowButtonType, user: User) {
         _viewModel = .init(wrappedValue: UserStatusDetailViewModel(initialTab: initialTab, user: user))
     }
     var body: some View {
@@ -23,7 +23,7 @@ struct UserStatusDetailView: View {
                                 TabLabel(type: .following),
                                 TabLabel(type: .followers)
                             ]) {
-                                ForEach(FollowStatusType.allCases) { type in
+                                ForEach(FollowButtonType.allCases) { type in
                                     FollowingUserListView(tabType: type)
                                         .environmentObject(self.viewModel)
                                         .frame(width: UIScreen.main.bounds.width)
@@ -35,7 +35,7 @@ struct UserStatusDetailView: View {
     }
     
     @ViewBuilder
-    func TabLabel(type: FollowStatusType) -> some View {
+    func TabLabel(type: FollowButtonType) -> some View {
         Text(type.title)
             .font(.subheadline)
             .fontWeight(.bold)

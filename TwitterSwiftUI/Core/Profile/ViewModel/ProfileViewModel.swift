@@ -9,12 +9,15 @@ import Foundation
 
 class ProfileViewModel: ObservableObject {
     
+    let user: User
+
     @Published var isFollowed = false
     @Published var followersCount: Int = 0
     @Published var follwoingCount: Int = 0
     @Published var showProfileEdit: Bool = false
+    @Published var showUserStatusDetail: Bool = false
     
-    let user: User
+    var selectedFollowButtonTab: FollowButtonType = .followers
     
     var actionButtonTitle: String {
         user.isCurrentUser ? "プロフィールを編集" : isFollowed ? "フォロー中" : "フォローする"
@@ -49,6 +52,13 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
+    func followButtonTapped(type: FollowButtonType) {
+        selectedFollowButtonTab = type
+        showUserStatusDetail.toggle()
+    }
+    
+    // MARK: Private
+
     @MainActor
     private func checkIfUserIsFollowing() async throws {
         guard let uid = user.id else { return }
