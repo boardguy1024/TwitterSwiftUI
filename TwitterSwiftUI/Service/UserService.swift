@@ -52,6 +52,49 @@ class UserService {
             return []
         }
     }
+    
+    func updateProfile(profileImage: UIImage?, 
+                       headerImage: UIImage?,
+                       name: String?,
+                       bio: String?,
+                       location: String?,
+                       webUrl: String?) async throws {
+        guard let uid = AuthService.shared.currentUser?.id else { return }
+        
+        var data: [String: Any] = [:]
+        
+        try await tryUploadImage(dataDic: &data, uploadImage: profileImage, using: ImageUploader.uploadProfileImage, key: "profileImageUrl")
+        try await tryUploadImage(dataDic: &data, uploadImage: headerImage, using: ImageUploader.uploadProfileImage, key: "profileHeaderImageUrl")
+
+        addIfNotEmpty(dataDic: &data, value: name, forKey: "username")
+        addIfNotEmpty(dataDic: &data, value: bio, forKey: "bio")
+        addIfNotEmpty(dataDic: &data, value: location, forKey: "location")
+        addIfNotEmpty(dataDic: &data, value: webUrl, forKey: "webUrl")
+
+        try await Firestore.firestore().collection("users")
+            .document(uid)
+            .updateData(data)
+    
+        try await AuthService.shared.refreshCurrentUser()
+        
+    }
+    
+    // Helper functions
+
+    private func tryUploadImage(dataDic: inout [String: Any],
+                                uploadImage: UIImage?,
+                                using uploader: (UIImage) async throws -> String?, key: String) async throws {
+        
+        if let image = uploadImage, let downloadUrl = try await uploader(image) {
+            dataDic[key] = downloadUrl
+        }
+    }
+    
+    private func addIfNotEmpty(dataDic: inout [String: Any], value: String?, forKey key: String) {
+        if let value = value, !value.isEmpty {
+            dataDic[key] = value
+        }
+    }
 }
 
 

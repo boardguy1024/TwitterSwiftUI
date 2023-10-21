@@ -25,7 +25,7 @@ class ExploreViewModel: ObservableObject {
             let lowercasedQuery = searchText.lowercased()
             
             let searchedUsers = self.users.filter({
-                $0.fullname.lowercased().contains(lowercasedQuery) ||
+                $0.email.lowercased().contains(lowercasedQuery) ||
                 $0.username.lowercased().contains(lowercasedQuery)
             })
             return searchedUsers

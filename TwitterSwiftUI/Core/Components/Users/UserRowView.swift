@@ -22,10 +22,11 @@ struct UserRowView: View {
                 .clipShape(Circle())
             
             VStack(alignment: .leading) {
-                Text(user.fullname)
+                Text(user.username)
                     .font(.subheadline).bold()
                     .foregroundStyle(.black)
-                Text(user.username)
+                
+                Text("@\(user.email.emailUsername ?? "")")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
@@ -37,5 +38,11 @@ struct UserRowView: View {
 }
 
 #Preview {
-    UserRowView(user: .init(username: "", fullname: "", profileImageUrl: "", email: ""))
+    UserRowView(user: .init(username: "",
+                            profileImageUrl: "",
+                            profileHeaderImageUrl: "profileHeaderImageUrl",
+                            email: "",
+                            bio: "",
+                            location: "",
+                            webUrl: ""))
 }

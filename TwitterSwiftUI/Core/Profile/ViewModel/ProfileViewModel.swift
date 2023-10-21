@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 class ProfileViewModel: ObservableObject {
     
-    let user: User
+    @Published var user: User
 
     @Published var isFollowed = false
     @Published var followersCount: Int = 0
@@ -23,6 +24,8 @@ class ProfileViewModel: ObservableObject {
         user.isCurrentUser ? "プロフィールを編集" : isFollowed ? "フォロー中" : "フォローする"
     }
     
+    private var cancellable = Set<AnyCancellable>()
+    
     init(user: User) {
         self.user = user
         
@@ -31,6 +34,8 @@ class ProfileViewModel: ObservableObject {
             try await fetchFollowingCount()
             try await fetchFollowersCount()
         }
+        
+        setupSubscribers()
     }
     
     // MARK: From View
@@ -48,7 +53,6 @@ class ProfileViewModel: ObservableObject {
                     try await follow()
                 }
             }
-            
         }
     }
     
@@ -58,6 +62,14 @@ class ProfileViewModel: ObservableObject {
     }
     
     // MARK: Private
+    
+    private func setupSubscribers() {
+        AuthService.shared.$currentUser.sink { [weak self] user in
+            guard let self = self, let unwapped = user else { return }
+            self.user = unwapped
+        }
+        .store(in: &cancellable)
+    }
 
     @MainActor
     private func checkIfUserIsFollowing() async throws {

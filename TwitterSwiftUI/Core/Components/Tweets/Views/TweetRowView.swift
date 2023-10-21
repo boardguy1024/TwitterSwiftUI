@@ -30,13 +30,14 @@ struct TweetRowView: View {
                     
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            Text(user.fullname)
-                                .font(.subheadline).bold()
                             
-                            Text("@\(user.username)")
+                            Text("\(user.username)")
+                                .font(.subheadline).bold()
+
+                            Text("@\(user.email.emailUsername ?? "")")
                                 .foregroundColor(.gray)
                                 .font(.caption)
-                            
+
                             Text("2w")
                                 .foregroundColor(.gray)
                                 .font(.caption)

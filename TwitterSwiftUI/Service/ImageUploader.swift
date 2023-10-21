@@ -10,7 +10,7 @@ import UIKit
 
 struct ImageUploader {
     
-    static func uploadImage(image: UIImage, comepletion: @escaping (String) -> Void) {
+    static func uploadProfileImage(image: UIImage, comepletion: @escaping (String) -> Void) {
          
         guard let imageData = image.aspectFittedToHeight(100).jpegData(compressionQuality: 0.25) else { return }
         
@@ -19,7 +19,7 @@ struct ImageUploader {
         
         ref.putData(imageData) { _, error in
             if let error = error {
-                print("DEBUG: Failed to upload image with error: \(error.localizedDescription)")
+                print("DEBUG: Failed to profile upload image with error: \(error.localizedDescription)")
                 return
             }
             
@@ -28,5 +28,26 @@ struct ImageUploader {
                 comepletion(imageUrl)
             }
         }
+    }
+    
+    static func uploadProfileImage(image: UIImage) async throws -> String? {
+         
+        guard let imageData = image.aspectFittedToHeight(100).jpegData(compressionQuality: 0.25) else { return nil }
+        
+        let filename = UUID().uuidString
+        let ref = Storage.storage().reference(withPath: "/profile_image/\(filename)")
+        
+        let _ = try await ref.putDataAsync(imageData)
+        return try await ref.downloadURL().absoluteString
+    }
+    
+    static func uploadProfileHeaderImage(image: UIImage) async throws -> String? {
+         
+        guard let imageData = image.aspectFittedToHeight(100).jpegData(compressionQuality: 0.25) else { return nil }
+        
+        let filename = UUID().uuidString
+        let ref = Storage.storage().reference(withPath: "/profile_header_image/\(filename)")
+        let _ = try await ref.putDataAsync(imageData)
+        return try await ref.downloadURL().absoluteString
     }
 }

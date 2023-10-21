@@ -69,16 +69,33 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(user: .init(username: "", fullname: "", profileImageUrl: "", email: ""))
+    ProfileView(user: .init(username: "", 
+                            profileImageUrl: "",
+                            profileHeaderImageUrl: "profileHeaderImageUrl",
+                            email: "",
+                            bio: "",
+                            location: "",
+                            webUrl: ""))
 }
 
 extension ProfileView {
     
     var headerView: some View {
         ZStack(alignment: .bottomLeading) {
-            Color(.systemCyan)
-                .ignoresSafeArea()
             
+            if let headerImageUrl = viewModel.user.profileHeaderImageUrl {
+                KFImage(URL(string: headerImageUrl))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 120)
+                    .clipShape(Rectangle())
+                    .edgesIgnoringSafeArea(.top)
+            } else {
+                Color(.systemCyan)
+                    .ignoresSafeArea()
+            }
+        
             VStack(spacing: 0) {
                 Button {
                     dismiss()
@@ -151,30 +168,37 @@ extension ProfileView {
     var userInfoDetails: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text(viewModel.user.fullname)
-                    .font(.title2).bold()
                 
+                Text("\(viewModel.user.username)")
+                    .font(.title2).bold()
+               
                 Image(systemName: "checkmark.seal.fill")
                     .foregroundColor(Color(.systemBlue))
             }
             
-            Text("@\(viewModel.user.username)")
+            Text("@\(viewModel.user.email.emailUsername ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.gray)
-            
-            Text("Your moms favorite villain")
-                .font(.subheadline)
-                .padding(.vertical)
+           
+            if let bio = viewModel.user.bio {
+                Text(bio)
+                    .font(.subheadline)
+                    .padding(.vertical)
+            }
             
             HStack(spacing: 24) {
-                HStack {
-                    Image(systemName: "mappin.and.ellipse")
-                    Text("Gotham, NY")
+                if let location = viewModel.user.location {
+                    HStack {
+                        Image(systemName: "mappin.and.ellipse")
+                        Text(location)
+                    }
                 }
-                
-                HStack {
-                    Image(systemName: "link")
-                    Text("www.thejoker.com")
+               
+                if let web = viewModel.user.webUrl {
+                    HStack {
+                        Image(systemName: "link")
+                        Text(web)
+                    }
                 }
             }
             .font(.caption)

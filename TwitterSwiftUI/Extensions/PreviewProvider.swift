@@ -12,6 +12,12 @@ class PreviewProvider {
     
     private init() { }
     
-    let user = User(username: "username", fullname: "fullname", profileImageUrl: "profileImageUrl", email: "email")
+    let user = User(username: "username",
+                    profileImageUrl: "profileImageUrl",
+                    profileHeaderImageUrl: "profileHeaderImageUrl",
+                    email: "email",
+                    bio: "",
+                    location: "",
+                    webUrl: "")
     let message = Message(user: PreviewProvider.shared.user, dic: ["text": "テキスト"])
 }

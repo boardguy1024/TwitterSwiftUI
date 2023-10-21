@@ -11,9 +11,12 @@ import Firebase
 struct User: Identifiable, Decodable, Hashable {
     @DocumentID var id: String?
     let username: String
-    let fullname: String
     let profileImageUrl: String
+    let profileHeaderImageUrl: String?
     let email: String
+    let bio: String?
+    let location: String?
+    let webUrl: String?
     
     var isCurrentUser: Bool {
         Auth.auth().currentUser?.uid == id 
@@ -25,9 +28,21 @@ extension User {
         
         let id = dic?["uid"] as? String
         let username = dic?["username"] as? String ?? ""
-        let fullname = dic?["fullname"] as? String ?? ""
         let profileImageUrl = dic?["profileImageUrl"] as? String ?? ""
+        let profileHeaderImageUrl = dic?["profileHeaderImageUrl"] as? String
         let email = dic?["email"] as? String ?? ""
-        return User(id: id, username: username, fullname: fullname, profileImageUrl: profileImageUrl, email: email)
+        let bio = dic?["bio"] as? String
+        let location = dic?["location"] as? String
+        let webUrl = dic?["webUrl"] as? String
+        
+        return User(id: id,
+                    username: username,
+                    profileImageUrl: profileImageUrl,
+                    profileHeaderImageUrl: profileHeaderImageUrl,
+                    email: email,
+                    bio: bio,
+                    location: location,
+                    webUrl: webUrl
+        )
     }
 }

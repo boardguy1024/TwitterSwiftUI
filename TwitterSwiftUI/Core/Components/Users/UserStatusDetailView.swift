@@ -72,7 +72,10 @@ extension UserStatusDetailView {
 #Preview {
     UserStatusDetailView(initialTab: .followers,
                          user: .init(username: "username",
-                                     fullname: "fullname",
                                      profileImageUrl: "profileImageUrl",
-                                     email: "email"))
+                                     profileHeaderImageUrl: "profileHeaderImageUrl",
+                                     email: "email",
+                                     bio: "",
+                                     location: "",
+                                     webUrl: ""))
 }

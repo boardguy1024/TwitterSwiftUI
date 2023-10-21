@@ -28,7 +28,7 @@ struct RegistrationView: View {
                 VStack(spacing: 40) {
                     CustomTextField(imageName: "envelope", placeholdeer: "メールアドレス", text: $viewModel.email)
                     CustomTextField(imageName: "person", placeholdeer: "ニックネーム", text: $viewModel.username)
-                    CustomTextField(imageName: "person", placeholdeer: "名前", text: $viewModel.fullname)
+
                     CustomTextField(imageName: "lock",
                                     placeholdeer: "パスワード",
                                     isSecureField: true,

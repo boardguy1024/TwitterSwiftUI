@@ -12,7 +12,6 @@ class RegistrationViewModel: ObservableObject {
     
     @Published var email = ""
     @Published var username = ""
-    @Published var fullname = ""
     @Published var password = ""
     
     @Published var didAuthenticateUser = false
@@ -26,7 +25,6 @@ class RegistrationViewModel: ObservableObject {
     func register() {
         AuthService.shared.register(withEmail: email,
                                     password: password,
-                                    fullname: fullname,
                                     username: username)
     }
     

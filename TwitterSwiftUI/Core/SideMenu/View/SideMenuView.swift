@@ -40,10 +40,10 @@ struct SideMenuView: View {
                             .clipShape(Circle())
                     }
                     
-                    Text(viewModel.user?.fullname ?? "")
+                    Text("\(viewModel.user?.username ?? "")")
                         .font(.headline).bold()
                     
-                    Text("@\(viewModel.user?.username ?? "")")
+                    Text("@\(viewModel.user?.email.emailUsername ?? "")")
                         .font(.caption)
                         .foregroundStyle(.gray)
                 }

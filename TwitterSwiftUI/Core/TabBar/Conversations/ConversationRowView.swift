@@ -22,10 +22,10 @@ struct ConversationRowView: View {
                 .clipShape(Circle())
             
             VStack(alignment: .leading) {
-                Text(message.user.fullname)
+                Text(message.text)
                     .font(.subheadline).bold()
                     .foregroundStyle(.black)
-                Text(message.text)
+                Text("@\(message.user.email.emailUsername ?? "")")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }

@@ -19,48 +19,36 @@ struct ProfileEditView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 0) {
-            header
-            
-            ZStack {
-                Color.gray
-                    .frame(height: 120).opacity(0.6)
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
                 
-                Image(systemName: "camera")
-                    .font(.title)
-                    .foregroundColor(.white)
-            }
-            .onTapGesture {
+                headerImage
+                    .padding(.top, 40)
                 
-            }
-            
-            ZStack {
-                KFImage(URL(string: viewModel.user.profileImageUrl))
-                    .resizable()
-                    .frame(width: 70, height: 70)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle().strokeBorder(Color.white, lineWidth: 3)
-                    )
-                Image(systemName: "camera")
-                    .font(.title2)
-                    .foregroundColor(.white)
-            }
-            .padding(.leading, 20)
-            .offset(y: -20)
-            .onTapGesture {
+                profileImage
                 
+                nameInput
+                
+                bioInput
+                
+                loactionInput
+                
+                webUrlInput
+                
+                Spacer()
             }
+            .overlay(header, alignment: .top)
+            .sheet(isPresented: $viewModel.showImagePickerForProfileImage , content: {
+                ImagePicker(selectedImage: $viewModel.profileImage)
+            })
+            .sheet(isPresented: $viewModel.showImagePrickerForHeaderImage, content: {
+                ImagePicker(selectedImage: $viewModel.headerImage)
+            })
             
-            nameInput
-            
-            bioInput
-            
-            loactionInput
-            
-            webUrlInput
-            
-            Spacer()
+            if viewModel.showProgressView {
+                Color.black.opacity(0.1).ignoresSafeArea()
+                ProgressView()
+            }
         }
     }
 }
@@ -77,13 +65,15 @@ extension ProfileEditView {
                 Spacer()
                 
                 Button {
-                    dismiss()
+                    Task {
+                        try await viewModel.updateProfile()
+                        dismiss()
+                    }
                 } label: {
                     Text("保存")
                         .opacity(viewModel.saveButtonDisable ? 0.5 : 1)
                 }
                 .disabled(viewModel.saveButtonDisable)
-                
             }
             
             Text("編集")
@@ -94,6 +84,68 @@ extension ProfileEditView {
         .padding(.horizontal)
         .padding(.vertical, 6)
         .padding(.top, 5)
+    }
+    
+    var headerImage: some View {
+        ZStack {
+            
+            Group {
+                if let selectedImageFromImagePicker = viewModel.headerImage {
+                    Image(uiImage: selectedImageFromImagePicker)
+                        .resizable()
+                        .scaledToFill()
+                } else if let headerImageUrl = viewModel.user.profileHeaderImageUrl {
+                    KFImage(URL(string: headerImageUrl))
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Color.gray
+                        .opacity(0.6)
+                }
+            }
+            .frame(height: 120)
+            .clipShape(Rectangle())
+
+            Image(systemName: "camera")
+                .font(.title)
+                .foregroundColor(.white)
+        }
+        .onTapGesture {
+            viewModel.showImagePrickerForHeaderImage.toggle()
+        }
+        
+    }
+    
+    var profileImage: some View {
+        ZStack {
+            
+            Group {
+                // プロフィールイメージを変更した場合、そのイメージを表示
+                if let selectedImageFromImagePicker = self.viewModel.profileImage {
+                    Image(uiImage: selectedImageFromImagePicker)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    KFImage(URL(string: viewModel.user.profileImageUrl))
+                        .resizable()
+                        .scaledToFill()
+                }
+            }
+            .frame(width: 70, height: 70)
+            .clipShape(Circle())
+            .overlay(
+                Circle().strokeBorder(Color.white, lineWidth: 3)
+            )
+            
+            Image(systemName: "camera")
+                .font(.title2)
+                .foregroundColor(.white)
+        }
+        .padding(.leading, 20)
+        .offset(y: -20)
+        .onTapGesture {
+            viewModel.showImagePickerForProfileImage.toggle()
+        }
     }
     
     var nameInput: some View {
@@ -139,7 +191,7 @@ extension ProfileEditView {
             HStack {
                 Text("場所")
                     .fontWeight(.semibold)
-                TextField("場所を追加", text: $viewModel.name)
+                TextField("場所を追加", text: $viewModel.location)
                     .foregroundColor(.blue)
                     .frame(maxWidth: .infinity)
             }
@@ -155,7 +207,7 @@ extension ProfileEditView {
             HStack {
                 Text("Web")
                     .fontWeight(.semibold)
-                TextField("Webサイトを追加", text: $viewModel.name)
+                TextField("Webサイトを追加", text: $viewModel.webUrl)
                     .keyboardType(.URL)
                     .foregroundColor(.blue)
                     .frame(maxWidth: .infinity)
@@ -168,5 +220,11 @@ extension ProfileEditView {
 }
 
 #Preview {
-    ProfileEditView(user: .init(username: "username", fullname: "fullname", profileImageUrl: "profileImageUrl", email: "email"))
+    ProfileEditView(user: .init(username: "username",
+                                profileImageUrl: "profileImageUrl",
+                                profileHeaderImageUrl: "profileHeaderImageUrl",
+                                email: "email",
+                                bio: "",
+                                location: "",
+                                webUrl: ""))
 }

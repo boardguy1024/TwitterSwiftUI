@@ -43,7 +43,7 @@ class AuthService: ObservableObject {
         }
     }
     
-    func register(withEmail email: String, password: String, fullname: String, username: String) {
+    func register(withEmail email: String, password: String, username: String) {
         
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -60,7 +60,6 @@ class AuthService: ObservableObject {
                                // 検索でユーザーを小文字でヒットさせるための工夫
                                "username_lowercase": username.lowercased(),
                                "username": username,
-                               "fullname": fullname,
                                "uid": user.uid]
             
             Firestore.firestore().collection("users")
@@ -84,17 +83,21 @@ class AuthService: ObservableObject {
     func uploadProfileImage(_ image: UIImage) {
         guard let uid = tempUserSession?.uid else { return }
         
-        ImageUploader.uploadImage(image: image) { profileImageUrl in
+        ImageUploader.uploadProfileImage(image: image) { imageUrl in
             
             Firestore.firestore().collection("users")
                 .document(uid)
-                .updateData(["profileImageUrl": profileImageUrl]) { _ in
+                .updateData(["profileImageUrl": imageUrl]) { _ in
                     // 選択したプロフィール画像が正常にStorageにアップデートし、そのdownloadUrlを取得したら
                     // userのnodeに「profileImageUrl」fieldを追加してアップデートを行う
                     // 全てが完了したら、userSessionに値をセットし、Home画面が表示されるようにする
                     self.userSession = self.tempUserSession
                 }
         }
+    }
+    
+    func refreshCurrentUser() async throws {
+        try await fetchUserProfile()
     }
     
     @MainActor
