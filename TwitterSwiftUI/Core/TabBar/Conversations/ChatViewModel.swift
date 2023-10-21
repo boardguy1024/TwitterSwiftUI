@@ -17,9 +17,12 @@ class ChatViewModel: ObservableObject {
     init(user: User) {
         self.user = user
         
-        fetchMessages()
+        Task {
+            await fetchMessages()
+        }
     }
     
+    @MainActor
     func sendButtonTapped(with message: String, completion: @escaping () -> Void) async throws {
         do {
             try await sendMessage(message, to: user)
@@ -29,6 +32,7 @@ class ChatViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func fetchMessages() {
         guard let currentUser = AuthService.shared.currentUser,
                 let currentUid = currentUser.id,
@@ -49,7 +53,7 @@ class ChatViewModel: ObservableObject {
                 
                 let messageOwner: User = fromId == currentUid ? currentUser : self.user
                 // 本来であれば、データの整合性のために取得が望ましいが、チャットのやりとりは 自分と self.Userが確定なので
-                // fetchせず、持っているUserデータを使う
+                // fetch(kingfisherはcacheを使うため、どちらでも良いが。。)せず、持っているUserデータを使う
 //                Firestore.firestore().collection("users").document(fromId).getDocument { snapshot, _ in
 //                    let user = User.decode(dic: snapshot?.data())
 //                    self.messages.append(.init(user: user, dic: messageData))
@@ -60,7 +64,6 @@ class ChatViewModel: ObservableObject {
     }
     
     
-    @MainActor
     private func sendMessage(_ messageText: String, to user: User) async throws {
         guard let currentUid = AuthService.shared.userSession?.uid, let userId = user.id else { return }
         let messageRef = Firestore.firestore().collection("messages")
