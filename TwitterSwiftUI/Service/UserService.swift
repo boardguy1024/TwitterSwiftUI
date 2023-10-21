@@ -7,6 +7,7 @@
 
 import Firebase
 import FirebaseFirestore
+import Combine
 
 class UserService {
     
@@ -39,21 +40,64 @@ class UserService {
     // ヒットしたユーザーリストを取得
     func fetchUsers(with query: String) async throws -> [User] {
         guard !query.isEmpty else { return [] }
+        
         let lowercasedQuery = query.lowercased()
-        do {
-            let snapshot = try await Firestore.firestore().collection("users")
-                .whereField("username_lowercase", isGreaterThanOrEqualTo: lowercasedQuery)
-                .whereField("username_lowercase", isLessThan: lowercasedQuery + "\u{f8ff}")
-                .getDocuments()
-            
-            return snapshot.documents.compactMap({ try? $0.data(as: User.self) })
-        } catch {
-            print("DEBUG: Failed fetchUsersWithQuery: \(error.localizedDescription)")
-            return []
+        let firestore = Firestore.firestore()
+        
+        // Publisher for fetching users by username_lowercase
+        @Sendable func usersByUsername() -> Future<[User], Error> {
+            return Future { promise in
+                Task {
+                    do {
+                        let snapshot = try await firestore.collection("users")
+                            .whereField("username_lowercase", isGreaterThanOrEqualTo: lowercasedQuery)
+                            .whereField("username_lowercase", isLessThan: lowercasedQuery + "\u{f8ff}")
+                            .getDocuments()
+                        
+                        let users = snapshot.documents.compactMap({ try? $0.data(as: User.self) })
+                        promise(.success(users))
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+            }
         }
+        
+        @Sendable func usersByEmail() -> Future<[User], Error> {
+            return Future { promise in
+                Task {
+                    do {
+                        let snapshot = try await firestore.collection("users")
+                            .whereField("emailUsername_lowercase", isGreaterThanOrEqualTo: lowercasedQuery)
+                            .whereField("emailUsername_lowercase", isLessThan: lowercasedQuery + "\u{f8ff}")
+                            .getDocuments()
+                        
+                        let users = snapshot.documents.compactMap({ try? $0.data(as: User.self) })
+                        promise(.success(users))
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+        
+        // Use CombineLatest to fetch both username and email results and combine them
+        let users = try await withThrowingTaskGroup(of: [User].self) { group in
+            group.addTask { try await usersByEmail().value }
+            group.addTask { try await usersByUsername().value }
+            
+            var combinedUsers: [User] = []
+            for try await users in group {
+                combinedUsers.append(contentsOf: users)
+            }
+            
+            return combinedUsers
+        }
+        
+        return users
     }
     
-    func updateProfile(profileImage: UIImage?, 
+    func updateProfile(profileImage: UIImage?,
                        headerImage: UIImage?,
                        name: String?,
                        bio: String?,
@@ -65,22 +109,22 @@ class UserService {
         
         try await tryUploadImage(dataDic: &data, uploadImage: profileImage, using: ImageUploader.uploadProfileImage, key: "profileImageUrl")
         try await tryUploadImage(dataDic: &data, uploadImage: headerImage, using: ImageUploader.uploadProfileImage, key: "profileHeaderImageUrl")
-
+        
         addIfNotEmpty(dataDic: &data, value: name, forKey: "username")
         addIfNotEmpty(dataDic: &data, value: bio, forKey: "bio")
         addIfNotEmpty(dataDic: &data, value: location, forKey: "location")
         addIfNotEmpty(dataDic: &data, value: webUrl, forKey: "webUrl")
-
+        
         try await Firestore.firestore().collection("users")
             .document(uid)
             .updateData(data)
-    
+        
         try await AuthService.shared.refreshCurrentUser()
         
     }
     
     // Helper functions
-
+    
     private func tryUploadImage(dataDic: inout [String: Any],
                                 uploadImage: UIImage?,
                                 using uploader: (UIImage) async throws -> String?, key: String) async throws {

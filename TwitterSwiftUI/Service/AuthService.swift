@@ -59,6 +59,7 @@ class AuthService: ObservableObject {
             let userDataDic = ["email": email,
                                // 検索でユーザーを小文字でヒットさせるための工夫
                                "username_lowercase": username.lowercased(),
+                               "emailUsername_lowercase": email.emailUsername?.lowercased() ?? "",
                                "username": username,
                                "uid": user.uid]
             
