@@ -35,7 +35,10 @@ class ProfileViewModel: ObservableObject {
             try await fetchFollowersCount()
         }
         
-        setupSubscribers()
+        if AuthService.shared.userSession?.uid == user.id {
+            // プロフィール編集で更新があった場合、更新をするため
+            setupSubscribers()
+        }
     }
     
     // MARK: From View
