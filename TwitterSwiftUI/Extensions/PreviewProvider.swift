@@ -8,16 +8,13 @@
 import Foundation
 
 class PreviewProvider {
-    static let shared = PreviewProvider()
     
-    private init() { }
-    
-    let user = User(username: "username",
+    static let user = User(username: "username",
                     profileImageUrl: "profileImageUrl",
                     profileHeaderImageUrl: "profileHeaderImageUrl",
                     email: "email",
                     bio: "",
                     location: "",
                     webUrl: "")
-    let message = Message(user: PreviewProvider.shared.user, dic: ["text": "テキスト"])
+    static let message = Message(user: PreviewProvider.user, dic: ["text": "テキスト"])
 }

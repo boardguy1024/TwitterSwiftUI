@@ -37,5 +37,5 @@ struct ConversationRowView: View {
 }
 
 #Preview {
-    ConversationRowView(message: PreviewProvider.shared.message)
+    ConversationRowView(message: PreviewProvider.message)
 }

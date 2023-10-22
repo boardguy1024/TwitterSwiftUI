@@ -120,5 +120,5 @@ extension ChatView {
 }
 
 #Preview {
-    ChatView(user: PreviewProvider.shared.user)
+    ChatView(user: PreviewProvider.user)
 }

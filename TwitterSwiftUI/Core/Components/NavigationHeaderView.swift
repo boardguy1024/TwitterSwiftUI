@@ -61,5 +61,5 @@ struct NavigationHeaderView: View {
 }
 
 #Preview {
-    NavigationHeaderView(showSideMenu: .constant(false), user: .constant(PreviewProvider.shared.user))
+    NavigationHeaderView(showSideMenu: .constant(false), user: .constant(PreviewProvider.user))
 }

@@ -22,7 +22,7 @@ struct FollowingUserListView: View {
                         NavigationLink {
                             ProfileView(user: user)
                         } label: {
-                            UserRowView(user: user)
+                            UserStatusRowView(user: user)
                         }
                     }
                 }

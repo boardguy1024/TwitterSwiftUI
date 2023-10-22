@@ -29,5 +29,5 @@ struct TweetListView: View {
 }
 
 #Preview {
-    TweetListView(user: PreviewProvider.shared.user, tabType: .tweets)
+    TweetListView(user: PreviewProvider.user, tabType: .tweets)
 }

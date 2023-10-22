@@ -27,6 +27,9 @@
 		2DC4D9492ADC14F30066FF02 /* NewMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC4D9482ADC14F30066FF02 /* NewMessageViewModel.swift */; };
 		2DD92B992AE3CEEA00252362 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD92B982AE3CEEA00252362 /* String+Extensions.swift */; };
 		2DE08BE72ADAEBF900DAA3C4 /* NewTweetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE08BE62ADAEBF900DAA3C4 /* NewTweetButton.swift */; };
+		2DF74F9D2AE552DD00DFBDD5 /* FollowStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF74F9C2AE552DD00DFBDD5 /* FollowStatusButton.swift */; };
+		2DF74F9F2AE555B500DFBDD5 /* UserStatusRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF74F9E2AE555B500DFBDD5 /* UserStatusRowView.swift */; };
+		2DF74FA12AE5576600DFBDD5 /* UserStatusRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF74FA02AE5576600DFBDD5 /* UserStatusRowViewModel.swift */; };
 		FF170EE32AD29E7800B90E2D /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE22AD29E7800B90E2D /* PreviewProvider.swift */; };
 		FF170EE52AD2A09E00B90E2D /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE42AD2A09E00B90E2D /* RegistrationViewModel.swift */; };
 		FF170EE82AD2A27D00B90E2D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF170EE72AD2A27D00B90E2D /* LoginViewModel.swift */; };
@@ -132,6 +135,9 @@
 		2DC4D9482ADC14F30066FF02 /* NewMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewModel.swift; sourceTree = "<group>"; };
 		2DD92B982AE3CEEA00252362 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		2DE08BE62ADAEBF900DAA3C4 /* NewTweetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTweetButton.swift; sourceTree = "<group>"; };
+		2DF74F9C2AE552DD00DFBDD5 /* FollowStatusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowStatusButton.swift; sourceTree = "<group>"; };
+		2DF74F9E2AE555B500DFBDD5 /* UserStatusRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusRowView.swift; sourceTree = "<group>"; };
+		2DF74FA02AE5576600DFBDD5 /* UserStatusRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusRowViewModel.swift; sourceTree = "<group>"; };
 		FF170EE22AD29E7800B90E2D /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		FF170EE42AD2A09E00B90E2D /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		FF170EE72AD2A27D00B90E2D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -280,6 +286,9 @@
 				2D7CD6512ADEC894006DECA4 /* UserStatusDetailView.swift */,
 				2D9F42B82AE161DE000FD971 /* UserStatusDetailViewModel.swift */,
 				2D9F42BA2AE16912000FD971 /* FollowingUserListView.swift */,
+				2DF74F9E2AE555B500DFBDD5 /* UserStatusRowView.swift */,
+				2DF74FA02AE5576600DFBDD5 /* UserStatusRowViewModel.swift */,
+				2DF74F9C2AE552DD00DFBDD5 /* FollowStatusButton.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -721,6 +730,7 @@
 				FF2EE4FB2ABF1C2F000522CF /* TextAreaView.swift in Sources */,
 				FFFB5D582AC0210600817497 /* ImagePicker.swift in Sources */,
 				2DC4D9492ADC14F30066FF02 /* NewMessageViewModel.swift in Sources */,
+				2DF74FA12AE5576600DFBDD5 /* UserStatusRowViewModel.swift in Sources */,
 				FF2EE50B2ABFE905000522CF /* AuthSubmitButton.swift in Sources */,
 				FF44B9222ABC8117005B87F4 /* ContentView.swift in Sources */,
 				FF2EE4EE2ABEF09C000522CF /* SideMenuRowView.swift in Sources */,
@@ -751,10 +761,12 @@
 				2D6173EA2AE011260089F1E7 /* Timestamp+Extensions.swift in Sources */,
 				2D89D9E02AD9955900F20E91 /* ChatViewModel.swift in Sources */,
 				FFACF2B42AC15A3400A2C911 /* SearchBar.swift in Sources */,
+				2DF74F9D2AE552DD00DFBDD5 /* FollowStatusButton.swift in Sources */,
 				FF2EE5042ABF23EE000522CF /* RoundedShape.swift in Sources */,
 				FF170EEC2AD2D95000B90E2D /* EntryView.swift in Sources */,
 				FFACF2BE2AC1BD2A00A2C911 /* ProfileViewModel.swift in Sources */,
 				FF170EE52AD2A09E00B90E2D /* RegistrationViewModel.swift in Sources */,
+				2DF74F9F2AE555B500DFBDD5 /* UserStatusRowView.swift in Sources */,
 				2DC291462ADA2B7D006E9E23 /* ConversationsView.swift in Sources */,
 				FFACF2B22AC1519E00A2C911 /* ExploreViewModel.swift in Sources */,
 				2D9F42BB2AE16912000FD971 /* FollowingUserListView.swift in Sources */,

@@ -69,5 +69,5 @@ extension ChatBubbleView {
 }
 
 #Preview {
-    ChatBubbleView(message: PreviewProvider.shared.message)
+    ChatBubbleView(message: PreviewProvider.message)
 }
