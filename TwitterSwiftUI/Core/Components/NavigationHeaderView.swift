@@ -35,7 +35,6 @@ struct NavigationHeaderView: View {
                             }
                         }
                         .foregroundColor(.gray)
-                        .padding(.all, 4)
                         .background(.gray.opacity(0.3))
                         .frame(width: 35, height: 35)
                         .clipShape(Circle())
