@@ -45,7 +45,7 @@ extension ChatBubbleView {
                     .foregroundStyle(.black)
                     .background(.gray.opacity(0.15))
                     .clipShape(RoundedShape(corners: [.bottomLeft, .bottomRight, .topRight], cornerRadius: 18))
-                Text(message.timestamp.jpString())
+                Text(message.timestamp.timeStringJP())
                     .font(.system(size: 9))
                     .foregroundStyle(.gray)
             }
@@ -54,7 +54,7 @@ extension ChatBubbleView {
     
     var messageBubble: some View {
         HStack(alignment: .bottom, spacing: 2) {
-            Text(message.timestamp.jpString())
+            Text(message.timestamp.timeStringJP())
                 .font(.system(size: 9))
                 .foregroundStyle(.gray)
             

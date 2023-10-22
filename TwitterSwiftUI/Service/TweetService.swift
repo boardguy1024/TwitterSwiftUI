@@ -43,6 +43,7 @@ class TweetService {
         return snapshot.documents.compactMap({ try? $0.data(as: Tweet.self )})
     }
     
+    
     func fetchTweets(forUid uid: String) async throws -> [Tweet] {
         let snapshot = try await Firestore.firestore()
             .collection("tweets")

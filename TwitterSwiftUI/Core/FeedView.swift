@@ -34,8 +34,7 @@ struct FeedView: View {
                             ]
                     ) {
                         ForEach(FeedTabFilter.allCases) { type in
-                            FeedTabListView()
-                                .environmentObject(self.viewModel)
+                            FeedTabListView(filterType: type)
                                 .frame(width: UIScreen.main.bounds.width)
                         }
                     }
@@ -44,11 +43,6 @@ struct FeedView: View {
                     // 左に透明のViewを設ける
                     Color.white.opacity(0.0001)
                         .frame(width: 30)
-                }
-            }
-            .refreshable {
-                Task {
-                    try await viewModel.fetchTweets()
                 }
             }
             .onChange(of: tabBarViewModel.showUserStatusDetail) { _ in

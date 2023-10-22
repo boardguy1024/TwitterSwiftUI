@@ -36,5 +36,129 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DAA38886-C8F6-4496-B3CB-59B0E7CFBAD1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "fetchTweetsFollowings()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3C89371D-C94F-4C3F-8714-4B534C1B6E67"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "fetchTweetsFollowings()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3C89371D-C94F-4C3F-8714-4B534C1B6E67 - 2fab95e926ee6e9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for TwitterSwiftUI.FeedTabListViewModel.fetchTweetsFollowings() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paku/XCode_Projects/Projects/TwitterSwiftUI/TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "316">
+               </Location>
+               <Location
+                  uuid = "3C89371D-C94F-4C3F-8714-4B534C1B6E67 - 286aa20a339c0c22"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for TwitterSwiftUI.FeedTabListViewModel.fetchTweetsFollowings() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paku/XCode_Projects/Projects/TwitterSwiftUI/TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "3C89371D-C94F-4C3F-8714-4B534C1B6E67 - 7d48139f7c4122a0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for TwitterSwiftUI.FeedTabListViewModel.fetchTweetsFollowings() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paku/XCode_Projects/Projects/TwitterSwiftUI/TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "3C89371D-C94F-4C3F-8714-4B534C1B6E67 - 7d48139f7c412281"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for TwitterSwiftUI.FeedTabListViewModel.fetchTweetsFollowings() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paku/XCode_Projects/Projects/TwitterSwiftUI/TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "3C89371D-C94F-4C3F-8714-4B534C1B6E67 - b2689e4c9938e6a2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for TwitterSwiftUI.FeedTabListViewModel.fetchTweetsFollowings() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paku/XCode_Projects/Projects/TwitterSwiftUI/TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "3C89371D-C94F-4C3F-8714-4B534C1B6E67 - b2689e4c9938e683"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for TwitterSwiftUI.FeedTabListViewModel.fetchTweetsFollowings() async throws -&gt; ()"
+                  moduleName = "TwitterSwiftUI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paku/XCode_Projects/Projects/TwitterSwiftUI/TwitterSwiftUI/Core/FeedTabListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

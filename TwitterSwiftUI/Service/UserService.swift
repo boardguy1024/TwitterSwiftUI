@@ -175,6 +175,17 @@ extension UserService {
         return users
     }
     
+    func fetchFollowingUserIds() async throws -> [String] {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return [] }
+        
+        let snapshot = try await Firestore.firestore().collection("following")
+            .document(currentUserId)
+            .collection("user-following")
+            .getDocuments()
+        
+        return snapshot.documents.compactMap { $0.documentID }
+    }
+    
     func fetchFollowing(with uid: String) async throws -> [User] {
         let snapshot = try await Firestore.firestore().collection("following").document(uid).collection("user-following")
             .getDocuments()

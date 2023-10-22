@@ -9,13 +9,17 @@ import SwiftUI
 
 struct FeedTabListView: View {
     
-    @EnvironmentObject var viewModel: FeedViewModel
+    @StateObject var viewModel: FeedTabListViewModel
         
+    init(filterType: FeedTabFilter) {
+        _viewModel = .init(wrappedValue: FeedTabListViewModel(selectedFilter: filterType))
+    }
+    
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
                 LazyVStack {
-                    ForEach(viewModel.tweets) { tweet in
+                    ForEach(viewModel.selectedFilter == .recommend ? viewModel.tweets : viewModel.tweetsOfFollowing) { tweet in
                         NavigationLink {
                             if let user = tweet.user {
                                 ProfileView(user: user)
@@ -26,11 +30,14 @@ struct FeedTabListView: View {
                     }
                 }
             }
+            .refreshable {
+                viewModel.refreshed()
+            }
         }
     }
 }
 
 #Preview {
-    FeedTabListView()
+    FeedTabListView(filterType: .recommend)
         .environmentObject(FeedViewModel())
 }

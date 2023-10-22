@@ -38,7 +38,7 @@ struct TweetRowView: View {
                                 .foregroundColor(.gray)
                                 .font(.caption)
 
-                            Text("2w")
+                            Text(viewModel.tweet.timestamp.timeStringJP())
                                 .foregroundColor(.gray)
                                 .font(.caption)
                         }
