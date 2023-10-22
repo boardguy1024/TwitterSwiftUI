@@ -1,5 +1,7 @@
 # TwitterSwiftUI
-The X Clone APP built on SwiftUI
+### The X Clone APP built on SwiftUI
+Firebaseを使った認証やDataStore、Storageなどを利用しX(旧Twitter)のCloneアプリを作成
+現在進行中で時間があれば新規機能追加やバグ対応を行なっています。🚀
 
 |Login|sideMenu|Home|Explore|
 |---|---|---|---|
