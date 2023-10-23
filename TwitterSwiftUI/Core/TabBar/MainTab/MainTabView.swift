@@ -74,7 +74,7 @@ struct MainTabView: View {
                 )
                 
                 NewTweetButton(selectedTab: $viewModel.selectedTab) { tab in
-                    viewModel.newTweetButtonTapped(tap: tab)
+                    viewModel.overlayButtonTapped(on: tab)
                 }
                 .opacity(viewModel.hiddenNewTweetButton ? 0 : 1)
             }

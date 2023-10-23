@@ -98,7 +98,7 @@ extension ConversationsView {
                 
             } label: {
                 Button {
-                    
+                    tabBarViewModel.overlayButtonTapped(on: .messages)
                 } label: {
                     Text("メッセージを書く")
                         .bold()

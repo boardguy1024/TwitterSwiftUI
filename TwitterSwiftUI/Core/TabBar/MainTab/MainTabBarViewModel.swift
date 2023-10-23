@@ -43,8 +43,8 @@ class MainTabBarViewModel: ObservableObject {
         }
     }
   
-    func newTweetButtonTapped(tap: MainTabBarFilter) {
-        switch tap {
+    func overlayButtonTapped(on tabBar: MainTabBarFilter) {
+        switch tabBar {
         case .messages:
             showNewMessageView = true
         case .home, .explore:
