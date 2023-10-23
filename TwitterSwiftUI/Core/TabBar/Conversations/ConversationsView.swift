@@ -80,9 +80,7 @@ struct ConversationsView: View {
                 , alignment: .top)
         }
         .background(Color.red)
-        
     }
-    
 }
 
 extension ConversationsView {

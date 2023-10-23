@@ -22,12 +22,24 @@ struct ConversationRowView: View {
                 .clipShape(Circle())
             
             VStack(alignment: .leading) {
+                HStack {
+                    Text(message.user.username)
+                        .font(.subheadline).bold()
+                        .foregroundStyle(.black)
+                    
+                    Text("@\(message.user.email.emailUsername ?? "")")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    Text("\(message.timestamp.timeStringJP())")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
                 Text(message.text)
                     .font(.subheadline).bold()
                     .foregroundStyle(.black)
-                Text("@\(message.user.email.emailUsername ?? "")")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
             }
             Spacer()
         }
