@@ -85,6 +85,9 @@ struct SideMenuView: View {
             Spacer()
             
         }
+        .onChange(of: showSideMenu, perform: { _ in
+            viewModel.refreshFollowStatusCount()
+        })
         .padding(.leading, 20)
         .frame(width: UIScreen.main.bounds.width - 90, alignment: .leading)
         .background(Color.white)

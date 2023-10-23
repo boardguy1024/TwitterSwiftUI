@@ -84,8 +84,8 @@ class AuthService: ObservableObject {
     func uploadProfileImage(_ image: UIImage) {
         guard let uid = tempUserSession?.uid else { return }
         
-        ImageUploader.uploadProfileImage(image: image) { imageUrl in
-            
+        ImageUploader.uploadProfileImage(image: image) { [weak self] imageUrl in
+            guard let self = self else { return }
             Firestore.firestore().collection("users")
                 .document(uid)
                 .updateData(["profileImageUrl": imageUrl]) { _ in
@@ -93,6 +93,10 @@ class AuthService: ObservableObject {
                     // userのnodeに「profileImageUrl」fieldを追加してアップデートを行う
                     // 全てが完了したら、userSessionに値をセットし、Home画面が表示されるようにする
                     self.userSession = self.tempUserSession
+                    
+                    Task {
+                        try await self.fetchUserProfile()
+                    }
                 }
         }
     }

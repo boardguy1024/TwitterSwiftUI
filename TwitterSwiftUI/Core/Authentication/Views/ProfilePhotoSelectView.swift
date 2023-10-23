@@ -18,8 +18,8 @@ struct ProfilePhotoSelectView: View {
     var body: some View {
         
         VStack {
-//            AuthHeaderView(title1: "Setup account.",
-//                           title2: "Add a profile photo")
+            AuthHeaderView(title: "Setup account.",
+                           cancelTapped: { })
             
             Button {
                 viewModel.showImagePicker.toggle()

@@ -51,6 +51,14 @@ class SideMenuViewModel: ObservableObject {
         AuthService.shared.signOut()
     }
     
+    // 画面が表示するたびにカウントを取得
+    func refreshFollowStatusCount() {
+        Task {
+            try await self.fetchFollowingCount()
+            try await self.fetchFollowersCount()
+        }
+    }
+    
     private func setupSubscribers() {
         AuthService.shared.$currentUser.sink { [weak self] user in
             self?.user = user
